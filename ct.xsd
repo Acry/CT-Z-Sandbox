@@ -1,0 +1,142 @@
+<?xml version="1.0" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<!-- Where does this go? xsd or xml
+
+targetNamespace="http://www.giuspen.com/cherrytree"
+xmlns="http://www.giuspen.com/cherrytree"
+
+xsi:schemaLocation="https://www.w3schools.com note.xsd"
+
+-->
+ 
+<!-- see machines.py class XMLHandler -->
+<!-- definition of Node attributes -->
+<xs:attribute name="custom_icon_id"		type="xs:string"/>
+<xs:attribute name="foreground"			type="xs:string"/>
+<xs:attribute name="is_bold"			type="xs:string"/>
+<xs:attribute name="name"				type="xs:string"/>
+<xs:attribute name="prog_lang"			type="xs:string"/>
+<xs:attribute name="readonly"			type="xs:string"/>
+<xs:attribute name="tags"				type="xs:string"/>
+<xs:attribute name="ts_creation"		type="xs:decimal"/>
+<xs:attribute name="ts_lastsave"		type="xs:decimal"/>
+<xs:attribute name="unique_id"			type="xs:positiveInteger"/>
+
+<!-- definition of complex elements -->
+<xs:element name ="bookmarks">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+		  <xs:attribute name="list" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>	
+
+<!-- TODO validate either anchor or filename -->
+<xs:element name="encoded_png">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="char_offset" type="xs:integer"/>
+        <xs:attribute name="link" type="xs:string"/>
+        <xs:attribute name="anchor" type="xs:string"/>
+        <xs:attribute name="filename" type="xs:string"/>
+        <xs:attribute name="time" type="xs:decimal"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+<!-- definition of table -->
+<xs:element name="row">
+	<xs:complexType>
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="cell" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:choice>
+	</xs:complexType>
+</xs:element>
+
+<xs:element name="table">
+	<xs:complexType>
+		<xs:choice maxOccurs="unbounded">
+			<xs:element ref="row" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:choice>
+        <xs:attribute name="char_offset" type="xs:integer"/>
+        <xs:attribute name="col_max" type="xs:integer"/>
+        <xs:attribute name="col_min" type="xs:integer"/>
+	</xs:complexType>
+</xs:element>
+<!-- end of definition of table -->
+
+<xs:element name="rich_text">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="char_offset" type="xs:integer"/>
+        <xs:attribute name="link" type="xs:string"/>
+        <xs:attribute name="scale" type="xs:string"/>
+        <xs:attribute name="weight" type="xs:string"/>
+        <xs:attribute name="justification" type="xs:string"/>
+        <xs:attribute name="background" type="xs:string"/>
+        <xs:attribute name="foreground" type="xs:string"/>
+        <xs:attribute name="style" type="xs:string"/>
+        <xs:attribute name="underline" type="xs:string"/>
+        <xs:attribute name="strikethrough" type="xs:string"/>
+        <xs:attribute name="family" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="codebox">
+  <xs:complexType>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="char_offset" type="xs:integer"/>
+        <xs:attribute name="frame_height" type="xs:integer"/>
+        <xs:attribute name="frame_width" type="xs:integer"/>
+        <xs:attribute name="highlight_brackets" type="xs:string"/>
+        <xs:attribute name="show_line_numbers" type="xs:string"/>
+        <xs:attribute name="syntax_highlighting" type="xs:string"/>
+        <xs:attribute name="width_in_pixels" type="xs:string"/>
+        <!-- "fill_text" ?-->
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="node">
+	<xs:complexType>
+		<xs:choice maxOccurs="unbounded">
+			<xs:element ref="rich_text" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element ref="encoded_png" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="codebox" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="node" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="table" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:choice>
+		<xs:attribute ref="custom_icon_id"/>
+		<xs:attribute ref="foreground"/>
+		<xs:attribute ref="is_bold"/>
+		<xs:attribute ref="name"/>
+		<xs:attribute ref="prog_lang"/>
+		<xs:attribute ref="readonly"/>
+		<xs:attribute ref="tags"/>
+		<xs:attribute ref="ts_creation"/>
+		<xs:attribute ref="ts_lastsave"/>
+		<xs:attribute ref="unique_id"/>
+	</xs:complexType>
+</xs:element>
+
+
+<xs:element name="cherrytree">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element ref="bookmarks" minOccurs="0" maxOccurs="1"/>
+			<xs:element ref="node" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:element>
+
+</xs:schema>

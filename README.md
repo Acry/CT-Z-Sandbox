@@ -1,4 +1,6 @@
 XML-Schema for [Cherrytree](https://www.giuspen.com/cherrytree/) XML (.ctd)  
 
-[My Site](https://acry.github.io/)  
+Simple transform example with [lxml](https://lxml.de/) in Python 3  
+´python3 lxml_1´  
+
 

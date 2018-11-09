@@ -24,7 +24,25 @@ import sys
 # Cherrytree uses the sqlite3 module, so it's a bit different here as I use apsw
 # see: https://github.com/rogerbinns/apsw
 # See: http://www.sqlitetutorial.net/sqlite-python/
+# for convenience sqlite import usage added
+
+db_handler = None
+
 import apsw
+if 'apsw' in sys.modules:
+    db_handler = "apsw"
+else:
+    import sqlite3
+    if 'sqlite3' in sys.modules:
+        db_handler = "sqlite3"
+
+if not db_handler:
+    print "either module apsw sqlite3 needed"
+    sys.exit()
+
+print db_handler
+
+
 try:
     file_name = sys.argv[1]
     if not file_name.lower().endswith('.ctb'):
@@ -34,18 +52,27 @@ except:
     sys.exit()
 
 print "Reading", file_name, "- hang on"
-connection = apsw.Connection(file_name)
+if db_handler == "apsw":
+    connection = apsw.Connection(file_name)
+else:
+    connection = sqlite3.connect(file_name)
+
 cursor = connection.cursor()
 SQL_STATEMENT = "SELECT png, node_id, filename FROM image"
 cursor.execute(SQL_STATEMENT)
 entries = cursor.fetchall()
 count = len(entries)
+print count
 pointer = count
 data = entries[0][0]
 node = entries[0][1]
 filename = entries[0][2]
-cursor.execute("SELECT name FROM node WHERE node_id=?", {node})
+if db_handler == "apsw":
+    cursor.execute("SELECT name FROM node WHERE node_id=?", {node})
+else:
+    cursor.execute("SELECT name FROM node WHERE node_id=?", (node,))
 name = cursor.fetchone()[0]
+
 
 TITLE = 'CherryTree CTB Image Viewer'
 IMAGE_DIR = ""
@@ -98,7 +125,10 @@ class Base:
         data = entries[pointer][0]
         node = entries[pointer][1]
         filename = entries[pointer][2]
-        cursor.execute("SELECT name FROM node WHERE node_id=?", {node})
+        if db_handler == "apsw":
+            cursor.execute("SELECT name FROM node WHERE node_id=?", {node})
+        else:
+            cursor.execute("SELECT name FROM node WHERE node_id=?", (node,))
         name = cursor.fetchone()[0]
         print "In", name, "with Node-ID:", node
         if not data or filename:

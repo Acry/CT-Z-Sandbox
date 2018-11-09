@@ -48,7 +48,7 @@ cursor.execute("SELECT name FROM node WHERE node_id=?", {node})
 name = cursor.fetchone()[0]
 
 TITLE = 'CherryTree CTB Image Viewer'
-IMAGE_DIR = "../gtk2/snippets"
+IMAGE_DIR = ""
 ICON_IMAGE = os.path.join(IMAGE_DIR, 'cherrytree_icon.png')
 
 # endregion

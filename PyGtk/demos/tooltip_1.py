@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-'''Tooltip
+'''Tooltips/Tooltip1
 
 This is a test of the new gtk tooltip system.  It is a
 fairly straight forward port of the example distributed with gtk.
@@ -18,7 +18,7 @@ rects = [
     {"x":100, "y":50, "r":0.8, "g":0.8, "b":0.0, "tooltip":"Yellow thing"}
     ]
 
-class TooltipDemo(gtk.Window):
+class Tooltip1Demo(gtk.Window):
     def __init__(self, parent=None):
         gtk.Window.__init__(self)
         try:
@@ -253,7 +253,7 @@ class TooltipDemo(gtk.Window):
         return False
 
 def main():
-    TooltipDemo()
+    Tooltip1Demo()
     gtk.main()
 
 if __name__ == '__main__':

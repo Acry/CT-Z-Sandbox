@@ -16,17 +16,18 @@
 
 # TODO:
 # Trying to connect Demos with the PyGTK Tutorial and RefMan
-# for a Cherrytree and Zim-Wiki Developer-Sandbox
+# for a CherryTree and Zim-Wiki Developer-Sandbox
 # implement hyperlinks
 # implement code-fork and save changes
 # implement bracket matching and autocomplete
 # implement code folding
-# implement a tutorial assistent where demos are in a pedagogical order
+# implement a tutorial assistant where demos are in a pedagogical order
 # add exercises
 
-# add cherrytree and zim demos
+# add CherryTree and Zim demos
 
 # Check if fallback font is needed.
+#   else embed font
 
 import string
 import re

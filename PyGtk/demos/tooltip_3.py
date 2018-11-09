@@ -1,9 +1,10 @@
 #!/usr/bin/env python2
-'''Tooltips/Tooltip0
+'''Tooltips/Tooltip3
 
-Construct Tooltip:
-self.tooltips = gtk.Tooltips()
-self.tooltips.set_tip(self, "Tooltip of this window")
+uses new tooltip API
+
+Construct Tooltip on Window:
+self.set_tooltip_text("Tooltip of this window")
 
 '''
 
@@ -11,11 +12,12 @@ import pygtk
 pygtk.require('2.0')
 import os
 import gtk
+
 IMAGEDIR = os.path.join(os.path.dirname(__file__), 'images')
 ICON_IMAGE = os.path.join(IMAGEDIR, 'apple-red.png')
 
 
-class Tooltip0Demo(gtk.Window):
+class Tooltip3Demo(gtk.Window):
     def __init__(self, parent=None):
         gtk.Window.__init__(self)
         try:
@@ -27,13 +29,14 @@ class Tooltip0Demo(gtk.Window):
         self.set_icon_from_file(ICON_IMAGE)
         self.set_geometry_hints(min_width=100, min_height=100)
         self.set_border_width(10)
-        self.tooltips = gtk.Tooltips()
-        self.tooltips.set_tip(self, "Tooltip of this window")
+        self.set_tooltip_text("Tooltip of this window")
         self.show_all()
 
+
 def main():
-    Tooltip0Demo()
+    Tooltip3Demo()
     gtk.main()
+
 
 if __name__ == '__main__':
     main()

@@ -18,6 +18,8 @@
 # Trying to connect Demos with the PyGTK Tutorial and RefMan
 # for a CherryTree and Zim-Wiki Developer-Sandbox
 # implement hyperlinks
+# add screenshots (preview images)
+# add intro page on expander
 # implement code-fork and save changes
 # implement bracket matching and autocomplete
 # implement code folding

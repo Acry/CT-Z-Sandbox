@@ -37,7 +37,7 @@ else:
         db_handler = "sqlite3"
 
 if not db_handler:
-    print "either module apsw sqlite3 needed"
+    print "either module apsw or sqlite3 needed"
     sys.exit()
 
 print db_handler

@@ -18,6 +18,7 @@ rects = [
     {"x":100, "y":50, "r":0.8, "g":0.8, "b":0.0, "tooltip":"Yellow thing"}
     ]
 
+
 class Tooltip2Demo(gtk.Window):
     def __init__(self, parent=None):
         gtk.Window.__init__(self)
@@ -252,9 +253,11 @@ class Tooltip2Demo(gtk.Window):
     
         return False
 
+
 def main():
     Tooltip2Demo()
     gtk.main()
+
 
 if __name__ == '__main__':
     main()

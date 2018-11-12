@@ -53,7 +53,6 @@ class Tooltip4Demo(gtk.Window):
         self.show_all()
 
 
-
 def main():
     Tooltip4Demo()
     gtk.main()

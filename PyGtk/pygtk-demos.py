@@ -14,8 +14,8 @@
                 (Carsten Holtkamp)
 '''
 
-# Trying to connect Demos with the PyGTK Tutorial, FAQ, RefMan and
-#   https://www.kksou.com/php-gtk2/category/Sample-Codes/
+# Trying to connect Demos from PyGTK Tutorial, FAQ, RefMan and
+#   several other resources to have a decent demo/recipe-pool
 # for a CherryTree and Zim-Wiki Developer-Sandbox
 
 # TODO:
@@ -37,8 +37,8 @@
 # add CherryTree and Zim demos
 # add sqlite demos
 # add gdk color examples and value range scaling aka normalization
-# cairo demos http://zetcode.com/gui/pygtk/drawingII/
-
+# demos from http://zetcode.com/gui/pygtk
+# demos from https://www.kksou.com/php-gtk2/category/Sample-Codes/
 
 import string
 import re

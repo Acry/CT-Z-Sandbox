@@ -36,6 +36,7 @@
 # Content:
 # add CherryTree and Zim demos
 # add sqlite demos
+# add more cairo demos
 # add gdk color examples and value range scaling aka normalization
 # demos from http://zetcode.com/gui/pygtk
 # demos from https://www.kksou.com/php-gtk2/category/Sample-Codes/

@@ -14,22 +14,31 @@
                 (Carsten Holtkamp)
 '''
 
-# TODO:
-# Trying to connect Demos with the PyGTK Tutorial and RefMan
+# Trying to connect Demos with the PyGTK Tutorial, FAQ, RefMan and
+#   https://www.kksou.com/php-gtk2/category/Sample-Codes/
 # for a CherryTree and Zim-Wiki Developer-Sandbox
+
+# TODO:
+# Self:
 # implement hyperlinks
 # add screenshots (preview images)
-# add intro page on expander
+# add intro/contents page on expander
+
 # implement code-fork and save changes
 # implement bracket matching and autocomplete
 # implement code folding
 # implement a tutorial assistant where demos are in a pedagogical order
 # add exercises
 
-# add CherryTree and Zim demos
-
 # Check if fallback font is needed.
 #   else embed font
+
+# Content:
+# add CherryTree and Zim demos
+# add sqlite demos
+# add gdk color examples and value range scaling aka normalization
+# cairo demos http://zetcode.com/gui/pygtk/drawingII/
+
 
 import string
 import re

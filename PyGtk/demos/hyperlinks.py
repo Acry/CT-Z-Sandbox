@@ -1,18 +1,59 @@
 #!/usr/bin/env python2
-'''Text Widget/Hypertext
+'''Text Widget/Hyperlinks
 
-Usually, tags modify the appearance of text in the view, e.g. making it
-bold or colored or underlined. But tags are not restricted to appearance.
-They can also affect the behavior of mouse and key presses, as this demo
-shows.'''
-# pygtk version: Maik Hertha <maik.hertha@berlin.de>
+Tag hyperlinks and connect click to browser.
+
+This Code needs feedback if it fails.
+Check the code used for newline character detection.
+Currently works on "https://" - to do: "http://"
+'''
+
+import sys
+import os
+
+# Newline characters:
+# Windows:          '\r\n'
+# Mac (OS -9):      '\r'
+# Mac (OS 10+):     '\n'
+# Unix/Linux:       '\n'
+
+supported_os = ['posix', 'nt', 'mac']
+
+if os.name not in supported_os:
+    sys.exit("Sorry, OS not supported so far, happy hacking!\n")
+
+NEWLINE_CHAR = ""
+
+if os.name == 'nt':
+    NEWLINE_CHAR = "\r"
+elif os.name == 'posix':
+    NEWLINE_CHAR = "\n"
+else:   # FIXME, I have no clue if this works
+    import platform
+    mac_version = platform.mac_ver()
+    v, _, _ = platform.mac_ver()
+    if mac_version <= 9:
+        NEWLINE_CHAR = "\r"
+    else:
+        NEWLINE_CHAR = "\n"
 
 import pygtk
 pygtk.require('2.0')
 import gtk
 import pango
+import webbrowser
 
-class HypertextDemo(gtk.Window):
+TEXT = "Let us see if we can tag some url's,\nhttps://github.com/Acry/CT-Z-Sandbox should work.\n"\
+       "https://www.giuspen.com/cherrytree - should work also.\n\n"\
+       "Either a newline or space is respected as delimiter.\n" \
+       "https://www.kksou.com/php-gtk2/category/sample-codes\n"
+
+# TODO check end of buffer - if the last newline is missing it fails
+
+LINKLIST = []
+
+
+class HyperlinksDemo(gtk.Window):
     hovering_over_link = False
     hand_cursor = gtk.gdk.Cursor(gtk.gdk.HAND2)
     regular_cursor = gtk.gdk.Cursor(gtk.gdk.XTERM)
@@ -25,7 +66,7 @@ class HypertextDemo(gtk.Window):
             self.connect('destroy', lambda *w: gtk.main_quit())
 
         self.set_title(self.__class__.__name__)
-        self.set_default_size(450, 450)
+        self.set_default_size(550, 250)
         self.set_border_width(0)
 
         view = gtk.TextView()
@@ -41,9 +82,7 @@ class HypertextDemo(gtk.Window):
         sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         self.add(sw)
         sw.add(view)
-
         self.show_page(buffer, 1)
-
         self.show_all()
 
     # Links can be activated by pressing Enter.
@@ -79,7 +118,6 @@ class HypertextDemo(gtk.Window):
 
         self.follow_if_link(text_view, iter)
         return False
-
 
     # Looks at all tags covering the position (x, y) in the text view,
     # and if one of them is a link, change the cursor to the "hands" cursor
@@ -133,54 +171,74 @@ class HypertextDemo(gtk.Window):
         tag.set_data("page", page)
         buffer.insert_with_tags(iter, text, tag)
 
-
     def show_page(self, buffer, page):
         ''' Fills the buffer with text and interspersed links. In any real
             hypertext app, this method would parse a file to identify the links.
         '''
-        buffer.set_text("", 0)
-        iter = buffer.get_iter_at_offset(0)
-        if page == 1:
-            buffer.insert(iter, "Some text to show that simple ")
-            self.insert_link(buffer, iter, "hypertext", 3)
-            buffer.insert(iter, " can easily be realized with ")
-            self.insert_link(buffer, iter, "tags", 2)
-            buffer.insert(iter, ".")
+        global LINKLIST
+        buffer.set_text(TEXT)
+        search_string = 'https://'
+        start, end = buffer.get_bounds()
+        tag = buffer.create_tag(None, foreground="red", underline=pango.UNDERLINE_SINGLE)
+        searching = True
+        count = 0
+        while searching:
+            enter_end = False
+            space_end = False
+            try:
+                match_start, match_end = start.forward_search(search_string, gtk.TEXT_SEARCH_VISIBLE_ONLY, limit=None)
+                tag_start = match_start
+                next_s = match_end
+                next_enter = match_end
+            except:
+                searching = False
+            try:
+                space_start, space_end = next_s.forward_search(" ", gtk.TEXT_SEARCH_VISIBLE_ONLY, limit=None)
+            except:
+                space_start = False
+            try:
+                enter_start, enter_end = next_enter.forward_search(NEWLINE_CHAR, gtk.TEXT_SEARCH_VISIBLE_ONLY, limit=None)
+            except:
+                enter_start = False
+            # print type(space_start)
+            # print type(enter_start)
+            if space_start and enter_start:
+                if enter_end.compare(space_end) == -1:
+                    match_end = enter_end
+                else:
+                    match_end = space_end
+            elif space_start:
+                match_end = space_end
+            else:
+                match_end = enter_end
 
-        elif page == 2:
-            buffer.insert(iter,
-                "A tag is an attribute that can be applied to some range of text. "
-                "For example, a tag might be called \"bold\" and make the text inside "
-                "the tag bold. However, the tag concept is more general than that "
-                "tags don't have to affect appearance. They can instead affect the "
-                "behavior of mouse and key presses, \"lock\" a range of text so the "
-                "user can't edit it, or countless other things.\n", -1)
-            self.insert_link(buffer, iter, "Go back", 1)
-        elif page == 3:
-            tag = buffer.create_tag(None, weight=pango.WEIGHT_BOLD)
-            buffer.insert_with_tags(iter, "hypertext:\n", tag)
-            buffer.insert(iter,
-                "machine-readable text that is not sequential but is organized "
-                "so that related items of information are connected.\n")
-            self.insert_link(buffer, iter, "Go back", 1)
-
+            if searching:
+                match_end.backward_char()
+                buffer.apply_tag(tag, tag_start, match_end)
+                text = tag_start.get_slice(match_end)
+                # print text
+                LINKLIST.append([(tag_start, match_end), text])
+                start = match_end
+                match_end.forward_char()
+                count = count + 1
+                # print "count:", count
 
     def follow_if_link(self, text_view, iter):
-        ''' Looks at all tags covering the position of iter in the text view,
-            and if one of them is a link, follow it by showing the page identified
-            by the data attached to it.
-        '''
-        tags = iter.get_tags()
-        for tag in tags:
-            page = tag.get_data("page")
-            if page != 0:
-                self.show_page(text_view.get_buffer(), page)
-                break
+        for x in LINKLIST:
+            iter_range = x[0]
+            start = iter_range[0]
+            end = iter_range[1]
+            result = iter.in_range(start, end)
+            if result:
+                text = x[1]
+                print text
+                webbrowser.open(text)
 
 
 def main():
-    HypertextDemo()
+    HyperlinksDemo()
     gtk.main()
+
 
 if __name__ == '__main__':
     main()

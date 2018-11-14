@@ -40,3 +40,11 @@ Most valuable links:
 
 **Cairo**  
 [PyCairo Docs](https://www.cairographics.org/documentation/pycairo/2/)
+___
+Windows user quick start:  
+
+Install:  
+<http://www.python.org/ftp/python/2.7.1/python-2.7.1.msi>  
+- you want activate sourceview install also.  
+
+<https://ftp.gnome.org/pub/GNOME/binaries/win32/pygtk/2.24/pygtk-all-in-one-2.24.2.win32-py2.7.msi>  

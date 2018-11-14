@@ -21,7 +21,7 @@ up first entry / down last entry
 Folder PyGtk contains:  
 **Python2 Gtk+2 demos** based on the FAQ, Demo-Package and the Tutorial.  
 
-![ ](/home/carsten/projects/cherrytree/PyGtk/demos.jpg  "few demos")
+![ ](PyGtk/demos.jpg  "few demos")
 ___
 
 Most valuable links:

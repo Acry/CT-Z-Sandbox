@@ -49,6 +49,8 @@ import gobject
 import gtk
 import pango
 import gtksourceview2
+import webbrowser
+import platform
 
 import demos
 D_TEMPL = '%sDemo'
@@ -63,6 +65,9 @@ D_TEMPL = '%sDemo'
 
 child_demos = {}
 testgtk_demos = []
+LINKLIST = []
+SEARCH_STRINGS = ["https://",  "http://"]
+NEWLINE_CHAR = "\n"
 
 for descr, mod in demos.demo_list:
     # Find some categorized demos
@@ -102,9 +107,11 @@ class InputStream(object):
         Using a iterator-like interface doesn't succeed, because the readline
         function isn't used in such a context. (see <python-lib>/tokenize.py)
     '''
+
     def __init__(self, data):
         self.__data = [ '%s\n' % x for x in data.splitlines() ]
         self.__lcount = 0
+
     def readline(self):
         try:
             line = self.__data[self.__lcount]
@@ -119,6 +126,137 @@ class PyGtkDemo(gtk.Window):
     info_buffer = None
     source_buffer = None
     module_cache  = {}
+
+    hovering_over_link = False
+    hand_cursor = gtk.gdk.Cursor(gtk.gdk.HAND2)
+    regular_cursor = gtk.gdk.Cursor(gtk.gdk.XTERM)
+    def key_press_event(self, text_view, event):
+        if (event.keyval == gtk.keysyms.Return or
+            event.keyval == gtk.keysyms.KP_Enter):
+            buffer = text_view.get_buffer()
+            iter = buffer.get_iter_at_mark(buffer.get_insert())
+            self.follow_if_link(text_view, iter)
+        return False
+
+    def event_after(self, text_view, event):
+        if event.type != gtk.gdk.BUTTON_RELEASE:
+            return False
+        if event.button != 1:
+            return False
+        buffer = text_view.get_buffer()
+
+        # we shouldn't follow a link if the user has selected something
+        try:
+            start, end = buffer.get_selection_bounds()
+        except ValueError:
+            # If there is nothing selected, None is return
+            pass
+        else:
+            if start.get_offset() != end.get_offset():
+                return False
+
+        x, y = text_view.window_to_buffer_coords(gtk.TEXT_WINDOW_WIDGET,
+            int(event.x), int(event.y))
+        iter = text_view.get_iter_at_location(x, y)
+
+        self.follow_if_link(text_view, iter)
+        return False
+
+    def follow_if_link(self, text_view, iter):
+        for x in LINKLIST:
+            iter_range = x[0]
+            start = iter_range[0]
+            end = iter_range[1]
+            result = iter.in_range(start, end)
+            if result:
+                text = x[1]
+                print text
+                webbrowser.open(text)
+
+    def set_cursor_if_appropriate(self, text_view, x, y):
+        hovering = False
+
+        buffer = text_view.get_buffer()
+        iter = text_view.get_iter_at_location(x, y)
+
+        tags = iter.get_tags()
+        for tag in tags:
+            page = tag.get_data("page")
+            if page != 0:
+                hovering = True
+                break
+
+        if hovering != self.hovering_over_link:
+            self.hovering_over_link = hovering
+
+        if self.hovering_over_link:
+            text_view.get_window(gtk.TEXT_WINDOW_TEXT).set_cursor(self.hand_cursor)
+        else:
+            text_view.get_window(gtk.TEXT_WINDOW_TEXT).set_cursor(self.regular_cursor)
+
+    def motion_notify_event(self, text_view, event):
+        x, y = text_view.window_to_buffer_coords(gtk.TEXT_WINDOW_WIDGET,
+            int(event.x), int(event.y))
+        self.set_cursor_if_appropriate(text_view, x, y)
+        text_view.window.get_pointer()
+        return False
+
+    def visibility_notify_event(self, text_view, event):
+        wx, wy, mod = text_view.window.get_pointer()
+        bx, by = text_view.window_to_buffer_coords(gtk.TEXT_WINDOW_WIDGET, wx, wy)
+
+        self.set_cursor_if_appropriate (text_view, bx, by)
+        return False
+
+    def check_links(self, search_string):
+        global LINKLIST
+        buffer = self.info_buffer
+        # print buffer
+        # search_string = 'https://'
+        start, end = buffer.get_bounds()
+        tag = buffer.create_tag(None, foreground="blue", underline=pango.UNDERLINE_SINGLE)
+        searching = True
+        count = 0
+        while searching:
+            enter_end = False
+            space_end = False
+            try:
+                match_start, match_end = start.forward_search(search_string, gtk.TEXT_SEARCH_VISIBLE_ONLY, limit=None)
+                tag_start = match_start
+                next_s = match_end
+                next_enter = match_end
+            except:
+                searching = False
+            try:
+                space_start, space_end = next_s.forward_search(" ", gtk.TEXT_SEARCH_VISIBLE_ONLY, limit=None)
+            except:
+                space_start = False
+            try:
+                enter_start, enter_end = next_enter.forward_search(NEWLINE_CHAR, gtk.TEXT_SEARCH_VISIBLE_ONLY, limit=None)
+            except:
+                enter_start = False
+            # print type(space_start)
+            # print type(enter_start)
+            if space_start and enter_start:
+                if enter_end.compare(space_end) == -1:
+                    match_end = enter_end
+                else:
+                    match_end = space_end
+            elif space_start:
+                match_end = space_end
+            else:
+                match_end = enter_end
+
+            if searching:
+                match_end.backward_char()
+                buffer.apply_tag(tag, tag_start, match_end)
+                text = tag_start.get_slice(match_end)
+                # print text
+                LINKLIST.append([(tag_start, match_end), text])
+                start = match_end
+                match_end.forward_char()
+                count = count + 1
+                # print "count:", count
 
     def __init__(self):
         gtk.Window.__init__(self)
@@ -147,7 +285,6 @@ class PyGtkDemo(gtk.Window):
         self._new_notebook_page(scrolled_window, '_Info')
         tag = self.info_buffer.create_tag('title')
         tag.set_property('font', 'Inconsolata 18')
-
         # SOURCE BUFFER
         scrolled_window, self.source_buffer = self.__create_text(True)
         self._new_notebook_page(scrolled_window, '_Source')
@@ -157,12 +294,6 @@ class PyGtkDemo(gtk.Window):
         # tag.set_property('font', 'monospace')
         # tag.set_property('pixels_above_lines', 0)
         # tag.set_property('pixels_below_lines', 0)
-        # tag = self.source_buffer.create_tag('keyword', foreground='#00007F',\
-        #     weight=pango.WEIGHT_BOLD)
-        # tag = self.source_buffer.create_tag('string', foreground='#7F007F')
-        # tag = self.source_buffer.create_tag('comment', foreground='#007F00',
-        #     style=pango.STYLE_ITALIC)
-
         self.show_all()
 
     def run(self):
@@ -232,6 +363,10 @@ class PyGtkDemo(gtk.Window):
         # sourceview
         buffer = gtksourceview2.Buffer(None)
         text_view = gtksourceview2.View(buffer)
+        text_view.connect("key-press-event", self.key_press_event)
+        text_view.connect("event-after", self.event_after)
+        text_view.connect("motion-notify-event", self.motion_notify_event)
+        text_view.connect("visibility-notify-event", self.visibility_notify_event)
         scrolled_window.add(text_view)
 
         return scrolled_window, buffer
@@ -292,6 +427,9 @@ class PyGtkDemo(gtk.Window):
         for line in lines[1:]:
             buffer.insert(iter, line)
             buffer.insert(iter, '\n')
+        global SEARCH_STRINGS
+        for entry in SEARCH_STRINGS:
+            self.check_links(entry)
 
     def clear_buffers(self):
         start, end = self.info_buffer.get_bounds()
@@ -317,8 +455,11 @@ class PyGtkDemo(gtk.Window):
         source = self.read_module(module)
         self.insert_source(source)
 
+
 if __name__ == '__main__':
-    print "PyGTK Demos",
-    print "(gtk: v%d.%d.%d, " % gtk.gtk_version,
-    print "pygtk: v%d.%d.%d)" % gtk.pygtk_version
+    print "PyGTK Demos - ",
+    print "Python: V%s, " % platform.python_version(),
+    print "GTK+: V%d.%d.%d, " % gtk.gtk_version,
+    print "PyGTK: v%d.%d.%d" % gtk.pygtk_version
+
     PyGtkDemo().run()

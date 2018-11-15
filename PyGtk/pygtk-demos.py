@@ -284,7 +284,7 @@ class PyGtkDemo(gtk.Window):
         scrolled_window, self.info_buffer = self.__create_text(False)
         self._new_notebook_page(scrolled_window, '_Info')
         tag = self.info_buffer.create_tag('title')
-        tag.set_property('font', 'Inconsolata 18')
+        tag.set_property('font', 'Indie Flower 18')
         # SOURCE BUFFER
         scrolled_window, self.source_buffer = self.__create_text(True)
         self._new_notebook_page(scrolled_window, '_Source')
@@ -363,6 +363,15 @@ class PyGtkDemo(gtk.Window):
         # sourceview
         buffer = gtksourceview2.Buffer(None)
         text_view = gtksourceview2.View(buffer)
+
+        if not is_source:
+            # context = text_view.get_pango_context()
+            # fonts = context.list_families()
+            # for font in fonts:
+            #     print font.get_name()
+            font = pango.FontDescription('Indie Flower 14')
+            text_view.modify_font(font)
+
         text_view.connect("key-press-event", self.key_press_event)
         text_view.connect("event-after", self.event_after)
         text_view.connect("motion-notify-event", self.motion_notify_event)

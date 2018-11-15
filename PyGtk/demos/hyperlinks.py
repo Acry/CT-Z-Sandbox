@@ -37,6 +37,8 @@ else:   # FIXME, I have no clue if this works
     else:
         NEWLINE_CHAR = "\n"
 
+NEWLINE_CHAR = "\n"
+
 import pygtk
 pygtk.require('2.0')
 import gtk

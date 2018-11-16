@@ -7,7 +7,7 @@ Background picture for Textview
 Creates a TextView in a scrolled Window.
 
 Image taken from:
-https://raw.githubusercontent.com/mypaint/mypaint/master/backgrounds/paper3_1.png
+https://raw.githubusercontent.com/mypaint/mypaint/master/backgrounds/mrmamurk/mamurk_b_3.png
 
 '''
 #endregion

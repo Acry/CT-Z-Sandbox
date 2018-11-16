@@ -1,17 +1,21 @@
 #!/usr/bin/env python2
 '''Buttons/Button 0
 
-Constructs:
- a button
+You can use the gtk.Button() function to create a button with a label by passing a string parameter,
+or to create a blank button by not specifying a label string.
 
-Methods used on Button:
-None
+It's then up to you to pack a label or pixmap into this new button.
 
-Constructed Methods:
-None
+To do this, create a new box, and then pack your objects into this box using the usual pack_start() method,
+and then use the add() method to pack the box into the button.
 
-Functions used:
-None
+The function to create a button is:
+
+  button = gtk.Button(label=None, stock=None)
+
+if label text is specified it is used as the text on the button.
+If stock is specified it is used to select a stock icon and text label for the button.
+The stock items are browseable in the Stock Item and Icon Browser Demo.
 
 '''
 

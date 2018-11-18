@@ -10,6 +10,7 @@ Change Textview Background Color
 https://developer.gnome.org/pygtk/stable/class-gdkcolor.html
 
 Creates a TextView in a scrolled Window.
+
 '''
 #endregion
 

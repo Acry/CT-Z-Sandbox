@@ -481,7 +481,6 @@ class PyGtkDemo(gtk.Window):
             self.check_links(entry)
         try:
             SCREENSHOT = "demos/" + filename + ".png"
-            print SCREENSHOT
             pixbuf = gtk.gdk.pixbuf_new_from_file(SCREENSHOT)
             # pixbuf = pixbuf.scale_simple(200, 200, gtk.gdk.INTERP_BILINEAR)
             enditer = buffer.get_end_iter()

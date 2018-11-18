@@ -1,7 +1,8 @@
 #!/usr/bin/env python2
 '''Application main window
 
-Demonstrates a typical application window, with menubar, toolbar, statusbar.'''
+Demonstrates a typical application window, with menubar, toolbar, statusbar.
+'''
 # pygtk version: Maik Hertha <maik.hertha@berlin.de>
 
 import pygtk

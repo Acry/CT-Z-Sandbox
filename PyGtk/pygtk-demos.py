@@ -51,7 +51,7 @@ import pango
 import gtksourceview2
 import webbrowser
 import platform
-
+import os
 import demos
 D_TEMPL = '%sDemo'
 
@@ -68,6 +68,11 @@ testgtk_demos = []
 LINKLIST = []
 SEARCH_STRINGS = ["https://",  "http://"]
 NEWLINE_CHAR = "\n"
+
+IMAGEDIR = os.path.join(os.path.dirname(__file__), 'demos/images')
+ICON_IMAGE = os.path.join(IMAGEDIR, 'gtk-logo.svg')
+IMAGE = "mamurk_b_3.png"
+MAIN_IMAGE = os.path.join(IMAGEDIR, IMAGE)
 
 for descr, mod in demos.demo_list:
     # Find some categorized demos
@@ -263,7 +268,7 @@ class PyGtkDemo(gtk.Window):
         self.set_title("PyGTK and Friends")
         self.connect('destroy', lambda w: gtk.main_quit())
         self.set_default_size(800, 400)
-
+        self.set_icon_from_file(ICON_IMAGE)
         hbox = gtk.HBox(False, 3)
         self.add(hbox)
         
@@ -277,23 +282,28 @@ class PyGtkDemo(gtk.Window):
         treeview = self.__create_treeview()
         sw.add(treeview)
         self.notebook = gtk.Notebook()
+
         hpaned.add2(self.notebook)
-        # scrolled_window, self.info_buffer = self.__create_text(False)
+        self.notebook.realize()
 
         # INFO BUFFER
         scrolled_window, self.info_buffer = self.__create_text(False)
         self._new_notebook_page(scrolled_window, '_Info')
+        pixbuf = gtk.gdk.pixbuf_new_from_file(MAIN_IMAGE)
+        pixmap, mask = pixbuf.render_pixmap_and_mask()
+
+        # tvwindow = self.notebook.get_window(gtk.TEXT_WINDOW_TEXT)
+        # tvwindow.set_back_pixmap(pixmap, gtk.FALSE)
+
         tag = self.info_buffer.create_tag('title')
         tag.set_property('font', 'Indie Flower 18')
+
         # SOURCE BUFFER
         scrolled_window, self.source_buffer = self.__create_text(True)
         self._new_notebook_page(scrolled_window, '_Source')
         tag = self.source_buffer.create_tag('source')
         tag.set_property('font', 'Inconsolata 18')
-        # tag = self.source_buffer.create_tag('source')
-        # tag.set_property('font', 'monospace')
-        # tag.set_property('pixels_above_lines', 0)
-        # tag.set_property('pixels_below_lines', 0)
+
         self.show_all()
 
     def run(self):
@@ -355,15 +365,13 @@ class PyGtkDemo(gtk.Window):
         return treeview
 
     def __create_text(self, is_source=False):
-        # scrolled window
         scrolled_window = gtk.ScrolledWindow()
         scrolled_window.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         scrolled_window.set_shadow_type(gtk.SHADOW_IN)
 
-        # sourceview
         buffer = gtksourceview2.Buffer(None)
         text_view = gtksourceview2.View(buffer)
-
+        scrolled_window.add(text_view)
         if not is_source:
             # context = text_view.get_pango_context()
             # fonts = context.list_families()
@@ -371,12 +379,10 @@ class PyGtkDemo(gtk.Window):
             #     print font.get_name()
             font = pango.FontDescription('Indie Flower 14')
             text_view.modify_font(font)
-
-        text_view.connect("key-press-event", self.key_press_event)
-        text_view.connect("event-after", self.event_after)
-        text_view.connect("motion-notify-event", self.motion_notify_event)
-        text_view.connect("visibility-notify-event", self.visibility_notify_event)
-        scrolled_window.add(text_view)
+            text_view.connect("key-press-event", self.key_press_event)
+            text_view.connect("event-after", self.event_after)
+            text_view.connect("motion-notify-event", self.motion_notify_event)
+            text_view.connect("visibility-notify-event", self.visibility_notify_event)
 
         return scrolled_window, buffer
 
@@ -409,7 +415,7 @@ class PyGtkDemo(gtk.Window):
         if name is not None:
             self.load_module(name)
 
-    def window_closed_cb (self, window, model, path):
+    def window_closed_cb(self, window, model, path):
         iter = model.get_iter(path)
         module_name  = model.get_value(iter, MODULE_COLUMN)
         del self.module_cache[module_name]
@@ -453,7 +459,6 @@ class PyGtkDemo(gtk.Window):
         id = foo.get_language('python')
         self.source_buffer.set_language(id)
         self.source_buffer.set_highlight_syntax(True)
-
 
     def load_module(self, name):
         self.clear_buffers()

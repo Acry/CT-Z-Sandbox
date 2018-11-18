@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 '''UI Manager
 
-The GtkUIManager object allows the easy creation of menus
+The `GtkUIManager` object allows the easy creation of menus
 from an array of actions and a description of the menu hierarchy.
 '''
 # pygtk version: Maik Hertha <maik.hertha@berlin.de>

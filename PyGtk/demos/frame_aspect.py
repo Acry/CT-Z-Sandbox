@@ -8,17 +8,15 @@ The size of the preview should vary when the user resizes the window, but the as
 to always match the original image.
 
 To create a new aspect frame use:
-
-aspect_frame = gtk.AspectFrame(label=None, xalign=0.5, yalign=0.5, ratio=1.0, obey_child=TRUE)
+`aspect_frame = gtk.AspectFrame(label=None, xalign=0.5, yalign=0.5, ratio=1.0, obey_child=TRUE)`
 
 label specifies the text to be displayed as the label.
-xalign and yalign specify alignment as with gtk.Alignment widgets.
-If obey_child is TRUE, the aspect ratio of a child widget will match the aspect ratio
+`xalign` and `yalign` specify alignment as with `gtk.Alignment` widgets.
+If `obey_child` is `TRUE`, the aspect ratio of a child widget will match the aspect ratio
 of the ideal size it requests. Otherwise, it is given by ratio.
 
 To change the options of an existing aspect frame, you can use:
-
-  aspect_frame.set(xalign=0.0, yalign=0.0, ratio=1.0, obey_child=TRUE)
+`aspect_frame.set(xalign=0.0, yalign=0.0, ratio=1.0, obey_child=TRUE)`
 
 This program uses an AspectFrame to present a drawing area whose aspect ratio will always be 2:1,
 no matter how the user resizes the top-level window.

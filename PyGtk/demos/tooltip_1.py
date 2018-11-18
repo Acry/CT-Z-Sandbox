@@ -4,8 +4,8 @@
 uses deprecated tooltips API:
 
 Construct Tooltip:
-self.tooltips = gtk.Tooltips()
-self.tooltips.set_tip(self, "Tooltip of this window")
+`self.tooltips = gtk.Tooltips()`
+`self.tooltips.set_tip(self, "Tooltip of this window")`
 
 '''
 

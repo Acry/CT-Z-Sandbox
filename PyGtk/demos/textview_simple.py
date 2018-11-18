@@ -4,12 +4,12 @@
 Creates a TextViewWidget in a Window.
 
 Constructor:
-gtk.TextView()
+`gtk.TextView()`
 
 Methods used:
-textview.get_buffer()
-textbuffer.set_text(text)
-textview.set_wrap_mode(gtk.WRAP_WORD)
+`textview.get_buffer()`
+`textbuffer.set_text(text)`
+`textview.set_wrap_mode(gtk.WRAP_WORD)`
 '''
 
 import pygtk

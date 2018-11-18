@@ -1,10 +1,10 @@
 #!/usr/bin/env python2
 '''Images/Images
 
-GtkImage is used to display an image; the image can be in a number of formats.
-Typically, you load an image into a GdkPixbuf, then display the pixbuf.
+`GtkImage` is used to display an image; the image can be in a number of formats.
+Typically, you load an image into a `GdkPixbuf`, then display the pixbuf.
 This demo code shows some of the more obscure cases, in the simple case a call
-to gtk_image_new_from_file() is all you need.
+to `gtk_image_new_from_file()` is all you need.
 If you want to put image data in your program as a C variable, use the
 make-inline-pixbuf program that comes with GTK+. This way you won't need to
 depend on loading external files, your application binary can be self-contained.'''

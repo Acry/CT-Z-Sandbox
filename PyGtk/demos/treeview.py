@@ -22,7 +22,6 @@ drag and drop support
 support for custom models (generic models) entirely written in Python
 support for custom cell renderers entirely written in Python
 
-Filename: treeview.py
 '''
 
 import pygtk

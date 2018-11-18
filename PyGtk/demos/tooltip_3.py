@@ -4,7 +4,7 @@
 uses new tooltip API
 
 Construct Tooltip on Window:
-self.set_tooltip_text("Tooltip of this window")
+`self.set_tooltip_text("Tooltip of this window")`
 
 '''
 

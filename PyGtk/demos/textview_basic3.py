@@ -4,9 +4,9 @@
 
 Change Textview Background Color
 
-textview.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(red=30000))
+`textview.modify_base(gtk.STATE_NORMAL, gtk.gdk.Color(red=30000))`
 
-gtk.gdk.Color
+`gtk.gdk.Color`
 https://developer.gnome.org/pygtk/stable/class-gdkcolor.html
 
 Creates a TextView in a scrolled Window.

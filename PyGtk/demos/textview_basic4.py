@@ -9,19 +9,19 @@ Creates a TextView in a scrolled Window.
 
 A widget can be added to a TextView using this method:
 
-  textview.add_child_in_window(child, which_window, xpos, ypos)
+  `textview.add_child_in_window(child, which_window, xpos, ypos)`
 
-where the child widget is placed in which_window at the location specified by xpos and ypos.
+where the child widget is placed in which_window at the location specified by `xpos` and `ypos`.
 
 which_window indicates in which of the windows that make up the TextView the widget is to be placed:
 
-  gtk.TEXT_WINDOW_TEXT
+  `gtk.TEXT_WINDOW_TEXT`
 
-  gtk.TEXT_WINDOW_TOP
-  gtk.TEXT_WINDOW_BOTTOM
-  gtk.TEXT_WINDOW_LEFT
-  gtk.TEXT_WINDOW_RIGHT
-  gtk.TEXT_WINDOW_WIDGET
+  `gtk.TEXT_WINDOW_TOP`
+  `gtk.TEXT_WINDOW_BOTTOM`
+  `gtk.TEXT_WINDOW_LEFT`
+  `gtk.TEXT_WINDOW_RIGHT`
+  `gtk.TEXT_WINDOW_WIDGET`
 '''
 #endregion
 

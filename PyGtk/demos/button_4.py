@@ -4,7 +4,7 @@
 Constructs:
  a round "button"
 
-Using an EventBox with a pixmap and mask as button
+Using an EventBox with a pixmap and mask as button.
 
 Methods used on Button:
 None

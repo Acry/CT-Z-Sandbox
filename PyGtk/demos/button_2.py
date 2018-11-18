@@ -6,14 +6,14 @@ Creates:
  a button
 
 Methods used on Window:
-set_title
-set_default_size
+`set_title`
+`set_default_size`
 
-set_geometry_hints
-show_all
+`set_geometry_hints`
+`show_all`
 
 Functions used:
-set_icon_from_file
+`set_icon_from_file`
 
 '''
 

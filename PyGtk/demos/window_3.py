@@ -4,12 +4,12 @@
 Creates a Toplevel Window, with custom Background Color
 
 Key Code:
-self.modify_bg(gtk.STATE_NORMAL, color)
+`self.modify_bg(gtk.STATE_NORMAL, color)`
 
     direct color
-    color = (gtk.STATE_NORMAL, gtk.gdk.Color(red=30000)
+    `color = (gtk.STATE_NORMAL, gtk.gdk.Color(red=30000)`
     or
-    gtk.gdk.color_parse
+    `gtk.gdk.color_parse`
 '''
 
 import pygtk

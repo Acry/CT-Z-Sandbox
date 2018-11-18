@@ -1,8 +1,8 @@
 #!/usr/bin/env python2
 """Text Widget/TextView
 
-The GtkTextView widget displays a GtkTextBuffer. One GtkTextBuffer can be displayed
-by multiple GtkTextViews. This demo has two views displaying a single buffer, and
+The `GtkTextView` widget displays a `GtkTextBuffer`. One `GtkTextBuffer` can be displayed
+by multiple `GtkTextViews`. This demo has two views displaying a single buffer, and
 shows off the widget's text formatting features."""
 # pygtk version: Maik Hertha <maik.hertha@berlin.de>
 

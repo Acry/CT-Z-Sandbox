@@ -1,51 +1,20 @@
 #!/usr/bin/env python2
-'''NoteBook/NoteBook0
+'''NoteBook/NoteBookAdvanced
 
-The NoteBook Widget is a collection of "pages" that overlap each other;
-each page contains different information with only one page visible at a time.
-It is a good way to show blocks of similar information that warrant separation in their display.
-
-The first function call you will need to know, is used to create a new notebook widget.
-
-`notebook = gtk.Notebook()`
-
-Once the notebook has been created, there are a number of methods that operate on the notebook widget.
-
-The first one we will look at is how to position the page indicators.
-These page indicators or "tabs" as they are referred to, can be positioned in four ways:
-
-top, bottom, left, or right
-
-`notebook.set_tab_pos(pos)`
-
-pos will be one of the following, which are pretty self explanatory:
-
-  `pos = gtk.POS_LEFT`
-  `pos = gtk.POS_RIGHT`
-  `pos = gtk.POS_TOP`
-  `pos = gtk.POS_BOTTOM`
-
-`POS_TOP` is the default.
-
-There are three ways to add pages to a NoteBook.
-Let's look at the first two together as they are quite similar.
-
-  `notebook.append_page(child, tab_label)`
-  `notebook.prepend_page(child, tab_label)`
-
-  `notebook.insert_page(child, tab_label, position)`
-
-the first page having position zero.
+This time we have a pixbuff as background.
 
 '''
 
-import os
-import gtk
 import pygtk
 pygtk.require('2.0')
+import gtk
+import os
+import pango
 
 IMAGEDIR = os.path.join(os.path.dirname(__file__), 'images')
 ICON_IMAGE = os.path.join(IMAGEDIR, 'gtk-logo.svg')
+IMAGE = "squares2.png"
+MAIN_IMAGE = os.path.join(IMAGEDIR, IMAGE)
 
 text1 = "On my first day learning PyGTK I browsed the examples. " \
        "I had a lot of great ideas, but I was pretty sceptical since PyGtk is deprecated. " \
@@ -57,7 +26,7 @@ text2 = "First thing to do is...\n" \
         "Last thing to know is... "
 
 
-class NoteBook0Demo(gtk.Window):
+class NoteBookAdvancedDemo(gtk.Window):
     def __init__(self, parent=None):
         gtk.Window.__init__(self)
         try:
@@ -69,17 +38,24 @@ class NoteBook0Demo(gtk.Window):
         self.set_icon_from_file(ICON_IMAGE)
         self.set_geometry_hints(min_width=100, min_height=100)
 
+        pixbuf = gtk.gdk.pixbuf_new_from_file(MAIN_IMAGE)
+        pixmap, mask = pixbuf.render_pixmap_and_mask()
+
         # New Notebook
         notebook = gtk.Notebook()
-        # Set Position of Tabs
         pos = gtk.POS_LEFT
         notebook.set_tab_pos(pos)
         self.add(notebook)
 
+        font = pango.FontDescription('Indie Flower 20')
+
         # Page 1
         textview1 = gtk.TextView()
         textbuffer = textview1.get_buffer()
+        layout = textview1.create_pango_layout(text1)
+        layout.set_spacing(pango.SCALE * 1000)
         textbuffer.set_text(text1)
+        textview1.modify_font(font)
         textview1.set_wrap_mode(gtk.WRAP_WORD)
         sw1 = gtk.ScrolledWindow()
         sw1.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
@@ -92,6 +68,7 @@ class NoteBook0Demo(gtk.Window):
         textview2 = gtk.TextView()
         textbuffer2 = textview2.get_buffer()
         textbuffer2.set_text(text2)
+        textview2.modify_font(font)
         textview2.set_wrap_mode(gtk.WRAP_WORD)
         sw2 = gtk.ScrolledWindow()
         sw2.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
@@ -99,15 +76,23 @@ class NoteBook0Demo(gtk.Window):
         l2 = gtk.Label('')
         l2.set_text_with_mnemonic("Day 2")
         notebook.append_page(sw2, l2)
+
+        notebook.set_current_page(2)
         self.show_all()
+        # Set Backgrounds
+        textview1.realize()
+        tvwindow = textview1.get_window(gtk.TEXT_WINDOW_TEXT)
+        tvwindow.set_back_pixmap(pixmap, gtk.FALSE)
+        textview2.realize()
+        tvwindow = textview2.get_window(gtk.TEXT_WINDOW_TEXT)
+        tvwindow.set_back_pixmap(pixmap, gtk.FALSE)
+        del pixbuf, pixmap
 
-
-def main():
+def main(self):
     gtk.main()
 
-
 def main():
-    NoteBook0Demo()
+    NoteBookAdvancedDemo()
     gtk.main()
 
 if __name__ == '__main__':

@@ -2,7 +2,7 @@
 """Text Widget/Automatic scrolling
 
 This example demonstrates how to use the gravity of
-GtkTextMarks to keep a text view scrolled to the bottom
+`GtkTextMarks` to keep a text view scrolled to the bottom
 while appending text."""
 
 import pygtk

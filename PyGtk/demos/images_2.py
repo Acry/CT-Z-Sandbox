@@ -2,11 +2,11 @@
 '''Images/Images2
 
 used relevant Methods:
-gtk.Image
-image.set_from_file
+`gtk.Image`
+`image.set_from_file`
 
-gtk.gdk.PixbufAnimation
-set_from_animation
+`gtk.gdk.PixbufAnimation`
+`set_from_animation`
 
 '''
 

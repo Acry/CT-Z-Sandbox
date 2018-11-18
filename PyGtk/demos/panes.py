@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 """Paned Widgets
 
-The GtkHPaned and GtkVPaned Widgets divide their content area into two panes
+The `GtkHPaned` and `GtkVPaned` Widgets divide their content area into two panes
 with a divider in between that the user can adjust. A separate child is placed
 into each pane.
 There are a number of options that can be set for each pane. This test contains

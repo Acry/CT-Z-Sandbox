@@ -7,10 +7,10 @@ Constructs:
  a button
 
 Methods used on Button:
-connect("clicked", self.hello, button)
+`connect("clicked", self.hello, button)`
 
 Constructed Methods:
-hello
+`hello`
 
 Functions used:
 None

@@ -2,10 +2,7 @@
 '''Text Widget/Hyperlinks
 
 Tag hyperlinks and connect click to browser.
-
-This Code needs feedback if it fails.
-Check the code used for newline character detection.
-Currently works on "https://" - to do: "http://"
+Currently works on "https://" and "http://"
 '''
 
 import sys
@@ -50,7 +47,7 @@ TEXT = "Let us see if we can tag some url's,\nhttps://github.com/Acry/CT-Z-Sandb
        "Either a newline or space is respected as delimiter.\n" \
        "https://www.kksou.com/php-gtk2/category/sample-codes\n"
 
-# TODO check end of buffer - if the last newline is missing it fails
+# TODO check end of buffer - if the last newline is missing, it fails
 
 LINKLIST = []
 

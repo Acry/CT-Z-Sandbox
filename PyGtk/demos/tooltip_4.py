@@ -5,13 +5,13 @@ uses new tooltip API
 
 Construct custom Tooltip with icon on Window:
 
-icon = gtk.gdk.pixbuf_new_from_file(ICON_IMAGE)
-self.set_property("has-tooltip", True)
+`icon = gtk.gdk.pixbuf_new_from_file(ICON_IMAGE)`
+`self.set_property("has-tooltip", True)`
 # connect to the callback function that for the tooltip
 # with the signal "query-tooltip"
-self.connect("query-tooltip", self.tooltip_callback, icon)
+`self.connect("query-tooltip", self.tooltip_callback, icon)`
 
-def tooltip_callback(...)
+`def tooltip_callback(...)`
 
 
 '''

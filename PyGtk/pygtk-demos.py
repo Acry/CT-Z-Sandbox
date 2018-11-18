@@ -416,7 +416,6 @@ class PyGtkDemo(gtk.Window):
         return scrolled_window, buffer
 
     def row_activated_cb(self, treeview, path, column):
-        module_name
         model = treeview.get_model()
         iter  = model.get_iter(path)
         module_name  = model.get_value(iter, MODULE_COLUMN)

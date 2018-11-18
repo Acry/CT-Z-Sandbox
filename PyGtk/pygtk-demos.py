@@ -28,6 +28,9 @@
 # switch to treestore and save Node relationship in sqlite
 # use closure tables
 
+# Bugs - not intended behaviour:
+# distinct clickable tags, since I have 2 now - inline code should't be clickable
+
 # Coding abilities:
 # implement code-fork and save changes
 # implement bracket matching and autocomplete
@@ -58,7 +61,6 @@ import platform
 import os
 import demos
 D_TEMPL = '%sDemo'
-
 # Some programmatic definition for the testgtk_demos list.
 #
 # This avoids extra maintenance if the demo list grows up.
@@ -414,6 +416,7 @@ class PyGtkDemo(gtk.Window):
         return scrolled_window, buffer
 
     def row_activated_cb(self, treeview, path, column):
+        module_name
         model = treeview.get_model()
         iter  = model.get_iter(path)
         module_name  = model.get_value(iter, MODULE_COLUMN)
@@ -458,6 +461,10 @@ class PyGtkDemo(gtk.Window):
         return fd.read()
 
     def insert_documentation(self, module):
+        path = module.__file__
+        basename = os.path.basename(path)
+        filename = os.path.splitext(basename)[0]
+        print filename
         buffer = self.info_buffer
         iter = buffer.get_iter_at_offset(0)
 
@@ -473,6 +480,15 @@ class PyGtkDemo(gtk.Window):
         global SEARCH_STRINGS
         for entry in SEARCH_STRINGS:
             self.check_links(entry)
+        try:
+            SCREENSHOT = "demos/" + filename + ".png"
+            print SCREENSHOT
+            pixbuf = gtk.gdk.pixbuf_new_from_file(SCREENSHOT)
+            # pixbuf = pixbuf.scale_simple(200, 200, gtk.gdk.INTERP_BILINEAR)
+            enditer = buffer.get_end_iter()
+            buffer.insert_pixbuf(enditer, pixbuf)
+        except:
+            pass
 
     def clear_buffers(self):
         start, end = self.info_buffer.get_bounds()

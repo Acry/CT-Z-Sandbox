@@ -19,27 +19,31 @@
 # for a CherryTree and Zim-Wiki Developer-Sandbox
 
 # TODO:
-# Self:
-# implement hyperlinks
-# add screenshots (preview images)
+# Browsing Visual/Usability:
+# add index
+# add widget list
+# tag inline code in Info Buffer
+# add screenshots (preview images) to Info Buffer
 # add intro/contents page on expander
+# switch to treestore and save Node relationship in sqlite
+# use closure tables
 
+# Coding abilities:
 # implement code-fork and save changes
 # implement bracket matching and autocomplete
 # implement code folding
 # implement a tutorial assistant where demos are in a pedagogical order
 # add exercises
 
-# Check if fallback font is needed.
-#   else embed font
-
 # Content:
 # add CherryTree and Zim demos
 # add sqlite demos
 # add more cairo demos
+# add pango demos
 # add gdk color examples and value range scaling aka normalization
 # demos from http://zetcode.com/gui/pygtk
 # demos from https://www.kksou.com/php-gtk2/category/Sample-Codes/
+# add widget-factory
 
 import string
 import re
@@ -71,7 +75,7 @@ NEWLINE_CHAR = "\n"
 
 IMAGEDIR = os.path.join(os.path.dirname(__file__), 'demos/images')
 ICON_IMAGE = os.path.join(IMAGEDIR, 'gtk-logo.svg')
-IMAGE = "mamurk_b_3.png"
+IMAGE = "squares2.png"
 MAIN_IMAGE = os.path.join(IMAGEDIR, IMAGE)
 
 for descr, mod in demos.demo_list:
@@ -209,15 +213,41 @@ class PyGtkDemo(gtk.Window):
     def visibility_notify_event(self, text_view, event):
         wx, wy, mod = text_view.window.get_pointer()
         bx, by = text_view.window_to_buffer_coords(gtk.TEXT_WINDOW_WIDGET, wx, wy)
-
         self.set_cursor_if_appropriate (text_view, bx, by)
         return False
+
+    def inlinecode_markup(self):
+        buffer = self.info_buffer
+        visibility_tag = buffer.create_tag(None, invisible=True)
+        tag = buffer.create_tag(None, background="lightgrey", background_full_height=True, style=pango.STYLE_OBLIQUE,\
+                                font="Inconsolta", size_points=10)
+        tag_string = "`"
+        start, end = buffer.get_bounds()
+        tag_start = None
+        tag_end = None
+        searching = True
+        count = 0
+        while searching:
+            try:
+                match_start, match_end = start.forward_search(tag_string, gtk.TEXT_SEARCH_TEXT_ONLY, limit=None)
+                if not count % 2:
+                    # first
+                    tag_start = match_start.copy()
+                    tag_start.forward_char()
+                else:
+                    # second
+                    tag_end = match_end.copy()
+                    tag_end.backward_char()
+                    buffer.apply_tag(tag, tag_start, tag_end)
+                buffer.apply_tag(visibility_tag, match_start, match_end)
+                start = match_end
+                count = count + 1
+            except:
+                searching = False
 
     def check_links(self, search_string):
         global LINKLIST
         buffer = self.info_buffer
-        # print buffer
-        # search_string = 'https://'
         start, end = buffer.get_bounds()
         tag = buffer.create_tag(None, foreground="blue", underline=pango.UNDERLINE_SINGLE)
         searching = True
@@ -240,8 +270,6 @@ class PyGtkDemo(gtk.Window):
                 enter_start, enter_end = next_enter.forward_search(NEWLINE_CHAR, gtk.TEXT_SEARCH_VISIBLE_ONLY, limit=None)
             except:
                 enter_start = False
-            # print type(space_start)
-            # print type(enter_start)
             if space_start and enter_start:
                 if enter_end.compare(space_end) == -1:
                     match_end = enter_end
@@ -256,12 +284,10 @@ class PyGtkDemo(gtk.Window):
                 match_end.backward_char()
                 buffer.apply_tag(tag, tag_start, match_end)
                 text = tag_start.get_slice(match_end)
-                # print text
                 LINKLIST.append([(tag_start, match_end), text])
                 start = match_end
                 match_end.forward_char()
                 count = count + 1
-                # print "count:", count
 
     def __init__(self):
         gtk.Window.__init__(self)
@@ -289,12 +315,6 @@ class PyGtkDemo(gtk.Window):
         # INFO BUFFER
         scrolled_window, self.info_buffer = self.__create_text(False)
         self._new_notebook_page(scrolled_window, '_Info')
-        pixbuf = gtk.gdk.pixbuf_new_from_file(MAIN_IMAGE)
-        pixmap, mask = pixbuf.render_pixmap_and_mask()
-
-        # tvwindow = self.notebook.get_window(gtk.TEXT_WINDOW_TEXT)
-        # tvwindow.set_back_pixmap(pixmap, gtk.FALSE)
-
         tag = self.info_buffer.create_tag('title')
         tag.set_property('font', 'Indie Flower 18')
 
@@ -305,6 +325,13 @@ class PyGtkDemo(gtk.Window):
         tag.set_property('font', 'Inconsolata 18')
 
         self.show_all()
+        nb_childs = self.notebook.get_children()
+        sw_childs = nb_childs[0].get_children()
+        sw_childs[0].realize()
+        pixbuf = gtk.gdk.pixbuf_new_from_file(MAIN_IMAGE)
+        pixmap, mask = pixbuf.render_pixmap_and_mask()
+        tvwindow = sw_childs[0].get_window(gtk.TEXT_WINDOW_TEXT)
+        tvwindow.set_back_pixmap(pixmap, gtk.FALSE)
 
     def run(self):
         gtk.main()
@@ -442,6 +469,7 @@ class PyGtkDemo(gtk.Window):
         for line in lines[1:]:
             buffer.insert(iter, line)
             buffer.insert(iter, '\n')
+        self.inlinecode_markup()
         global SEARCH_STRINGS
         for entry in SEARCH_STRINGS:
             self.check_links(entry)

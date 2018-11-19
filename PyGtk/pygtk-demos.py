@@ -423,7 +423,6 @@ class PyGtkDemo(gtk.Window):
         italic_value = model.get_value(iter, ITALIC_COLUMN)
         if module_name is None:  # a "category" row is activated
             return True
-        print "%s.py" % module_name
         try:
             self.module_cache[module_name].present()
         except KeyError:

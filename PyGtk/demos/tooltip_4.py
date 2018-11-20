@@ -12,8 +12,6 @@ Construct custom Tooltip with icon on Window:
 `self.connect("query-tooltip", self.tooltip_callback, icon)`
 
 `def tooltip_callback(...)`
-
-
 '''
 
 import pygtk

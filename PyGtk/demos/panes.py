@@ -6,7 +6,8 @@ with a divider in between that the user can adjust. A separate child is placed
 into each pane.
 There are a number of options that can be set for each pane. This test contains
 both a horizontal(HPaned) and a vertical(VPaned) widget, and allows you to
-adjust the options for each side of each widget."""
+adjust the options for each side of each widget.
+"""
 
 import pygtk
 pygtk.require('2.0')

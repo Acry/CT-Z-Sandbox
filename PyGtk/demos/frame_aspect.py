@@ -20,7 +20,6 @@ To change the options of an existing aspect frame, you can use:
 
 This program uses an AspectFrame to present a drawing area whose aspect ratio will always be 2:1,
 no matter how the user resizes the top-level window.
-
 '''
 import pygtk
 pygtk.require('2.0')

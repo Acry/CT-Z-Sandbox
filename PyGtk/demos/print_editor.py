@@ -1,6 +1,7 @@
 """Print Editor
 
-A small demo editor with printing support"""
+A small demo editor with printing support
+"""
 
 import sys
 

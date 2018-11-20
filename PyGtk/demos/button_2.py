@@ -14,7 +14,6 @@ Methods used on Window:
 
 Functions used:
 `set_icon_from_file`
-
 '''
 
 import pygtk

@@ -1,7 +1,8 @@
 #!/usr/bin/env python2
 """Dialog and Message Boxes
 
-Dialog widgets are used to pop up a transient window for user feedback."""
+Dialog widgets are used to pop up a transient window for user feedback.
+"""
 
 import pygtk
 pygtk.require('2.0')

@@ -4,7 +4,8 @@
 Usually, tags modify the appearance of text in the view, e.g. making it
 bold or colored or underlined. But tags are not restricted to appearance.
 They can also affect the behavior of mouse and key presses, as this demo
-shows.'''
+shows.
+'''
 # pygtk version: Maik Hertha <maik.hertha@berlin.de>
 
 import pygtk

@@ -2,7 +2,8 @@
 '''Buttons/Button Box
 
 This demo shows various button box configurations available.  It also
-uses stock buttons, and use of mnemonics for navigation.'''
+uses stock buttons, and use of mnemonics for navigation.
+'''
 
 import pygtk
 pygtk.require('2.0')

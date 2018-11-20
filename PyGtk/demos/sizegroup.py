@@ -10,7 +10,8 @@ Note that size groups only affect the amount of space requested, not the size
 that the widgets finally receive. If you want the widgets in a `GtkSizeGroup` to
 actually be the same size, you need to pack them in such a way that they get
 the size they request and not more. For example, if you are packing your
-widgets into a table, you would not include the `GTK_FILL` flag."""
+widgets into a table, you would not include the `GTK_FILL` flag.
+"""
 
 import pygtk
 pygtk.require('2.0')

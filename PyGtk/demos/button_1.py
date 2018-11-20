@@ -14,7 +14,6 @@ Constructed Methods:
 
 Functions used:
 None
-
 '''
 
 import pygtk

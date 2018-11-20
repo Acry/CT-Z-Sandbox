@@ -4,9 +4,9 @@
 A `GdkPixbuf` represents an image, normally in RGB or RGBA format.
 Pixbufs are normally used to load files from disk and perform image scaling.
 This demo is not all that educational, but looks cool. It was written by
-Extreme Pixbuf Hacker Federico Mena Quintero. It also shows off how to use
-GtkDrawingArea to do a simple animation.
-Look at the Image demo for additional pixbuf usage examples.'''
+Federico Mena Quintero. It also shows off how to use GtkDrawingArea to do a simple animation.
+Look at the Image demos for additional pixbuf usage examples.
+'''
 # pygtk version: Maik Hertha <maik.hertha@berlin.de>
 
 import os

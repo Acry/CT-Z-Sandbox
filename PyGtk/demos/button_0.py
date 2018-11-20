@@ -1,6 +1,13 @@
 #!/usr/bin/env python2
 '''Buttons/Button 0
 
+The Button Widget
+
+There for different types of default buttons:
+A normal buttons, the toggle buttons, check buttons, and radio buttons.
+
+The normal button:
+
 You can use the `gtk.Button()` function to create a button with a label by passing a string parameter,
 or to create a blank button by not specifying a label string.
 
@@ -16,7 +23,6 @@ The function to create a button is:
 if label text is specified it is used as the text on the button.
 If stock is specified it is used to select a stock icon and text label for the button.
 The stock items are browseable in the Stock Item and Icon Browser Demo.
-
 '''
 
 import pygtk

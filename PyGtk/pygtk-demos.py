@@ -462,7 +462,7 @@ class PyGtkDemo(gtk.Window):
         path = module.__file__
         basename = os.path.basename(path)
         filename = os.path.splitext(basename)[0]
-        print filename
+        # print filename
         buffer = self.info_buffer
         iter = buffer.get_iter_at_offset(0)
 

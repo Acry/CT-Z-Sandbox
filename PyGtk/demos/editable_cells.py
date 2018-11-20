@@ -3,7 +3,8 @@
 
 This demo demonstrates the use of editable cells in a GtkTreeView.
 If you're new to the GtkTreeView widgets and associates, look into the
-GtkListStore example first.'''
+GtkListStore example first.
+'''
 # pygtk version: Maik Hertha <maik.hertha@berlin.de>
 
 import pygtk

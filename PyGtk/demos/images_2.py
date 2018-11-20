@@ -7,7 +7,6 @@ used relevant Methods:
 
 `gtk.gdk.PixbufAnimation`
 `set_from_animation`
-
 '''
 
 import os

@@ -14,7 +14,6 @@ None
 
 Functions used:
 None
-
 '''
 
 import pygtk

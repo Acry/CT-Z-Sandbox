@@ -14,7 +14,6 @@ Implement:
 Inline Code Markup like inline Code in Markdown.
 Search backticks and remove them from visible text.
 After that, apply a tag.
-
 '''
 #endregion
 

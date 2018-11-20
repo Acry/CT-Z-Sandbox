@@ -5,8 +5,7 @@ The NoteBook Widget is a collection of "pages" that overlap each other; each pag
 
 The first function call you will need to know, as you can probably guess by now, is used to create a new notebook widget.
 
-  notebook = gtk.Notebook()
-
+  `notebook = gtk.Notebook()`
 '''
 import pygtk
 

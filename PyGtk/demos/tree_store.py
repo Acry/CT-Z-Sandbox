@@ -4,7 +4,8 @@
 The `GtkTreeStore` is used to store data in tree form, to be used
 later on by a `GtkTreeView` to display it. This demo builds a simple
 `GtkTreeStore` and displays it. If you're new to the `GtkTreeView` widgets
-and associates, look into the `GtkListStore` example first.'''
+and associates, look into the `GtkListStore` example first.
+'''
 # pygtk version: Maik Hertha <maik.hertha@berlin.de>
 
 import pygtk

@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-'''Drag and Drop
+'''Drag and Drop/_5
 
 This is a test of the drag and drop capabilities of gtk.  It is a
 fairly straight forward port of the example distributed with gtk.
@@ -26,7 +26,7 @@ def create_pixmap(widget, xpm_data):
         gtk.gdk.pixmap_colormap_create_from_xpm_d(
             None, widget.get_colormap(), None, xpm_data)
 
-class DragAndDropDemo(gtk.Window):
+class _5Demo(gtk.Window):
     trashcan_open = None
     trashcan_open_mask = None
     trashcan_closed = None
@@ -200,7 +200,7 @@ class DragAndDropDemo(gtk.Window):
         print 'Delete the data!'
 
 def main():
-    DragAndDropDemo()
+    _5Demo()
     gtk.main()
 
 if __name__ == '__main__':

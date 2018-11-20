@@ -2,7 +2,6 @@
 '''NoteBook/NoteBookAdvanced
 
 This time we have a pixbuff as background.
-
 '''
 
 import pygtk

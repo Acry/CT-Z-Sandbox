@@ -36,7 +36,6 @@ Let's look at the first two together as they are quite similar.
   `notebook.insert_page(child, tab_label, position)`
 
 the first page having position zero.
-
 '''
 
 import os

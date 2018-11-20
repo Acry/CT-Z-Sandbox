@@ -12,7 +12,6 @@ Methods used:
 
 Functions used:
 `set_icon_from_file`
-
 '''
 
 import pygtk

@@ -3,6 +3,17 @@
 
 Button with Callback
 
+The Button widget emits following signals:
+      `pressed` when pointer button is pressed within Button widget
+
+      `released` when pointer button is released within Button widget
+
+      `clicked` when pointer button is pressed and then released within Button widget
+
+      `enter` when pointer enters Button widget
+
+      `leave` when pointer leaves Button widget
+
 Constructs:
  a button
 

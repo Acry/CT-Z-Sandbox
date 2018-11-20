@@ -14,7 +14,6 @@ ICON_IMAGE = os.path.join(IMAGEDIR, 'apple-red.png')
 
 class Button0aDemo(gtk.Window):
 
-
     def pixmap_label_box(self, parent, filename, label_text):
         """Create a new hbox with an image and a label packed into it and return the box."""
         # Create box for xpm and label

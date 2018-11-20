@@ -20,6 +20,7 @@
 
 # TODO:
 # Browsing Visual/Usability:
+# internal links to different demos
 # add index
 # add widget list
 # tag inline code in Info Buffer

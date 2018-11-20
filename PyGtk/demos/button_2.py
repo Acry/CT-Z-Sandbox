@@ -1,19 +1,7 @@
 #!/usr/bin/env python2
 '''Buttons/Button 2
 
-Creates:
- a Toplevel Window.
- a button
-
-Methods used on Window:
-`set_title`
-`set_default_size`
-
-`set_geometry_hints`
-`show_all`
-
-Functions used:
-`set_icon_from_file`
+Catching and Overriding signals.
 '''
 
 import pygtk
@@ -29,8 +17,8 @@ class Button2Demo(gtk.Window):
         print "Printing Message"
 
     def delete_event(self, widget, event, data=None):
-        # If you return FALSE in the "delete_event" signal handler,
-        # GTK will emit the "destroy" signal. Returning TRUE means
+        # If you return False in the "delete_event" signal handler,
+        # GTK will emit the "destroy" signal. Returning True means
         # you don't want the window to be destroyed.
         # This is useful for popping up 'are you sure you want to quit?'
         # type dialogs.
@@ -84,10 +72,11 @@ class Button2Demo(gtk.Window):
         # and the window
         self.show_all()
 
+
 def main():
     Button2Demo()
     gtk.main()
-# If the program is run directly or passed as an argument to the python
-# interpreter then create a instance and show it
+
+
 if __name__ == '__main__':
     main()

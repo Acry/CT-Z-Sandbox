@@ -1,19 +1,20 @@
 #!/usr/bin/env python2
 '''Buttons/Button 4
 
-Constructs:
- a round "button"
+Check Buttons
+Check buttons inherit many properties and methods from the the toggle buttons, but look a little different.
+Rather than being buttons with text inside them, they are small squares with the text to the right of them.
+These are often used for toggling options on and off in applications.
 
-Using an EventBox with a pixmap and mask as button.
+The creation method is similar to that of the normal button.
+`check_button = gtk.CheckButton(label=None)`
 
-Methods used on Button:
-None
+If the label argument is specified the method creates a check button with a label beside it.
+The label text is parsed for '_'-prefixed mnemonic characters.
 
-Constructed Methods:
-None
+Checking and setting the state of the check button are identical to that of the toggle button.
 
-Functions used:
-None
+This program provides an example of the use of the check buttons.
 '''
 
 import pygtk
@@ -22,44 +23,38 @@ import gtk
 import os
 
 IMAGEDIR = os.path.join(os.path.dirname(__file__), 'images')
-ICON_IMAGE = os.path.join(IMAGEDIR, 'gtk-logo.svg')
-IMAGE = "link.png"
-MAIN_IMAGE = os.path.join(IMAGEDIR, IMAGE)
+ICON_IMAGE = os.path.join(IMAGEDIR, 'apple-red.png')
+
+
+def callback(widget, data=None):
+    print "%s was toggled %s" % (data, ("OFF", "ON")[widget.get_active()])
 
 
 class Button4Demo(gtk.Window):
-    def on_button_press(self, widget, data):
-        print "pressed!"
-
     def __init__(self, parent=None):
         gtk.Window.__init__(self)
         try:
             self.set_screen(parent.get_screen())
         except AttributeError:
             self.connect('destroy', lambda *w: gtk.main_quit())
-        self.set_border_width(10)
-        self.set_default_size(200, 200)
+        self.set_default_size(200, 100)
         self.set_icon_from_file(ICON_IMAGE)
         self.set_geometry_hints(min_width=100, min_height=100)
+        self.set_border_width(10)
+        vbox = gtk.VBox(True, 2)
+        self.add(vbox)
 
-        rootbox = gtk.HBox(False, 0)
-        self.add(rootbox)
+        # Create first button
+        button = gtk.CheckButton("check button 1")
+        button.connect("toggled", callback, "check button 1")
+        vbox.pack_start(button, True, True, 2)
 
-        pixbuf = gtk.gdk.pixbuf_new_from_file(MAIN_IMAGE)
-        pixmap, mask = pixbuf.render_pixmap_and_mask()
-        ebox = gtk.EventBox()
-        style = ebox.get_style()
-        new_style = style.copy()
-        new_style.bg_pixmap[gtk.STATE_NORMAL] = pixmap
-        ebox.set_style(new_style)
-        ebox.shape_combine_mask(mask, 0, 0)
-        ebox.connect('button-press-event', self.on_button_press)
-        rootbox.pack_start(ebox, True, True, 0)
-        del pixmap, mask
+        # Create second button
+        button = gtk.CheckButton("check button 2")
+        button.connect("toggled", callback, "check button 2")
+        vbox.pack_start(button, True, True, 2)
+
         self.show_all()
-
-    def main(self):
-        gtk.main()
 
 
 def main():

@@ -7,10 +7,10 @@
                 gtk+ distribution.
 
   2004-07-22:   Simple syntax highlighting implemented, based on the tokenizer-module.
-  2018-10-22:   Switched plain TextView with SourceHighlight.
-                Added panning
-                Added some educational valuable Demos
-                Push to github
+  2018-10-22:   Switched plain TextView with SourceHighlight - made that simple syntax highlighting obsolete.
+                Added panning.
+                Added some educational valuable Demos.
+                Push to github.
                 (Carsten Holtkamp)
 '''
 

@@ -74,13 +74,16 @@ def macro_set_func_text(tree_column, cell, model, iter):
     info = model.get_value(iter, 0)
     cell.set_property("text", info.macro)
 
+
 def id_set_func(tree_column, cell, model, iter):
     info = model.get_value(iter, 0)
     cell.set_property("text", info.stock_id)
 
+
 def accel_set_func(tree_column, cell, model, iter):
     info = model.get_value(iter, 0)
     cell.set_property("text", info.accel_str)
+
 
 def label_set_func(tree_column, cell, model, iter):
     info = model.get_value(iter, 0)
@@ -94,7 +97,6 @@ class StockItemAndIconBrowserDemo(gtk.Window):
             self.set_screen(parent.get_screen())
         except AttributeError:
             self.connect('destroy', lambda *w: gtk.main_quit())
-
         self.set_title(self.__class__.__name__)
         self.set_default_size(-1, 500)
         self.set_border_width(8)
@@ -145,7 +147,7 @@ class StockItemAndIconBrowserDemo(gtk.Window):
 
         display = StockItemDisplay()
         treeview.set_data("stock-display", display)
-
+        treeview.connect('button_press_event', self.on_tv_click)
         display.type_label  = gtk.Label()
         display.macro_label = gtk.Label()
         display.id_label    = gtk.Label()
@@ -158,12 +160,19 @@ class StockItemAndIconBrowserDemo(gtk.Window):
         vbox.pack_start(display.macro_label, False, False, 0)
         vbox.pack_start(display.id_label, False, False, 0)
 
-        selection = treeview.get_selection()
-        selection.set_mode(gtk.SELECTION_SINGLE)
+        self.selection = treeview.get_selection()
+        self.selection.set_mode(gtk.SELECTION_SINGLE)
 
-        selection.connect("changed", self.on_selection_changed)
-
+        self.selection.connect("changed", self.on_selection_changed)
+        self.clipboard = gtk.clipboard_get(gtk.gdk.SELECTION_CLIPBOARD)
         self.show_all()
+
+    def on_tv_click(self, widget, data):
+        if data.button == 1 and data.type == gtk.gdk._2BUTTON_PRESS:
+            (model, iter) = self.selection.get_selected()
+            value = model.get_value(iter, 0)
+            self.clipboard.set_text(value.macro)
+            return
 
     def __create_model(self):
         store = gtk.ListStore(
@@ -264,9 +273,11 @@ class StockItemAndIconBrowserDemo(gtk.Window):
             display.label_accel_label.set_text("")
             display.icon_image.set_from_pixbuf(None)
 
+
 def main():
     StockItemAndIconBrowserDemo()
     gtk.main()
+
 
 if __name__ == '__main__':
     main()

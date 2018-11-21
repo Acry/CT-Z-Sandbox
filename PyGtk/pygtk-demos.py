@@ -124,11 +124,11 @@ CHILDREN_COLUMN = 3
 
 
 class InputStream(object):
-    ''' Simple Wrapper for File-like objects. [c]StringIO doesn't provide
+    """ Simple Wrapper for File-like objects. [c]StringIO doesn't provide
         a readline function for use with generate_tokens.
         Using a iterator-like interface doesn't succeed, because the readline
         function isn't used in such a context. (see <python-lib>/tokenize.py)
-    '''
+    """
 
     def __init__(self, data):
         self.__data = ['%s\n' % x for x in data.splitlines()]
@@ -316,14 +316,13 @@ class PyGtkDemo(gtk.Window):
         hpaned = gtk.HPaned()
         hpaned.set_border_width(5)
         hbox.pack_start(hpaned, True, True)
-
         sw = gtk.ScrolledWindow()
         sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         hpaned.add1(sw)
+
         treeview = self.__create_treeview()
         sw.add(treeview)
         self.notebook = gtk.Notebook()
-
         hpaned.add2(self.notebook)
         self.notebook.realize()
 
@@ -339,7 +338,6 @@ class PyGtkDemo(gtk.Window):
         tag = self.source_buffer.create_tag('source')
         tag.set_property('font', 'Inconsolata 18')
 
-        self.show_all()
         nb_childs = self.notebook.get_children()
         sw_childs = nb_childs[0].get_children()
         sw_childs[0].realize()
@@ -347,6 +345,7 @@ class PyGtkDemo(gtk.Window):
         pixmap, mask = pixbuf.render_pixmap_and_mask()
         tvwindow = sw_childs[0].get_window(gtk.TEXT_WINDOW_TEXT)
         tvwindow.set_back_pixmap(pixmap, gtk.FALSE)
+        self.show_all()
 
     def run(self):
         gtk.main()
@@ -413,6 +412,7 @@ class PyGtkDemo(gtk.Window):
 
         buffer = gtksourceview2.Buffer(None)
         text_view = gtksourceview2.View(buffer)
+        text_view.set_wrap_mode(gtk.WRAP_WORD)
         scrolled_window.add(text_view)
         if not is_source:
             # context = text_view.get_pango_context()
@@ -425,7 +425,6 @@ class PyGtkDemo(gtk.Window):
             text_view.connect("event-after", self.event_after)
             text_view.connect("motion-notify-event", self.motion_notify_event)
             text_view.connect("visibility-notify-event", self.visibility_notify_event)
-
         return scrolled_window, buffer
 
     def row_activated_cb(self, treeview, path, column):
@@ -475,10 +474,8 @@ class PyGtkDemo(gtk.Window):
         path = module.__file__
         basename = os.path.basename(path)
         filename = os.path.splitext(basename)[0]
-        # print filename
         buffer = self.info_buffer
         iter = buffer.get_iter_at_offset(0)
-
         lines = string.split(module.__doc__ or '', '\n')
         buffer.insert(iter, lines[0])
         start = buffer.get_iter_at_offset(0)
@@ -499,11 +496,7 @@ class PyGtkDemo(gtk.Window):
             buffer.insert_pixbuf(enditer, pixbuf)
         except:
             pass
-        iter = buffer.get_iter_at_line(2)
-        #insert play button
-        button = gtk.Button(label=None, stock=gtk.STOCK_EXECUTE)
-        #insert stop button
-        button = gtk.Button(label=None, stock=gtk.STOCK_STOP)
+
     def clear_buffers(self):
         start, end = self.info_buffer.get_bounds()
         self.info_buffer.delete(start, end)

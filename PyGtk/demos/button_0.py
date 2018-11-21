@@ -7,13 +7,11 @@ There are four different types of default buttons:
 Normal buttons, toggle buttons, check buttons, and radio buttons.
 
 __The normal button__:
-You can use the `gtk.Button()` function to create a button with a label by passing a string parameter,
-or to create a blank button by not specifying a label string.
+You can use the `gtk.Button()` function to create a button with a label by passing a string parameter, or to create a blank button by not specifying a label string.
 
 It's then up to you to pack a label or pixmap into this new button.
 
-To do this, create a new box, and then pack your objects into this box using the usual `pack_start()` method,
-and then use the `add()` method to pack the box into the button.
+To do this, create a new box, and then pack your objects into this box using the usual `pack_start()` method, and then use the `add()` method to pack the box into the button.
 
 The function to create a button is:
 `button = gtk.Button(label=None, stock=None)`

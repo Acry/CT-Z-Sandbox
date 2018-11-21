@@ -2,7 +2,7 @@
 #region Description
 '''Text Widget/Add Widget Button
 
-Insert button into Textview.
+Insert button to Textview.
 
 A GTK+ widget can be inserted in a TextView at a buffer location specified with a TextChildAnchor.
 The TextChildAnchor will be counted as one character and represented as "0xFFFC" similar to a pixbuf.

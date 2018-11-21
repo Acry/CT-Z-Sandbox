@@ -28,7 +28,7 @@
 # tag inline code in Info Buffer
 # add screenshots (preview images) to Info Buffer
 # add intro/contents page on expander
-# switch to treestore and save Node relationship in sqlite
+# switch to treestore and save node relationship in sqlite
 # use closure tables
 # remove info from the source buffer
 

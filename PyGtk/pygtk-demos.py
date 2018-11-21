@@ -52,6 +52,9 @@
 # demos from http://zetcode.com/gui/pygtk
 # demos from https://www.kksou.com/php-gtk2/category/Sample-Codes/
 # add widget-factory
+# add custom widget
+# add containers category
+# tables - Weighting on a table
 
 import string
 import re

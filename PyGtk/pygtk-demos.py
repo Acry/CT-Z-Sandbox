@@ -18,6 +18,8 @@
 #   several other resources to have a decent demo/recipe-pool
 # for a CherryTree and Zim-Wiki Developer-Sandbox
 
+# NEWS:
+
 # TODO:
 # Browsing Visual/Usability:
 # internal links to different demos
@@ -28,9 +30,11 @@
 # add intro/contents page on expander
 # switch to treestore and save Node relationship in sqlite
 # use closure tables
+# remove info from the source buffer
 
 # Bugs - not intended behaviour:
 # distinct clickable tags, since I have 2 now - inline code should't be clickable
+# FIXME: don't use anonymous tags
 
 # Coding abilities:
 # implement code-fork and save changes
@@ -52,6 +56,7 @@
 import string
 import re
 import pygtk
+
 pygtk.require('2.0')
 import gobject
 import gtk
@@ -61,6 +66,7 @@ import webbrowser
 import platform
 import os
 import demos
+
 D_TEMPL = '%sDemo'
 # Some programmatic definition for the testgtk_demos list.
 #
@@ -73,7 +79,7 @@ D_TEMPL = '%sDemo'
 child_demos = {}
 testgtk_demos = []
 LINKLIST = []
-SEARCH_STRINGS = ["https://",  "http://"]
+SEARCH_STRINGS = ["https://", "http://"]
 NEWLINE_CHAR = "\n"
 
 IMAGEDIR = os.path.join(os.path.dirname(__file__), 'demos/images')
@@ -88,14 +94,14 @@ for descr, mod in demos.demo_list:
     except ValueError:
         # No, only one application
         demo_class = D_TEMPL % re.sub('(\S+) *',
-            lambda m:(m.group(1)[0].isupper() and m.group(1) or m.group(1).capitalize()),
-            descr)
+                                      lambda m: (m.group(1)[0].isupper() and m.group(1) or m.group(1).capitalize()),
+                                      descr)
         testgtk_demos.append((descr, mod, demo_class))
     else:
         # Ok. Some more testing
         demo_class = D_TEMPL % re.sub('(\S+) *',
-            lambda m:(m.group(1)[0].isupper() and m.group(1) or m.group(1).capitalize()),
-            child)
+                                      lambda m: (m.group(1)[0].isupper() and m.group(1) or m.group(1).capitalize()),
+                                      child)
         try:
             # Applicationgroup already defined?
             child_demos[main.upper()].append((child, mod, demo_class))
@@ -105,13 +111,14 @@ for descr, mod in demos.demo_list:
             testgtk_demos.append((main, None, None, child_demos[main.upper()]))
 
 (
-   TITLE_COLUMN,
-   MODULE_COLUMN,
-   FUNC_COLUMN,
-   ITALIC_COLUMN
+    TITLE_COLUMN,
+    MODULE_COLUMN,
+    FUNC_COLUMN,
+    ITALIC_COLUMN
 ) = range(4)
 
 CHILDREN_COLUMN = 3
+
 
 class InputStream(object):
     ''' Simple Wrapper for File-like objects. [c]StringIO doesn't provide
@@ -121,7 +128,7 @@ class InputStream(object):
     '''
 
     def __init__(self, data):
-        self.__data = [ '%s\n' % x for x in data.splitlines() ]
+        self.__data = ['%s\n' % x for x in data.splitlines()]
         self.__lcount = 0
 
     def readline(self):
@@ -137,14 +144,15 @@ class InputStream(object):
 class PyGtkDemo(gtk.Window):
     info_buffer = None
     source_buffer = None
-    module_cache  = {}
+    module_cache = {}
 
     hovering_over_link = False
     hand_cursor = gtk.gdk.Cursor(gtk.gdk.HAND2)
     regular_cursor = gtk.gdk.Cursor(gtk.gdk.XTERM)
+
     def key_press_event(self, text_view, event):
         if (event.keyval == gtk.keysyms.Return or
-            event.keyval == gtk.keysyms.KP_Enter):
+                event.keyval == gtk.keysyms.KP_Enter):
             buffer = text_view.get_buffer()
             iter = buffer.get_iter_at_mark(buffer.get_insert())
             self.follow_if_link(text_view, iter)
@@ -168,7 +176,7 @@ class PyGtkDemo(gtk.Window):
                 return False
 
         x, y = text_view.window_to_buffer_coords(gtk.TEXT_WINDOW_WIDGET,
-            int(event.x), int(event.y))
+                                                 int(event.x), int(event.y))
         iter = text_view.get_iter_at_location(x, y)
 
         self.follow_if_link(text_view, iter)
@@ -208,7 +216,7 @@ class PyGtkDemo(gtk.Window):
 
     def motion_notify_event(self, text_view, event):
         x, y = text_view.window_to_buffer_coords(gtk.TEXT_WINDOW_WIDGET,
-            int(event.x), int(event.y))
+                                                 int(event.x), int(event.y))
         self.set_cursor_if_appropriate(text_view, x, y)
         text_view.window.get_pointer()
         return False
@@ -216,13 +224,13 @@ class PyGtkDemo(gtk.Window):
     def visibility_notify_event(self, text_view, event):
         wx, wy, mod = text_view.window.get_pointer()
         bx, by = text_view.window_to_buffer_coords(gtk.TEXT_WINDOW_WIDGET, wx, wy)
-        self.set_cursor_if_appropriate (text_view, bx, by)
+        self.set_cursor_if_appropriate(text_view, bx, by)
         return False
 
     def inlinecode_markup(self):
         buffer = self.info_buffer
         visibility_tag = buffer.create_tag(None, invisible=True)
-        tag = buffer.create_tag(None, background="lightgrey", background_full_height=True, style=pango.STYLE_OBLIQUE,\
+        tag = buffer.create_tag(None, background="lightgrey", background_full_height=True, style=pango.STYLE_OBLIQUE, \
                                 font="Inconsolta", size_points=10)
         tag_string = "`"
         start, end = buffer.get_bounds()
@@ -270,7 +278,8 @@ class PyGtkDemo(gtk.Window):
             except:
                 space_start = False
             try:
-                enter_start, enter_end = next_enter.forward_search(NEWLINE_CHAR, gtk.TEXT_SEARCH_VISIBLE_ONLY, limit=None)
+                enter_start, enter_end = next_enter.forward_search(NEWLINE_CHAR, gtk.TEXT_SEARCH_VISIBLE_ONLY,
+                                                                   limit=None)
             except:
                 enter_start = False
             if space_start and enter_start:
@@ -300,7 +309,7 @@ class PyGtkDemo(gtk.Window):
         self.set_icon_from_file(ICON_IMAGE)
         hbox = gtk.HBox(False, 3)
         self.add(hbox)
-        
+
         hpaned = gtk.HPaned()
         hpaned.set_border_width(5)
         hbox.pack_start(hpaned, True, True)
@@ -360,22 +369,22 @@ class PyGtkDemo(gtk.Window):
         for module in testgtk_demos:
             iter = model.append(None)
             model.set(iter,
-                TITLE_COLUMN, module[TITLE_COLUMN],
-                MODULE_COLUMN, module[MODULE_COLUMN],
-                FUNC_COLUMN, module[FUNC_COLUMN],
-                ITALIC_COLUMN, False
-            )
+                      TITLE_COLUMN, module[TITLE_COLUMN],
+                      MODULE_COLUMN, module[MODULE_COLUMN],
+                      FUNC_COLUMN, module[FUNC_COLUMN],
+                      ITALIC_COLUMN, False
+                      )
 
             try:
                 children = module[CHILDREN_COLUMN]
                 for child_module in children:
                     child_iter = model.append(iter)
                     model.set(child_iter,
-                        TITLE_COLUMN, child_module[TITLE_COLUMN],
-                        MODULE_COLUMN, child_module[MODULE_COLUMN],
-                        FUNC_COLUMN, child_module[FUNC_COLUMN],
-                        ITALIC_COLUMN, False
-                    )
+                              TITLE_COLUMN, child_module[TITLE_COLUMN],
+                              MODULE_COLUMN, child_module[MODULE_COLUMN],
+                              FUNC_COLUMN, child_module[FUNC_COLUMN],
+                              ITALIC_COLUMN, False
+                              )
             except IndexError:
                 pass
 
@@ -383,7 +392,7 @@ class PyGtkDemo(gtk.Window):
         cell.set_property('style', pango.STYLE_ITALIC)
 
         column = gtk.TreeViewColumn("Double click for demo.", cell,
-            text=TITLE_COLUMN, style_set=ITALIC_COLUMN)
+                                    text=TITLE_COLUMN, style_set=ITALIC_COLUMN)
 
         treeview.append_column(column)
 
@@ -418,9 +427,9 @@ class PyGtkDemo(gtk.Window):
 
     def row_activated_cb(self, treeview, path, column):
         model = treeview.get_model()
-        iter  = model.get_iter(path)
-        module_name  = model.get_value(iter, MODULE_COLUMN)
-        func_name    = model.get_value(iter, FUNC_COLUMN)
+        iter = model.get_iter(path)
+        module_name = model.get_value(iter, MODULE_COLUMN)
+        func_name = model.get_value(iter, FUNC_COLUMN)
         italic_value = model.get_value(iter, ITALIC_COLUMN)
         if module_name is None:  # a "category" row is activated
             return True
@@ -446,7 +455,7 @@ class PyGtkDemo(gtk.Window):
 
     def window_closed_cb(self, window, model, path):
         iter = model.get_iter(path)
-        module_name  = model.get_value(iter, MODULE_COLUMN)
+        module_name = model.get_value(iter, MODULE_COLUMN)
         del self.module_cache[module_name]
         italic_value = model.get_value(iter, ITALIC_COLUMN)
         if italic_value:
@@ -517,5 +526,4 @@ if __name__ == '__main__':
     print "Python: V%s, " % platform.python_version(),
     print "GTK+: V%d.%d.%d, " % gtk.gtk_version,
     print "PyGTK: v%d.%d.%d" % gtk.pygtk_version
-
     PyGtkDemo().run()

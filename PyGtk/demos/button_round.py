@@ -1,10 +1,8 @@
 #!/usr/bin/env python2
-'''Buttons/ButtonRound
+'''Buttons/Button Round
 
 Constructs:
- a round "button"
-
-Using an EventBox with a pixmap and mask as button.
+ a round "button" using an EventBox with a pixmap and mask as button.
 '''
 
 import pygtk
@@ -18,9 +16,11 @@ IMAGE = "link.png"
 MAIN_IMAGE = os.path.join(IMAGEDIR, IMAGE)
 
 
+def on_button_press(widget, data):
+    print "pressed!"
+
+
 class ButtonRoundDemo(gtk.Window):
-    def on_button_press(self, widget, data):
-        print "pressed!"
 
     def __init__(self, parent=None):
         gtk.Window.__init__(self)
@@ -44,13 +44,14 @@ class ButtonRoundDemo(gtk.Window):
         new_style.bg_pixmap[gtk.STATE_NORMAL] = pixmap
         ebox.set_style(new_style)
         ebox.shape_combine_mask(mask, 0, 0)
-        ebox.connect('button-press-event', self.on_button_press)
+        ebox.connect('button-press-event', on_button_press)
         rootbox.pack_start(ebox, True, True, 0)
         del pixmap, mask
         self.show_all()
 
-    def main(self):
-        gtk.main()
+
+def main(self):
+    gtk.main()
 
 
 def main():

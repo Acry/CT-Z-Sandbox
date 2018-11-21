@@ -3,11 +3,10 @@
 
 The Button Widget
 
-There for different types of default buttons:
-A normal buttons, the toggle buttons, check buttons, and radio buttons.
+There are four different types of default buttons:
+Normal buttons, toggle buttons, check buttons, and radio buttons.
 
-The normal button:
-
+__The normal button__:
 You can use the `gtk.Button()` function to create a button with a label by passing a string parameter,
 or to create a blank button by not specifying a label string.
 
@@ -17,10 +16,9 @@ To do this, create a new box, and then pack your objects into this box using the
 and then use the `add()` method to pack the box into the button.
 
 The function to create a button is:
+`button = gtk.Button(label=None, stock=None)`
 
-  `button = gtk.Button(label=None, stock=None)`
-
-if label text is specified it is used as the text on the button.
+If the label text is specified it is used as the text on the button.
 If stock is specified it is used to select a stock icon and text label for the button.
 The stock items are browseable in the Stock Item and Icon Browser Demo.
 '''

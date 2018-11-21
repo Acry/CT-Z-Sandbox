@@ -499,7 +499,11 @@ class PyGtkDemo(gtk.Window):
             buffer.insert_pixbuf(enditer, pixbuf)
         except:
             pass
-
+        iter = buffer.get_iter_at_line(2)
+        #insert play button
+        button = gtk.Button(label=None, stock=gtk.STOCK_EXECUTE)
+        #insert stop button
+        button = gtk.Button(label=None, stock=gtk.STOCK_STOP)
     def clear_buffers(self):
         start, end = self.info_buffer.get_bounds()
         self.info_buffer.delete(start, end)

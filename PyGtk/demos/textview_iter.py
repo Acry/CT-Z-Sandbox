@@ -40,7 +40,7 @@ TextBuffer methods that manipulate text use TextIters to specify where the metho
 
 `startiter = textbuffer.get_start_iter()`
 
-`enditer = textbuffer_get_end_iter()`
+`enditer = textbuffer.get_end_iter()`
 
 `startiter, enditer = textbuffer.get_bounds()`
 
@@ -64,7 +64,7 @@ text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
        "Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
 
 
-class TextViewItersDemo(gtk.Window):
+class ItersDemo(gtk.Window):
     def __init__(self, parent=None):
         gtk.Window.__init__(self)
         try:
@@ -99,7 +99,7 @@ class TextViewItersDemo(gtk.Window):
         self.show_all()
 
 def main():
-    TextViewItersDemo()
+    ItersDemo()
     gtk.main()
 
 if __name__ == '__main__':

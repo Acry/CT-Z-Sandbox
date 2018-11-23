@@ -48,7 +48,7 @@ class Images2Demo(gtk.Window):
 
         self.add(hbox)
 
-        # button 1
+        # PixbufAnimation
         pixbufanim = gtk.gdk.PixbufAnimation(GOALIE_IMAGE)
         image = gtk.Image()
         image.set_from_animation(pixbufanim)
@@ -57,7 +57,7 @@ class Images2Demo(gtk.Window):
         hbox.pack_start(button)
         button.connect("clicked", self.button_clicked, "1")
 
-        # button 2
+        # ImageFromFile
         image = gtk.Image()
         image.set_from_file(REDAPPLE_IMAGE)
         button = gtk.Button()
@@ -65,7 +65,7 @@ class Images2Demo(gtk.Window):
         hbox.pack_start(button)
         button.connect("clicked", self.button_clicked, "2")
 
-        # button 3
+        # ImageFromFile
         image = gtk.Image()
         image.set_from_file(CHAOS_IMAGE)
         button = gtk.Button()
@@ -73,7 +73,7 @@ class Images2Demo(gtk.Window):
         hbox.pack_start(button)
         button.connect("clicked", self.button_clicked, "3")
 
-        # button 4
+        # ImageFromFile
         image = gtk.Image()
         image.set_from_file(IMPORTANT_IMAGE)
         button = gtk.Button()
@@ -81,7 +81,7 @@ class Images2Demo(gtk.Window):
         hbox.pack_start(button)
         button.connect("clicked", self.button_clicked, "4")
 
-        # button 5
+        # ImageFromFile
         image = gtk.Image()
         image.set_from_file(SOCCERBALL_IMAGE)
         button = gtk.Button()

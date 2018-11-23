@@ -18,7 +18,7 @@ The function to create a button is:
 
 If the label text is specified it is used as the text on the button.
 If stock is specified it is used to select a stock icon and text label for the button.
-The stock items are browseable in the Stock Item and Icon Browser Demo.
+The stock items are browseable in the [Stock Item and Icon Browser Demo].
 '''
 
 import pygtk

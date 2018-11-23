@@ -40,34 +40,26 @@ import pango
 #region Constants
 IMAGEDIR = os.path.join(os.path.dirname(__file__), 'images')
 ICON_IMAGE = os.path.join(IMAGEDIR, 'gtk-logo.svg')
-IMAGE = "Ghostscript_Tiger.svg"
-MAIN_IMAGE = os.path.join(IMAGEDIR, IMAGE)
 
-text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et" \
+text = "Press on this button:" \
        " dolore magna aliquyam erat, sed diam voluptua.\n At vero eos et accusam et justo duo dolores et ea rebum.\n" \
        " Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.\n"
 #endregion
 
+
 class AddWidgetButtonDemo(gtk.Window):
-
     def __init__(self, parent=None):
-
-        #region Window init
         gtk.Window.__init__(self)
-
         try:
             self.set_screen(parent.get_screen())
         except AttributeError:
-            self.connect('destroy', lambda *w: gtk.main_quit())
-
+            self.connect('destroy', lambda w: gtk.main_quit())
         self.set_title(self.__class__.__name__)
         self.set_default_size(400, 450)
         self.set_icon_from_file(ICON_IMAGE)
         self.set_geometry_hints(min_width=200, min_height=100)
-        #endregion
 
         box1 = gtk.VBox(False, 0)
-
         self.add(box1)
 
         textview = gtk.TextView()
@@ -78,16 +70,17 @@ class AddWidgetButtonDemo(gtk.Window):
         sw1.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         sw1.add(textview)
         box1.pack_start(sw1, True, True, 0)
+
         button = gtk.Button(label=None, stock=gtk.STOCK_QUIT)
-        button.connect('pressed', lambda *w: gtk.main_quit())
+        button.set_size_request(80, 30)
+        button.connect('pressed', lambda a: self.destroy())
         iter = textbuffer.get_iter_at_line(2)
         anchor = textbuffer.create_child_anchor(iter)
         textview.add_child_at_anchor(button, anchor)
+
         self.show_all()
 
-def main():
-    AddWidgetButtonDemo()
-    gtk.main()
 
 if __name__ == '__main__':
-    main()
+    AddWidgetButtonDemo()
+    gtk.main()

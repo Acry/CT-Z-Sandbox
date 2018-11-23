@@ -13,6 +13,7 @@ import gobject
 import gtk
 import re
 
+
 def id_to_macro(stock_id):
     if stock_id == '':
         return ''
@@ -152,7 +153,7 @@ class StockItemAndIconBrowserDemo(gtk.Window):
         display.macro_label = gtk.Label()
         display.id_label    = gtk.Label()
         display.label_accel_label = gtk.Label()
-        display.icon_image  = gtk.Image(); # empty image
+        display.icon_image  = gtk.Image()
 
         vbox.pack_start(display.type_label, False, False, 0)
         vbox.pack_start(display.icon_image, False, False, 0)

@@ -31,8 +31,10 @@
 # switch to treestore and save node relationship in sqlite
 # use closure tables
 # remove info from the source buffer
+# thinking of clutter integration, but it looks bad.
+#   since finding a working version failed for now
 
-# Bugs - not intended behaviour:
+# Bugs: - not intended behaviour:
 # distinct clickable tags, since I have 2 now - inline code should't be clickable
 # FIXME: don't use anonymous tags
 

@@ -148,7 +148,6 @@ class PyGtkDemo(gtk.Window):
     info_buffer = None
     source_buffer = None
     module_cache = {}
-
     hovering_over_link = False
     hand_cursor = gtk.gdk.Cursor(gtk.gdk.HAND2)
     regular_cursor = gtk.gdk.Cursor(gtk.gdk.XTERM)
@@ -494,6 +493,23 @@ class PyGtkDemo(gtk.Window):
             # pixbuf = pixbuf.scale_simple(200, 200, gtk.gdk.INTERP_BILINEAR)
             enditer = buffer.get_end_iter()
             buffer.insert_pixbuf(enditer, pixbuf)
+        except:
+            pass
+        try:
+            SCREENSHOT = "demos/" + filename + ".gif"
+            pixbufanim = gtk.gdk.PixbufAnimation(SCREENSHOT)
+            image = gtk.Image()
+            image.set_from_animation(pixbufanim)
+            image.show()
+            button = gtk.Button()
+            button.add(image)
+            button.show()
+            enditer = buffer.get_end_iter()
+            anchor = buffer.create_child_anchor(enditer)
+            nb_childs = self.notebook.get_children()
+            sw_childs = nb_childs[0].get_children()
+            sw_childs[0].realize()
+            sw_childs[0].add_child_at_anchor(button, anchor)
         except:
             pass
 

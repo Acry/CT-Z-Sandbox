@@ -45,13 +45,8 @@ class Button0aDemo(gtk.Window):
         self.set_icon_from_file(ICON_IMAGE)
         button = gtk.Button()
         box1 = self.pixmap_label_box(self.window, ICON_IMAGE, "Eat more Apples!")
-
-        # Pack and show all our widgets
         button.add(box1)
-        # This packs the button into the window (a GTK container).
         self.add(button)
-
-        # and the window
         self.show_all()
 
 

@@ -309,7 +309,7 @@ class PyGtkDemo(gtk.Window):
         gtk.Window.__init__(self)
         self.set_title("PyGTK and Friends")
         self.connect('destroy', lambda w: gtk.main_quit())
-        self.set_default_size(800, 400)
+        self.set_default_size(950, 750)
         self.set_icon_from_file(ICON_IMAGE)
         hbox = gtk.HBox(False, 3)
         self.add(hbox)

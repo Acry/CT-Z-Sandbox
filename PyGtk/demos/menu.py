@@ -83,17 +83,6 @@ class MenuB1Demo(gtk.Window):
 
         self.show_all()
 
-    def button_press(self, widget, event):
-        """Respond to a button-press by posting a menu passed in as widget.
-        Note that the "widget" argument is the menu being posted, NOT he button that was pressed."""
-        if event.type == gtk.gdk.BUTTON_PRESS:
-            widget.popup(None, None, None, event.button, event.time)
-            # Tell calling code that we have handled this event the buck
-            # stops here.
-            return True
-        # Tell calling code that we have not handled this event pass it on.
-        return False
-
     # Print a string when a menu item is selected
     def menuitem_response(self, widget, string):
         print "%s" % string

@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-"""Dialog and Message Boxes
+"""Dialogs/D10
 
 Dialog widgets are used to pop up a transient window for user feedback.
 """
@@ -7,19 +7,26 @@ Dialog widgets are used to pop up a transient window for user feedback.
 import pygtk
 pygtk.require('2.0')
 import gtk
+import os
 
-class DialogAndMessageBoxesDemo(gtk.Window):
+IMAGEDIR = os.path.join(os.path.dirname(__file__), 'images')
+ICON_IMAGE = os.path.join(IMAGEDIR, 'apple-red.png')
+
+class D10Demo(gtk.Window):
     counter = 1
+
     def __init__(self, parent=None):
-        # Create the toplevel window
         gtk.Window.__init__(self)
         try:
             self.set_screen(parent.get_screen())
         except AttributeError:
             self.connect('destroy', lambda *w: gtk.main_quit())
-
         self.set_title(self.__class__.__name__)
+        self.set_default_size(450, 200)
+        self.set_icon_from_file(ICON_IMAGE)
+        self.set_geometry_hints(min_width=450, min_height=200)
         self.set_border_width(8)
+        self.show_all()
 
         frame = gtk.Frame("Dialogs")
         self.add(frame)
@@ -125,9 +132,6 @@ class DialogAndMessageBoxesDemo(gtk.Window):
 
         dialog.destroy()
 
-def main():
-    DialogAndMessageBoxesDemo()
-    gtk.main()
-
 if __name__ == '__main__':
-    main()
+    D10Demo()
+    gtk.main()

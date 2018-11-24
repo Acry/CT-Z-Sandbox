@@ -5,12 +5,14 @@ Dialog widgets are used to pop up a transient window for user feedback.
 """
 
 import pygtk
+
 pygtk.require('2.0')
 import gtk
 import os
 
 IMAGEDIR = os.path.join(os.path.dirname(__file__), 'images')
 ICON_IMAGE = os.path.join(IMAGEDIR, 'apple-red.png')
+
 
 class D10Demo(gtk.Window):
     counter = 1
@@ -78,10 +80,10 @@ class D10Demo(gtk.Window):
 
     def on_message_dialog_clicked(self, button):
         dialog = gtk.MessageDialog(self,
-                gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-                gtk.MESSAGE_INFO, gtk.BUTTONS_OK,
-                "This message box has been popped up %d time%s." %
-                        (self.counter, self.counter > 1 and 's' or ''))
+                                   gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+                                   gtk.MESSAGE_INFO, gtk.BUTTONS_OK,
+                                   "This message box has been popped up %d time%s." %
+                                   (self.counter, self.counter > 1 and 's' or ''))
         dialog.run()
         dialog.destroy()
         self.counter += 1
@@ -89,16 +91,16 @@ class D10Demo(gtk.Window):
     def on_interactive_dialog_clicked(self, button):
 
         dialog = gtk.Dialog("Interactive Dialog", self, 0,
-                (gtk.STOCK_OK, gtk.RESPONSE_OK,
-                "_Non-stock button", gtk.RESPONSE_CANCEL))
+                            (gtk.STOCK_OK, gtk.RESPONSE_OK,
+                             "_Non-stock button", gtk.RESPONSE_CANCEL))
 
         hbox = gtk.HBox(False, 8)
         hbox.set_border_width(8)
         dialog.vbox.pack_start(hbox, False, False, 0)
 
         stock = gtk.image_new_from_stock(
-                gtk.STOCK_DIALOG_QUESTION,
-                gtk.ICON_SIZE_DIALOG)
+            gtk.STOCK_DIALOG_QUESTION,
+            gtk.ICON_SIZE_DIALOG)
         hbox.pack_start(stock, False, False, 0)
 
         table = gtk.Table(2, 2)
@@ -131,6 +133,7 @@ class D10Demo(gtk.Window):
             self.entry2.set_text(local_entry2.get_text())
 
         dialog.destroy()
+
 
 if __name__ == '__main__':
     D10Demo()

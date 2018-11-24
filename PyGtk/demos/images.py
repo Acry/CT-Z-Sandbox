@@ -102,7 +102,6 @@ class ImagesDemo(gtk.Window):
         frame.add(image)
 
         # Animation
-
         label = gtk.Label()
         label.set_markup("<u>Animation loaded from a file</u>")
         vbox.pack_start(label, False, False, 0)
@@ -123,7 +122,6 @@ class ImagesDemo(gtk.Window):
         frame.add(image)
 
         # Progressive
-
         label = gtk.Label()
         label.set_markup("<u>Progressive image loading</u>")
         vbox.pack_start(label, False, False, 0)

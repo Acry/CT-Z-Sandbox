@@ -20,7 +20,7 @@ import gtk
 import os
 
 IMAGEDIR = os.path.join(os.path.dirname(__file__), 'images')
-ICON_IMAGE = os.path.join(IMAGEDIR, 'apple-red.png')
+ICON_IMAGE = os.path.join(IMAGEDIR, 'gtk-logo.svg')
 
 class WindowDemo(gtk.Window):
     def __init__(self, parent=None):

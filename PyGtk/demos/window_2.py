@@ -18,7 +18,7 @@ import gtk
 import os
 
 IMAGEDIR = os.path.join(os.path.dirname(__file__), 'images')
-ICON_IMAGE = os.path.join(IMAGEDIR, 'apple-red.png')
+ICON_IMAGE = os.path.join(IMAGEDIR, 'gtk-logo.svg')
 IMAGE = "stones-background.jpg"
 MAIN_IMAGE = os.path.join(IMAGEDIR, IMAGE)
 

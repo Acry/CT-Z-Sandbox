@@ -2,7 +2,14 @@
 # -*- coding: utf-8 -*-
 
 '''SQLite/S2
-Create Table and view from treestore.
+Create Table and view from liststore.
+
+SQL STATEMENTS:
+CREATE TABLE
+INSERT INTO
+
+sqlite-binding:
+fetchall
 
 SQLite automatically creates an implicit column named rowid and automatically assigns an integer value whenever you insert a new row.
 '''

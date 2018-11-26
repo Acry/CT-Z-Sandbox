@@ -2,6 +2,18 @@
 # -*- coding: utf-8 -*-
 
 '''SQLite/S1
+Import SQLite and query version.
+If you get an error message you probably don't have the sqlite module.
+
+SQL Statement:
+SELECT
+
+SQLite binding:
+connect
+cursor
+execute
+fetchone
+:memory: DB
 '''
 import sqlite3
 import pygtk

@@ -498,6 +498,14 @@ class PyGtkDemo(gtk.Window):
         except:
             pass
         try:
+            SCREENSHOT = "demos/" + filename + ".svg"
+            pixbuf = gtk.gdk.pixbuf_new_from_file(SCREENSHOT)
+            # pixbuf = pixbuf.scale_simple(200, 200, gtk.gdk.INTERP_BILINEAR)
+            enditer = buffer.get_end_iter()
+            buffer.insert_pixbuf(enditer, pixbuf)
+        except:
+            pass
+        try:
             SCREENSHOT = "demos/" + filename + ".gif"
             pixbufanim = gtk.gdk.PixbufAnimation(SCREENSHOT)
             image = gtk.Image()

@@ -3,7 +3,7 @@
 
 '''SQLite/S3
 Import names from file,
-create Table and view from treestore.
+create Table and view from liststore.
 '''
 import sqlite3
 import pygtk

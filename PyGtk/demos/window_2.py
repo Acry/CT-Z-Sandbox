@@ -49,7 +49,6 @@ class Window2Demo(gtk.Window):
         try:
             self.shape_combine_mask(mask, 0, 0)  # set alpha if necessary
         except:
-            pass
             self.window.set_back_pixmap(pixmap, gtk.FALSE)
         del pixmap
         self.show_all()

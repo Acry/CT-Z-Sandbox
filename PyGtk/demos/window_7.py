@@ -13,6 +13,7 @@ import os
 IMAGEDIR = os.path.join(os.path.dirname(__file__), 'images')
 STAR_IMAGE = os.path.join(IMAGEDIR, 'star.png')
 
+
 class Window7Demo(gtk.Window):
     def close(self, win, data):
         win.destroy()

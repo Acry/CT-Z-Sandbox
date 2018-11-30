@@ -43,9 +43,11 @@ class Window3Demo(gtk.Window):
         self.modify_bg(gtk.STATE_NORMAL, the_gdk_color)
         self.show_all()
 
+
 def main():
     Window3Demo()
     gtk.main()
+
 
 if __name__ == '__main__':
     main()

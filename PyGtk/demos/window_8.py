@@ -31,8 +31,8 @@ class Window8Demo(gtk.Window):
         self.destroy()
         for window in windowlist:
             window.destroy()
-        if __name__ == '__main__':
-            gtk.main_quit()
+        # if __name__ == '__main__':
+        #     gtk.main_quit()
 
     def __init__(self, parent=None):
         gtk.Window.__init__(self)

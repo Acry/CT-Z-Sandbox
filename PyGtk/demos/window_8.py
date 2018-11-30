@@ -1,6 +1,6 @@
 #!/usr/bin/env python2
 '''Windows/Window8
-Rudimentary Demo that shows how tu use an masked window as connection between two windows.
+Rudimentary Demo that shows how tu use a masked window as connection between two windows.
 '''
 
 import pygtk

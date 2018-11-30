@@ -54,6 +54,7 @@ class Window8Demo(gtk.Window):
         window1 = gtk.Window()
         window1.set_default_size(200, 200)
         window1.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_DIALOG)
+        window1.set_icon_from_file(ICON_IMAGE)
         windows.append(window1)
 
         pixbuf = gtk.gdk.pixbuf_new_from_file(ARROWS_IMAGE)

@@ -13,6 +13,7 @@ IMAGEDIR = os.path.join(os.path.dirname(__file__), 'images')
 ICON_IMAGE = os.path.join(IMAGEDIR, 'gtk-logo.svg')
 ARROWS_IMAGE = os.path.join(IMAGEDIR, 'arrows.svg')
 
+
 class Window8Demo(gtk.Window):
     def cb(self, windowlist):
         gobject.source_remove(self.timer)

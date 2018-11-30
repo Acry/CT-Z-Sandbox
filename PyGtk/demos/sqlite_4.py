@@ -202,7 +202,6 @@ class S4Demo(gtk.Window):
         treeview.append_column(column)
 
 
-
 if __name__ == '__main__':
     S4Demo()
     gtk.main()

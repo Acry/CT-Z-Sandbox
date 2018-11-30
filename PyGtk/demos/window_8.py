@@ -19,16 +19,20 @@ class Window8Demo(gtk.Window):
         gobject.source_remove(self.timer)
         (x, y) = self.get_position()
         (w, h) = self.get_size()
-
         wx = x+w+40
-        print windowlist
         windowlist[0].move(wx, y)
         windowlist[0].show()
-
         wx = x+w-30
         wy = y+80
         windowlist[1].move(wx, wy)
         windowlist[1].show()
+
+    def close(self, widget, data, windowlist):
+        self.destroy()
+        for window in windowlist:
+            window.destroy()
+        if __name__ == '__main__':
+            gtk.main_quit()
 
     def __init__(self, parent=None):
         gtk.Window.__init__(self)
@@ -49,11 +53,8 @@ class Window8Demo(gtk.Window):
         windows = []
         window1 = gtk.Window()
         window1.set_default_size(200, 200)
-        window1.set_modal(True)
-        window1.set_transient_for(self)
         window1.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_DIALOG)
         windows.append(window1)
-
 
         pixbuf = gtk.gdk.pixbuf_new_from_file(ARROWS_IMAGE)
         # pixbuf = pixbuf.scale_simple(100, 100, gtk.gdk.INTERP_BILINEAR)
@@ -81,6 +82,8 @@ class Window8Demo(gtk.Window):
 
         # I need to set this timer once as a delay before querying main windows pos.
         self.timer = gobject.timeout_add(500, self.cb, windows)
+        self.connect("delete_event", self.close, windows)
+        window1.connect("delete_event", self.close, windows)
 
 
 if __name__ == '__main__':

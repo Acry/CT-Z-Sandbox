@@ -132,6 +132,7 @@ class S3bDemo(gtk.Window):
         column.set_sort_column_id(COLUMN_SURNAME)
         treeview.append_column(column)
 
+
 if __name__ == '__main__':
     S3bDemo()
     gtk.main()

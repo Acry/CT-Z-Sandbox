@@ -30,8 +30,6 @@ class Window3Demo(gtk.Window):
             self.set_screen(parent.get_screen())
         except AttributeError:
             self.connect('destroy', lambda *w: gtk.main_quit())
-
-
         self.set_title(self.__class__.__name__)
         self.set_default_size(200, 200)
         self.set_icon_from_file(ICON_IMAGE)

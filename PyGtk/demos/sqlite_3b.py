@@ -1,12 +1,16 @@
 # !/usr/bin/python2
 # -*- coding: utf-8 -*-
 
-'''SQLite/S3a
+'''SQLite/S3b
 Filter Data
 
 SELECT WHERE Operators
 
 Operators in The WHERE Clause
+
+Here:
+`cur.execute("SELECT  rowid,  first_name,  last_name FROM  people WHERE rowid<25")`
+
 The following operators can be used in the WHERE clause:
 
 Operator	Description
@@ -65,7 +69,7 @@ data = cur.fetchall()
 #        con.close()
 # -> onquit
 
-class S3aDemo(gtk.Window):
+class S3bDemo(gtk.Window):
     def __init__(self, parent=None):
         gtk.Window.__init__(self)
         try:
@@ -129,5 +133,5 @@ class S3aDemo(gtk.Window):
         treeview.append_column(column)
 
 if __name__ == '__main__':
-    S3aDemo()
+    S3bDemo()
     gtk.main()

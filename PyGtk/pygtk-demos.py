@@ -489,6 +489,15 @@ class PyGtkDemo(gtk.Window):
         global SEARCH_STRINGS
         for entry in SEARCH_STRINGS:
             self.check_links(entry)
+        # FIXME REFACTOR
+        try:
+            SCREENSHOT = "demos/" + filename + ".jpg"
+            pixbuf = gtk.gdk.pixbuf_new_from_file(SCREENSHOT)
+            # pixbuf = pixbuf.scale_simple(200, 200, gtk.gdk.INTERP_BILINEAR)
+            enditer = buffer.get_end_iter()
+            buffer.insert_pixbuf(enditer, pixbuf)
+        except:
+            pass
         try:
             SCREENSHOT = "demos/" + filename + ".png"
             pixbuf = gtk.gdk.pixbuf_new_from_file(SCREENSHOT)

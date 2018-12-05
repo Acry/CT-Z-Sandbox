@@ -235,7 +235,7 @@ class PyGtkDemo(gtk.Window):
         buffer = self.info_buffer
         visibility_tag = buffer.create_tag(None, invisible=True)
         tag = buffer.create_tag(None, background="lightgrey", background_full_height=True, style=pango.STYLE_OBLIQUE, \
-                                font="Inconsolta", size_points=10)
+                                font="Inconsolta", size_points=12)
         tag_string = "`"
         start, end = buffer.get_bounds()
         tag_start = None
@@ -420,7 +420,7 @@ class PyGtkDemo(gtk.Window):
             # fonts = context.list_families()
             # for font in fonts:
             #     print font.get_name()
-            font = pango.FontDescription('Indie Flower 14')
+            font = pango.FontDescription('Indie Flower 16')
             text_view.modify_font(font)
             text_view.connect("key-press-event", self.key_press_event)
             text_view.connect("event-after", self.event_after)

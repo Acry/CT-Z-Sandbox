@@ -1,7 +1,9 @@
 #!/usr/bin/env python2
 '''Images/Images2
+Render some images from:
+PixbufAnimation, Pixbuf, ImageFromFile, ImageFromStockItem, inline ImageFromXPM.
 
-used relevant Methods:
+some relevant Methods:
 `gtk.Image`
 `image.set_from_file`
 
@@ -10,6 +12,7 @@ used relevant Methods:
 
 `gtk.gdk.pixmap_create_from_xpm_d()`
 
+See:
 https://developer.gnome.org/pygtk/stable/class-gdkpixmap.html
 '''
 
@@ -23,7 +26,6 @@ import gtk
 IMAGEDIR = os.path.join(os.path.dirname(__file__), 'images')
 GOALIE_IMAGE = os.path.join(IMAGEDIR, "goalie.gif")
 REDAPPLE_IMAGE = os.path.join(IMAGEDIR, "apple-red.png")
-CHAOS_IMAGE = os.path.join(IMAGEDIR, "chaos.jpg")
 IMPORTANT_IMAGE = os.path.join(IMAGEDIR, "important.tif")
 SOCCERBALL_IMAGE = os.path.join(IMAGEDIR, "soccerball.gif")
 
@@ -186,9 +188,21 @@ class Images2Demo(gtk.Window):
         hbox.pack_start(button)
         button.connect("clicked", self.button_clicked, "2")
 
-        # ImageFromFile
+        # ImageFromStockItem
+        # The render_icon() method is a convenience method that uses the theme engine and RC file settings for the
+        # widget to look up the stock icon specified by stock_id of the specified size and to render it to a pixbuf
+        # that is returned. stock_id should be a stock icon ID such as gtk.STOCK_OPEN or gtk.STOCK_OK.
+        # size should be one of the GTK Icon Size Constants
+        # detail is an optional string that identifies the widget or code doing the rendering, so that theme engines
+        # can special-case rendering for that widget or code.
+
         image = gtk.Image()
-        image.set_from_file(CHAOS_IMAGE)
+        pb = gtk.gdk.Pixbuf
+        pb = image.render_icon(gtk.STOCK_HELP, gtk.ICON_SIZE_LARGE_TOOLBAR, None)
+        w = pb.get_width()
+        h = pb.get_height()
+        pb = pb.scale_simple(w*4, h*4, gtk.gdk.INTERP_BILINEAR)
+        image.set_from_pixbuf(pb)
         button = gtk.Button()
         button.add(image)
         hbox.pack_start(button)
@@ -202,14 +216,14 @@ class Images2Demo(gtk.Window):
         hbox.pack_start(button)
         button.connect("clicked", self.button_clicked, "4")
 
-        # ImageFromFile
+        # ImageFromPixBuf
+        pixbuf = gtk.gdk.pixbuf_new_from_file(SOCCERBALL_IMAGE)
         image = gtk.Image()
-        image.set_from_file(SOCCERBALL_IMAGE)
+        image.set_from_pixbuf(pixbuf)
         button = gtk.Button()
         button.add(image)
         hbox.pack_start(button)
         button.connect("clicked", self.button_clicked, "5")
-
 
         # ImageFromXPM
         self.realize()  # to get the drawable

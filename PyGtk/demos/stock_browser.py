@@ -1,9 +1,9 @@
 #!/usr/bin/env python2
 '''Stock Item and Icon Browser
 
-This source code for this demo doesn't demonstrate anything particularly
-useful in applications. The purpose of the "demo" is just to provide a
-handy place to browse the available stock icons and stock items.
+This demo  provides the available stock icons and stock items.
+
+Double click to copy stock icon name.
 
 GTK Icon Size Constants:
 The Icon Size constants specify the pre-defined sizes of icons for various application uses.

@@ -4,6 +4,23 @@
 This source code for this demo doesn't demonstrate anything particularly
 useful in applications. The purpose of the "demo" is just to provide a
 handy place to browse the available stock icons and stock items.
+
+GTK Icon Size Constants:
+The Icon Size constants specify the pre-defined sizes of icons for various application uses.
+
+`gtk.ICON_SIZE_INVALID`
+
+`gtk.ICON_SIZE_MENU`
+
+`gtk.ICON_SIZE_SMALL_TOOLBAR`
+
+`gtk.ICON_SIZE_LARGE_TOOLBAR`
+
+`gtk.ICON_SIZE_BUTTON`
+
+`gtk.ICON_SIZE_DND`
+
+`gtk.ICON_SIZE_DIALOG`
 '''
 # pygtk version: Maik Hertha <maik.hertha@berlin.de>
 
@@ -67,7 +84,6 @@ def get_largest_size(stockid):
             best_pixels = width * height
 
         i += 1
-
     return best_size
 
 

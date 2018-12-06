@@ -1,0 +1,15 @@
+gtk.Dialog
+gtk.MessageDialog
+
+Predefined dialogs
+gtk.AboutDialog
+gtk.ColorSelectionDialog
+gtk.FileChooserDialog
+gtk.FileChooserButton
+gtk.FileSelection
+gtk.FontSelectionDialog
+gtk.InputDialog
+gtk.RecentChooserDialog
+
+gtkunixprint.PageSetupUnixDialog
+gtkunixprint.PrintUnixDialog

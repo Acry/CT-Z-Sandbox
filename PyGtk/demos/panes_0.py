@@ -1,6 +1,5 @@
 #!/usr/bin/env python2
-"""Paned Widgets simple
-
+"""Paned Widgets/HPaned 1
 Paned Widgets divide their content area into two panes
 with a divider in between that the user can adjust.
 A separate child is placed into each pane.
@@ -10,7 +9,7 @@ import pygtk
 pygtk.require('2.0')
 import gtk
 
-class PanedWidgetsSimpleDemo(gtk.Window):
+class HPaned1Demo(gtk.Window):
     def __init__(self, parent=None):
         # Create toplevel window
         gtk.Window.__init__(self)
@@ -49,10 +48,6 @@ class PanedWidgetsSimpleDemo(gtk.Window):
         self.show_all()
 
 
-
-def main():
-    PanedWidgetsSimpleDemo()
-    gtk.main()
-
 if __name__ == '__main__':
-    main()
+    HPaned1Demo()
+    gtk.main()

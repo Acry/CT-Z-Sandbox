@@ -15,6 +15,7 @@ import os
 IMAGEDIR = os.path.join(os.path.dirname(__file__), 'images')
 ICON_IMAGE = os.path.join(IMAGEDIR, 'gtk-logo.svg')
 
+
 class Window5Demo(gtk.Window):
     def __init__(self, parent=None):
         gtk.Window.__init__(self)
@@ -42,6 +43,7 @@ class Window5Demo(gtk.Window):
         # window1.set_type_hint( gtk.gdk.WINDOW_TYPE_HINT_DIALOG )
         window1.set_icon_from_file(ICON_IMAGE)
         window1.show()
+
 
 if __name__ == '__main__':
     Window5Demo()

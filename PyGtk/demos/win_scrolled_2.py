@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-"""Windows/Window Scrolling
+"""Windows/Scrolling 2
 
 INFO HERE
 """
@@ -8,7 +8,7 @@ import pygtk
 pygtk.require('2.0')
 import gtk
 
-class WindowScrollingDemo(gtk.Window):
+class Scrolling2Demo(gtk.Window):
     def __init__(self, parent=None):
         # Create toplevel window
         gtk.Window.__init__(self)
@@ -70,7 +70,7 @@ class WindowScrollingDemo(gtk.Window):
 	self.show_all()
 
 def main():
-    WindowScrollingDemo()
+    Scrolling2Demo()
     gtk.main()
 
 if __name__ == '__main__':

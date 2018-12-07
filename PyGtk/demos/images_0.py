@@ -25,6 +25,7 @@ import gtk
 
 IMAGEDIR = os.path.join(os.path.dirname(__file__), 'images')
 GOALIE_IMAGE = os.path.join(IMAGEDIR, "goalie.gif")
+
 REDAPPLE_IMAGE = os.path.join(IMAGEDIR, "apple-red.png")
 IMPORTANT_IMAGE = os.path.join(IMAGEDIR, "important.tif")
 SOCCERBALL_IMAGE = os.path.join(IMAGEDIR, "soccerball.gif")

@@ -24,8 +24,7 @@ import gobject
 import gtk
 
 IMAGEDIR = os.path.join(os.path.dirname(__file__), 'images')
-GOALIE_IMAGE = os.path.join(IMAGEDIR, "goalie.gif")
-
+FOURIER_IMAGE = os.path.join(IMAGEDIR, "Fourier_series_square_wave_circles_animation.gif")
 REDAPPLE_IMAGE = os.path.join(IMAGEDIR, "apple-red.png")
 IMPORTANT_IMAGE = os.path.join(IMAGEDIR, "important.tif")
 SOCCERBALL_IMAGE = os.path.join(IMAGEDIR, "soccerball.gif")
@@ -173,7 +172,7 @@ class Images2Demo(gtk.Window):
         self.add(hbox)
 
         # PixbufAnimation
-        pixbufanim = gtk.gdk.PixbufAnimation(GOALIE_IMAGE)
+        pixbufanim = gtk.gdk.PixbufAnimation(FOURIER_IMAGE)
         image = gtk.Image()
         image.set_from_animation(pixbufanim)
         button = gtk.Button()

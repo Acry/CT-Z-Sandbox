@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-'''Windows/Window
+'''Windows/Window1
 
 Creates a Toplevel Window.
 
@@ -22,7 +22,7 @@ import os
 IMAGEDIR = os.path.join(os.path.dirname(__file__), 'images')
 ICON_IMAGE = os.path.join(IMAGEDIR, 'gtk-logo.svg')
 
-class WindowDemo(gtk.Window):
+class Window1Demo(gtk.Window):
     def __init__(self, parent=None):
 
         # Create the toplevel window
@@ -40,7 +40,7 @@ class WindowDemo(gtk.Window):
         self.show_all()
 
 def main():
-    WindowDemo()
+    Window1Demo()
     gtk.main()
 
 if __name__ == '__main__':

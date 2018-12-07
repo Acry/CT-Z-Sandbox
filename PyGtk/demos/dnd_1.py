@@ -10,7 +10,7 @@ pygtk.require('2.0')
 import gtk
 import gobject
 
-from dndpixmap import drag_icon_xpm, trashcan_open_xpm, trashcan_closed_xpm
+from dnd_pixmap import drag_icon_xpm, trashcan_open_xpm, trashcan_closed_xpm
 
 TARGET_STRING = 0
 TARGET_ROOTWIN = 1

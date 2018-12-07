@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-'''Tree View/Basic Treeview of TreeStore
+'''Tree View/Model Tree 0
 
 Basic Treeview connected to TreeStore.
 
@@ -27,7 +27,7 @@ import pygtk
 pygtk.require('2.0')
 import gtk
 
-class BasicTreeviewOfTreeStoreDemo(gtk.Window):
+class ModelTree0Demo(gtk.Window):
     def __init__(self, parent=None):
         gtk.Window.__init__(self)
         try:
@@ -79,9 +79,7 @@ class BasicTreeviewOfTreeStoreDemo(gtk.Window):
         self.add(treeview)
         self.show_all()
 
-def main():
-    BasicTreeviewOfTreeStoreDemo()
-    gtk.main()
 
 if __name__ == '__main__':
-    main()
+    ModelTree0Demo()
+    gtk.main()

@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-"""Paned Widgets
+"""Paned Widgets/VPaned and HPaned
 
 The `GtkHPaned` and `GtkVPaned` Widgets divide their content area into two panes
 with a divider in between that the user can adjust. A separate child is placed
@@ -13,7 +13,7 @@ import pygtk
 pygtk.require('2.0')
 import gtk
 
-class PanedWidgetsDemo(gtk.Window):
+class VPanedandHPanedDemo(gtk.Window):
     def __init__(self, parent=None):
         # Create the toplevel window
         gtk.Window.__init__(self)
@@ -119,9 +119,7 @@ class PanedWidgetsDemo(gtk.Window):
 
         return frame
 
-def main():
-    PanedWidgetsDemo()
-    gtk.main()
 
 if __name__ == '__main__':
-    main()
+    VPanedandHPanedDemo()
+    gtk.main()

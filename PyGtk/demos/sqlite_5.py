@@ -108,7 +108,7 @@ cur.execute('CREATE TABLE services (id INTEGER PRIMARY KEY, name text NOT NULL)'
 services = ["clean", "garden", "decorate"]
 i=1
 for service in services:
-    print service
+    # print service
     cur.execute('INSERT INTO services (id, name) VALUES (?,?)', (i, service))
     i = i+1
 

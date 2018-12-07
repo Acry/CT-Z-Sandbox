@@ -22,15 +22,17 @@
 
 # TODO:
 # Browsing Visual/Usability:
-# internal links to different demos
+# Show Title Page at the beginning.
+# internal links to different demos.
 # add index
 # add widget list
 # tag inline code in Info Buffer
 # add screenshots (preview images) to Info Buffer
 # add intro/contents page on expander
 # switch to treestore and save node relationship in sqlite
-# use closure tables
-# remove info from the source buffer
+#   use closure tables
+# remove info from the source buffer (make hidden)
+
 # thinking of clutter integration, but it looks bad.
 #   since finding a working version failed for now
 
@@ -72,6 +74,10 @@ import platform
 import os
 import demos
 import subprocess
+# import socket
+
+REMOTE_SERVER = "www.google.com"    # for checking online status
+CHECK_TIME = 1000 * 60 * 60         # checking every hour
 
 D_TEMPL = '%sDemo'
 # Some programmatic definition for the demo list.
@@ -160,6 +166,9 @@ class PyGtkDemo(gtk.Window):
     hovering_over_link = False
     hand_cursor = gtk.gdk.Cursor(gtk.gdk.HAND2)
     regular_cursor = gtk.gdk.Cursor(gtk.gdk.XTERM)
+
+    def is_connected(self):
+        pass
 
     def key_press_event(self, text_view, event):
         if (event.keyval == gtk.keysyms.Return or
@@ -324,24 +333,30 @@ class PyGtkDemo(gtk.Window):
         self.set_icon_from_file(ICON_IMAGE)
         vbox = gtk.VBox(False, 3)
         self.add(vbox)
-
+        tbbox = gtk.HBox(False)
+        vbox.pack_start(tbbox, False, False)
         # toolbar
         toolbar = gtk.Toolbar()
         toolbar.set_orientation(gtk.ORIENTATION_HORIZONTAL)
         toolbar.set_style(gtk.TOOLBAR_ICONS)
         toolbar.set_border_width(4)
-        vbox.pack_start(toolbar, False, True)
-        # add makehuman button
+
+        tbbox.pack_end(toolbar, False, False)
+        # git button
         iconw = gtk.Image()  # icon widget
         iconw.set_from_file(GIT_IMAGE)
         git_button = toolbar.append_item(
             "git pull",
-            "pull latest version",
+            "get latest version",
             "Private",
             iconw,
             self.git)
         git_button.set_size_request(80, 34)
-        toolbar.append_space()
+        # foo = toolbar.
+        # git_button.tool_item_set_expand()
+        # git_button.set_alignment(1,1)
+        # toolbar.append_space()
+
         self.hpaned = gtk.HPaned()
         self.hpaned.set_border_width(5)
         vbox.pack_start(self.hpaned, True, True)

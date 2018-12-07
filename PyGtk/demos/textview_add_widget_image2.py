@@ -17,7 +17,8 @@ import pango
 #region Constants
 IMAGEDIR = os.path.join(os.path.dirname(__file__), 'images')
 ICON_IMAGE = os.path.join(IMAGEDIR, 'gtk-logo.svg')
-GOALIE_IMAGE = os.path.join(IMAGEDIR, "goalie.gif")
+FOURIER_IMAGE = os.path.join(IMAGEDIR, "Fourier_series_square_wave_circles_animation.gif")
+
 text = "Press on this button:" \
        " dolore magna aliquyam erat, sed diam voluptua.\n At vero eos et accusam et justo duo dolores et ea rebum.\n" \
        " Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.\n"
@@ -49,7 +50,7 @@ class AddWidgetImage2Demo(gtk.Window):
         sw1.add(textview)
         box1.pack_start(sw1, True, True, 0)
         iter = textbuffer.get_iter_at_line(2)
-        pixbufanim = gtk.gdk.PixbufAnimation(GOALIE_IMAGE)
+        pixbufanim = gtk.gdk.PixbufAnimation(FOURIER_IMAGE)
         image = gtk.Image()
         image.set_from_animation(pixbufanim)
         button = gtk.Button()

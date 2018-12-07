@@ -1,7 +1,16 @@
 #!/usr/bin/env python2
-'''Check Git
+"""Check Git
+
 Checks internet connection and repository head.
-'''
+`CHECK_TIME` is every `10` minutes.
+You get green light if remote and local head are equal.
+Red if you aren't online and a yellowisch color if you are connected but heads differ.
+If you press the git button it calls a `git pull`.
+I may make the button inactive later on, if a pull is not necessary.
+"""
+
+# TODO: Probably I should just switch the "image" not the whole widget.
+#       But then I have to update the tooltip either.
 
 import gtk
 import socket

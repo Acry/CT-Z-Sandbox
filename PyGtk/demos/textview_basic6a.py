@@ -1,19 +1,22 @@
 #!/usr/bin/env python2
 #region Description
-'''Text Widget/TextViewBasic6
+'''Text Widget/TextViewBasic6a
 
 You can tag text as invisible in the text buffer.
 `visibility_tag = textbuffer.create_tag(None, invisible=True)`
 The so tagged text isn't rendered.
 
-In the search one can use:
-`gtk.TEXT_SEARCH_VISIBLE_ONLY`
-to not recognize those tagged regions.
-
 Implement:
-Inline Code Markup like inline Code in Markdown.
-Search backticks and remove them from visible text.
-After that, apply a tag.
+* Text Folding
+* get selection
+`start, end = textbuffer.get_selection_bounds()`
+* hide selection
+`invisibility_tag = textbuffer.create_tag(None, invisible=True)`
+* insert button at selection start
+
+ to hide/unhide
+`invisibility_tag = textbuffer.create_tag(None, invisible=True)`
+`visibility_tag = textbuffer.create_tag(None, invisible=False)`
 '''
 #endregion
 
@@ -36,11 +39,31 @@ text = "Read and show png from from Cherrytree sqlite db (ctb).\n" \
        "left/right step back and forth\n"   \
        "up first entry / down last entry\n "
 #endregion
+def create_toggler(widget, data=None):
+    button = gtk.ToggleButton("toggle button 1")
+    # When the button is toggled, we call the "callback" method
+    # with a pointer to "button" as its argument
+    button.connect("toggled", callback, "toggle button 1")
+    (button, True, True, 2)
+    # iter = textbuffer.get_iter_at_line(2)
+    # anchor = textbuffer.create_child_anchor(iter)
+    # textview.add_child_at_anchor(button, anchor)
 
 
-class TextViewBasic6Demo(gtk.Window):
+def callback(widget, data=None):
+    print "%s was toggled %s" % (data, ("OFF", "ON")[widget.get_active()])
+
+def cb(widget, textview, data=None):
+    gtk.MenuItem(label="foo", use_underline=True)
+    print "yep"
+
+def cb2(textview, menu, anchor):
+        """Extend the Default Right-Click Menu of the CodeBox"""
+        # textview.menu_populate_popup(menu, menus.get_popup_menu_entries_codebox(self), self.dad.orphan_accel_group)
+        pass
+
+class TextViewBasic6aDemo(gtk.Window):
     def __init__(self, parent=None):
-
         #region Window init
         gtk.Window.__init__(self)
 
@@ -67,9 +90,17 @@ class TextViewBasic6Demo(gtk.Window):
         self.add(sw1)
         sw1.add(textview)
         #endregion
+        # textview.connect("", create_toggler,)
+        # invisibility_tag = textbuffer.create_tag(None, invisible=True)
+        visibility_tag = textbuffer.create_tag(None, invisible=True)
+        # Gtk.TextView.signals.populate_popup(text_view, popup)
+        textview.connect("populate_popup", cb, textview)
+        # menu = textview.
+        print dir(textview)
+        #Connect to the populate-popup signal, and add your menu item to the Gtk.Menu
+        # that is passed to your signal handler.
 
         #region Search Backtick and set invisible, markup
-        visibility_tag = textbuffer.create_tag(None, invisible=True)
         tag = textbuffer.create_tag(None, background="lightgrey", background_full_height=True, style=pango.STYLE_OBLIQUE, font="Inconsolta")
         tag_string = "`"
         start, end = textbuffer.get_bounds()
@@ -100,7 +131,7 @@ class TextViewBasic6Demo(gtk.Window):
 
 
 def main():
-    TextViewBasic6Demo()
+    TextViewBasic6aDemo()
     gtk.main()
 
 

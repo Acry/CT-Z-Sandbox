@@ -67,13 +67,19 @@ class CheckGitDemo(gtk.Window):
         self.timer = gobject.timeout_add(CHECK_TIME, self.is_connected)
 
     def git(self, something):
-        status = None
         try:
-            status = subprocess.check_output(['git', 'pull'])
-        except:
-            pass
-        # show a dialog?
-        print status
+            status = subprocess.check_output("git pull", shell=True, stderr=subprocess.STDOUT)
+            # status = subprocess.check_output(['git', 'pull'])
+            dialog = gtk.MessageDialog(self, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO,
+                                       gtk.BUTTONS_CLOSE, status)
+            dialog.run()
+            dialog.destroy()
+        except subprocess.CalledProcessError as e:
+            dialog = gtk.MessageDialog(self, gtk.DIALOG_MODAL, gtk.MESSAGE_ERROR,
+                                       gtk.BUTTONS_CLOSE, e.output)
+            dialog.run()
+            dialog.destroy()
+            raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
 
     def __init__(self, parent=None):
         gtk.Window.__init__(self)

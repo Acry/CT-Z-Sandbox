@@ -67,6 +67,7 @@ class CheckGitDemo(gtk.Window):
         self.timer = gobject.timeout_add(CHECK_TIME, self.is_connected)
 
     def git(self, something):
+        status = None
         try:
             status = subprocess.check_output(['git', 'pull'])
         except:

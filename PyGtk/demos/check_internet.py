@@ -20,8 +20,8 @@ import subprocess
 import os
 
 pygtk.require('2.0')
-IMAGEDIR = os.path.join(os.path.dirname(__file__), 'images')
 
+IMAGEDIR = os.path.join(os.path.dirname(__file__), 'images')
 ICON_IMAGE = os.path.join(IMAGEDIR, 'gtk-logo.svg')
 GIT_IMAGE = os.path.join(IMAGEDIR, 'Git-Logo-Black.svg')
 BUTTON_RED = os.path.join(IMAGEDIR, 'Button-Red.svg')
@@ -106,6 +106,8 @@ class CheckGitDemo(gtk.Window):
             iconw,
             self.git)
         self.git_button.set_size_request(80, 34)
+
+        # lights
         self.image = gtk.Image()
         self.image.set_from_file(BUTTON_GREEN)
         self.image.set_tooltip_text("Connected and up to date.")
@@ -118,6 +120,7 @@ class CheckGitDemo(gtk.Window):
         self.image3.set_from_file(BUTTON_RED)
         self.image3.set_tooltip_text("Not connected.")
 
+        # start with a red light
         self.tbbox.pack_end(self.image3, False, False)
         self.tbbox.pack_end(self.toolbar, False, False)
 

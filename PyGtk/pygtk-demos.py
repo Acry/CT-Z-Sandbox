@@ -93,13 +93,14 @@ LINKLIST = []
 SEARCH_STRINGS = ["https://", "http://"]
 NEWLINE_CHAR = "\n"
 
-IMAGEDIR = os.path.join(os.path.dirname(__file__), 'demos/images')
+
+DEMODIR = os.path.join(os.path.dirname(__file__), "demos")
+IMAGEDIR = os.path.join(DEMODIR, 'images')
 ICON_IMAGE = os.path.join(IMAGEDIR, 'gtk-logo.svg')
 GIT_IMAGE = os.path.join(IMAGEDIR, "Git-Logo-Black.svg")
-IMAGE = "squares2.png"
-MAIN_IMAGE = os.path.join(IMAGEDIR, IMAGE)
-
-
+MAIN_IMAGE = os.path.join(IMAGEDIR, "squares2.png")
+TITLE = os.path.join(DEMODIR, "title.txt")
+TITLE_ACTIVE = False
 category = []  # not used right now, even so it is filled
 
 for descr, mod in demos.demo_list:
@@ -171,8 +172,7 @@ class PyGtkDemo(gtk.Window):
         pass
 
     def key_press_event(self, text_view, event):
-        if (event.keyval == gtk.keysyms.Return or
-                event.keyval == gtk.keysyms.KP_Enter):
+        if event.keyval == gtk.keysyms.Return or event.keyval == gtk.keysyms.KP_Enter:
             buffer = text_view.get_buffer()
             iter = buffer.get_iter_at_mark(buffer.get_insert())
             self.follow_if_link(text_view, iter)
@@ -215,20 +215,16 @@ class PyGtkDemo(gtk.Window):
 
     def set_cursor_if_appropriate(self, text_view, x, y):
         hovering = False
-
         buffer = text_view.get_buffer()
         iter = text_view.get_iter_at_location(x, y)
-
         tags = iter.get_tags()
         for tag in tags:
             page = tag.get_data("page")
             if page != 0:
                 hovering = True
                 break
-
         if hovering != self.hovering_over_link:
             self.hovering_over_link = hovering
-
         if self.hovering_over_link:
             text_view.get_window(gtk.TEXT_WINDOW_TEXT).set_cursor(self.hand_cursor)
         else:
@@ -322,7 +318,6 @@ class PyGtkDemo(gtk.Window):
                 count = count + 1
 
     def git(self, widget):
-        # subprocess.Popen('ls', shell=True)
         subprocess.Popen('git pull', shell=True)
 
     def __init__(self):
@@ -331,17 +326,20 @@ class PyGtkDemo(gtk.Window):
         self.connect('destroy', lambda w: gtk.main_quit())
         self.set_default_size(950, 750)
         self.set_icon_from_file(ICON_IMAGE)
+
         vbox = gtk.VBox(False, 3)
         self.add(vbox)
         tbbox = gtk.HBox(False)
         vbox.pack_start(tbbox, False, False)
+
         # toolbar
         toolbar = gtk.Toolbar()
         toolbar.set_orientation(gtk.ORIENTATION_HORIZONTAL)
         toolbar.set_style(gtk.TOOLBAR_ICONS)
         toolbar.set_border_width(4)
-
+        toolbar.show()
         tbbox.pack_end(toolbar, False, False)
+
         # git button
         iconw = gtk.Image()  # icon widget
         iconw.set_from_file(GIT_IMAGE)
@@ -393,6 +391,16 @@ class PyGtkDemo(gtk.Window):
         tag = self.toc_buffer.create_tag('toc')
         tag.set_property('font', 'Inconsolata 18')
 
+        # TITLE
+        self.scrolled_window_title = gtk.ScrolledWindow()
+        self.scrolled_window_title.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        self.scrolled_window_title.set_shadow_type(gtk.SHADOW_IN)
+        self.title_buffer = gtksourceview2.Buffer(None)
+        self.title_view = gtksourceview2.View(self.title_buffer)
+        self.title_view.set_wrap_mode(gtk.WRAP_WORD)
+        self.scrolled_window_title.add(self.title_view)
+        tag = self.title_buffer.create_tag('toc')
+        tag.set_property('font', 'Inconsolata 18')
         # FUTURE - ALL CONTENT BUFFER | Index etc
         # scrolled_window, self.toc_buffer = self.__create_text(True)
         # self._new_notebook_page(scrolled_window, '_TOC')
@@ -407,6 +415,7 @@ class PyGtkDemo(gtk.Window):
         tvwindow = sw_childs[0].get_window(gtk.TEXT_WINDOW_TEXT)
         tvwindow.set_back_pixmap(pixmap, gtk.FALSE)
         self.show_all()
+        self.on_launch()
 
     def run(self):
         gtk.main()
@@ -423,7 +432,6 @@ class PyGtkDemo(gtk.Window):
             gobject.TYPE_STRING,
             gobject.TYPE_BOOLEAN
         )
-
         treeview = gtk.TreeView(model)
         selection = treeview.get_selection()
         selection.set_mode(gtk.SELECTION_BROWSE)
@@ -437,7 +445,6 @@ class PyGtkDemo(gtk.Window):
                       FUNC_COLUMN, module[FUNC_COLUMN],
                       ITALIC_COLUMN, False
                       )
-
             try:
                 children = module[CHILDREN_COLUMN]
                 for child_module in children:
@@ -450,20 +457,14 @@ class PyGtkDemo(gtk.Window):
                               )
             except IndexError:
                 pass
-
         cell = gtk.CellRendererText()
         cell.set_property('style', pango.STYLE_ITALIC)
-
         column = gtk.TreeViewColumn("Double click for demo.", cell,
                                     text=TITLE_COLUMN, style_set=ITALIC_COLUMN)
-
         treeview.append_column(column)
-
         selection.connect('changed', self.selection_changed_cb)
         treeview.connect('row-activated', self.row_activated_cb)
-
         # treeview.expand_all()
-
         return treeview
 
     def __create_text(self, is_source=False):
@@ -488,6 +489,27 @@ class PyGtkDemo(gtk.Window):
             text_view.connect("visibility-notify-event", self.visibility_notify_event)
         return scrolled_window, buffer
 
+    def on_launch(self):
+        self.insert_title()
+
+    def insert_title(self):
+        global TITLE_ACTIVE
+        if not TITLE_ACTIVE:
+            file = open(TITLE, "r")
+            text = file.read()
+            self.title_view.show()
+            self.title_buffer.set_text(text)
+            for row in category:
+                enditer = self.title_buffer.get_end_iter()
+                self.title_buffer.insert(enditer, "\n")
+                enditer = self.title_buffer.get_end_iter()
+                self.title_buffer.insert(enditer, row)
+                enditer = self.title_buffer.get_end_iter()
+            self.hpaned.remove(self.notebook)
+            self.hpaned.add2(self.scrolled_window_title)
+            self.scrolled_window_title.show()
+            TITLE_ACTIVE = True
+
     def row_activated_cb(self, treeview, path, column):
         # fixme - is this actually called in the original code?
         model = treeview.get_model()
@@ -496,9 +518,9 @@ class PyGtkDemo(gtk.Window):
         func_name = model.get_value(iter, FUNC_COLUMN)
         italic_value = model.get_value(iter, ITALIC_COLUMN)
         if module_name is None:  # a "category" row is activated
-            print "cat selected"
+            # print "cat selected"
             cat_name = model.get_value(iter, TITLE_COLUMN)
-            print cat_name
+            # print cat_name
             return True
         try:
             self.module_cache[module_name].present()
@@ -515,13 +537,18 @@ class PyGtkDemo(gtk.Window):
         model, iter = selection.get_selected()
         if not iter:
             return False
+
         name = model.get_value(iter, MODULE_COLUMN)
         if name is not None:
+            # show module
             self.load_module(name)
             childs = self.hpaned.get_children()
             if childs[1] == self.scrolled_window_toc:
                 self.hpaned.remove(self.scrolled_window_toc)
-                self.hpaned.add2(self.notebook)
+            if childs[1] == self.scrolled_window_title:
+                self.hpaned.remove(self.scrolled_window_title)
+                TITLE_ACTIVE = False
+            self.hpaned.add2(self.notebook)
             self.notebook.show()
         else:
             # show toc
@@ -532,24 +559,22 @@ class PyGtkDemo(gtk.Window):
 
     def insert_toc(self, cat_name):
         try:
-            TOCDIR = os.path.join(os.path.dirname(__file__), 'demos')
             TOCFILE = cat_name + ".toc"
-            TOCFILE = os.path.join(TOCDIR, TOCFILE)
-            array = []
-            with open(TOCFILE, "r") as ins:
-                for line in ins:
-                    line = line.rstrip('\n')
-                    array.append(line)
+            TOCFILE = os.path.join(DEMODIR, TOCFILE)
             file = open(TOCFILE, "r")
             text = file.read()
             self.toc_view.show()
             self.toc_buffer.set_text(text)
-            self.hpaned.remove(self.notebook)
+            childs = self.hpaned.get_children()
+            if childs[1] == self.scrolled_window:
+                self.hpaned.remove(self.scrolled_window)
+            if childs[1] == self.scrolled_window_title:
+                self.hpaned.remove(self.scrolled_window_title)
+                TITLE_ACTIVE = False
             self.hpaned.add2(self.scrolled_window_toc)
             self.scrolled_window_toc.show()
         except:
             self.scrolled_window_toc.hide()
-
 
     def window_closed_cb(self, window, model, path):
         iter = model.get_iter(path)

@@ -6,7 +6,6 @@ Checks internet connection and repository head.
 You get green light if remote and local head are equal.
 Red if you aren't online and a yellowisch color if you are connected but heads differ.
 If you press the git button it calls a `git pull`.
-I may make the button inactive later on, if a pull is not necessary.
 """
 
 # TODO: Probably I should just switch the "image" not the whole widget.
@@ -47,6 +46,7 @@ class CheckGitDemo(gtk.Window):
             self.image2.show()
         except:
             connected = False
+            self.git_button.set_sensitive(False)
         print datetime.datetime.now().time()
         if connected:
             try:
@@ -62,14 +62,14 @@ class CheckGitDemo(gtk.Window):
                     self.tbbox.pack_end(self.image, False, False)
                     self.tbbox.pack_end(self.toolbar, False, False)
                     self.image.show()
+                    self.git_button.set_sensitive(False)
             except:
-                pass
+                self.git_button.set_sensitive(True)
         self.timer = gobject.timeout_add(CHECK_TIME, self.is_connected)
 
     def git(self, something):
         try:
             status = subprocess.check_output("git pull", shell=True, stderr=subprocess.STDOUT)
-            # status = subprocess.check_output(['git', 'pull'])
             dialog = gtk.MessageDialog(self, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO,
                                        gtk.BUTTONS_CLOSE, status)
             dialog.run()
@@ -99,13 +99,13 @@ class CheckGitDemo(gtk.Window):
         # git button
         iconw = gtk.Image()  # icon widget
         iconw.set_from_file(GIT_IMAGE)
-        git_button = self.toolbar.append_item(
+        self.git_button = self.toolbar.append_item(
             "git pull",
             "get latest version",
             "Private",
             iconw,
             self.git)
-        git_button.set_size_request(80, 34)
+        self.git_button.set_size_request(80, 34)
         self.image = gtk.Image()
         self.image.set_from_file(BUTTON_GREEN)
         self.image.set_tooltip_text("Connected and up to date.")

@@ -1,3 +1,9 @@
 Hello and Welcome!
 
+Cherrytree and Zim kinda SDK (work in progress)
+Cherrytree & Zim - A Desktop Wiki
+Python 2 with GTK+ 2 and friends...
+
+https://github.com/Acry/CT-Z-Sandbox
+
 Categories:

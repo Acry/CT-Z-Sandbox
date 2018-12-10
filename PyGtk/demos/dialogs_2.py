@@ -61,7 +61,7 @@ class D2Demo(gtk.Window):
         image.set_from_file(ICON_IMAGE)
         image.show()
         dialog = gtk.MessageDialog(self, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO,
-                                   gtk.BUTTONS_OK, "For your information")
+                                   gtk.BUTTONS_CLOSE, "For your information")
         dialog.set_image(image)
         dialog.run()
         dialog.destroy()

@@ -588,16 +588,13 @@ class PyGtkDemo(gtk.Window):
             return
         else:
             childs = self.hpaned.get_children()
-            print childs
             try:
                 if childs[1] is self.scrolled_window_toc:
-                    print "toc is active"
                     self.hpaned.remove(self.scrolled_window_toc)
             except:
                 pass
             try:
                 if childs[1] is self.notebook:
-                    print "module info is active"
                     self.hpaned.remove(self.notebook)
             except:
                 pass
@@ -620,10 +617,7 @@ class PyGtkDemo(gtk.Window):
                 enditer = self.title_buffer.get_end_iter()
                 self.title_buffer.insert(enditer, row)
                 enditer = self.title_buffer.get_end_iter()
-            self.hpaned.remove(self.notebook)
-            self.hpaned.add2(self.scrolled_window_title)
-            self.scrolled_window_title.show()
-            TITLE_ACTIVE = True
+            self.show_title(self)
 
     def row_activated_cb(self, treeview, path, column):
         # fixme - is this actually called in the original code?

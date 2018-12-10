@@ -1,5 +1,21 @@
 #!/usr/bin/env python2
-'''
+"""
+Cherrytree and Zim kinda SDK (work in progress)
+Cherrytree & Zim - A Desktop Wiki
+Python 2 with GTK+ 2 and friends...
+
+Repository:
+https://github.com/Acry/CT-Z-Sandbox
+
+Trying to connect Demos from PyGTK Tutorial, FAQ, RefMan and
+several other resources to have a decent demo/recipe-pool
+for a CherryTree and Zim-Wiki Developer-Sandbox.
+
+based on pygtk-demo, demos from http://zetcode.com/gui/pygtk
+demos from https://www.kksou.com/php-gtk2/category/Sample-Codes/
+"""
+
+"""
   $Id$
 
   pygtk-demo.py
@@ -12,27 +28,28 @@
                 Added some educational valuable Demos.
                 Push to github.
                 (Carsten Holtkamp)
-'''
+"""
 
-# Trying to connect Demos from PyGTK Tutorial, FAQ, RefMan and
-#   several other resources to have a decent demo/recipe-pool
-# for a CherryTree and Zim-Wiki Developer-Sandbox
+
 
 # NEWS:
 
 # TODO:
 # Browsing Visual/Usability:
-# Show Title Page at the beginning.
+# add home button which links to title
+# save last used page/module
 # internal links to different demos.
 # add index
 # add widget list
 # tag inline code in Info Buffer
-# add screenshots (preview images) to Info Buffer
-# add intro/contents page on expander
 # switch to treestore and save node relationship in sqlite
 #   use closure tables
-# remove info from the source buffer (make hidden)
+# remove info from the source buffer (make hidden)?
+#   think it is better to seperate description
+# implement a tutorial assistant where demos are in a pedagogical order
+# add exercises
 
+# Long term:
 # thinking of clutter integration, but it looks bad.
 #   since finding a working version failed for now
 
@@ -44,21 +61,17 @@
 # implement code-fork and save changes
 # implement bracket matching and autocomplete
 # implement code folding
-# implement a tutorial assistant where demos are in a pedagogical order
-# add exercises
 
 # Content:
 # add CherryTree and Zim demos
-# add sqlite demos
-# add more cairo demos
+# add cairo demos
 # add pango demos
 # add gdk color examples and value range scaling aka normalization
-# demos from http://zetcode.com/gui/pygtk
-# demos from https://www.kksou.com/php-gtk2/category/Sample-Codes/
-# add widget-factory
+# add item-factory (deprecated)
+#   gtk.ItemFactory is deprecated in PyGTK 2.4 and above, gtk.UIManager should be used instead.
 # add custom widget
-# add containers category
 # tables - Weighting on a table
+# add python 2 category
 
 #region imports
 import string
@@ -75,13 +88,11 @@ import platform
 import os
 import demos
 import subprocess
-# import socket
+import datetime
+import socket
 #endregion
 
 #region globals and constants
-REMOTE_SERVER = "www.google.com"    # for checking online status
-CHECK_TIME = 1000 * 60 * 60         # checking every hour
-
 child_demos = {}
 testgtk_demos = []
 LINKLIST = []
@@ -91,7 +102,14 @@ NEWLINE_CHAR = "\n"
 DEMODIR = os.path.join(os.path.dirname(__file__), "demos")
 IMAGEDIR = os.path.join(DEMODIR, 'images')
 ICON_IMAGE = os.path.join(IMAGEDIR, 'gtk-logo.svg')
+
 GIT_IMAGE = os.path.join(IMAGEDIR, "Git-Logo-Black.svg")
+REMOTE_SERVER = "www.google.com"    # for checking online status
+CHECK_TIME = 1000 * 60 * 60         # checking every hour
+BUTTON_RED = os.path.join(IMAGEDIR, 'Button-Red.svg')
+BUTTON_ORANGE = os.path.join(IMAGEDIR, 'Button-Yellow.svg')
+BUTTON_GREEN = os.path.join(IMAGEDIR, 'Button-Green.svg')
+
 MAIN_IMAGE = os.path.join(IMAGEDIR, "squares2.png")
 TITLE = os.path.join(DEMODIR, "title.txt")
 TITLE_ACTIVE = False
@@ -172,7 +190,38 @@ class PyGtkDemo(gtk.Window):
     regular_cursor = gtk.gdk.Cursor(gtk.gdk.XTERM)
 
     def is_connected(self):
-        pass
+        gobject.source_remove(self.timer)
+        try:
+            host = socket.gethostbyname(REMOTE_SERVER)
+            s = socket.create_connection((host, 80), 2)
+            connected = True
+            self.tbbox.remove(self.image3)
+            self.tbbox.remove(self.toolbar_r)
+            self.tbbox.pack_end(self.image2, False, False)
+            self.tbbox.pack_end(self.toolbar_r, False, False)
+            self.image2.show()
+        except:
+            connected = False
+            self.git_button.set_sensitive(False)
+        print datetime.datetime.now().time()
+        if connected:
+            try:
+                local_head = subprocess.check_output(['git', 'rev-parse', '@'])
+                local_head = local_head.rstrip()
+                # FIXME: find a solution for shh/git
+                remote_head = subprocess.check_output(['git', 'ls-remote', 'https://github.com/Acry/CT-Z-Sandbox.git'])
+                remote_head = remote_head.split()
+                remote_head = remote_head[0]
+                if remote_head == local_head:
+                    self.tbbox.remove(self.image2)
+                    self.tbbox.remove(self.toolbar_r)
+                    self.tbbox.pack_end(self.image, False, False)
+                    self.tbbox.pack_end(self.toolbar_r, False, False)
+                    self.image.show()
+                    self.git_button.set_sensitive(False)
+            except:
+                self.git_button.set_sensitive(True)
+        self.timer = gobject.timeout_add(CHECK_TIME, self.is_connected)
 
     def key_press_event(self, text_view, event):
         if event.keyval == gtk.keysyms.Return or event.keyval == gtk.keysyms.KP_Enter:
@@ -317,8 +366,19 @@ class PyGtkDemo(gtk.Window):
                 match_end.forward_char()
                 count = count + 1
 
-    def git(self, widget):
-        subprocess.Popen('git pull', shell=True)
+    def git(self, something):
+        try:
+            status = subprocess.check_output("git pull", shell=True, stderr=subprocess.STDOUT)
+            dialog = gtk.MessageDialog(self, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO,
+                                       gtk.BUTTONS_CLOSE, status)
+            dialog.run()
+            dialog.destroy()
+        except subprocess.CalledProcessError as e:
+            dialog = gtk.MessageDialog(self, gtk.DIALOG_MODAL, gtk.MESSAGE_ERROR,
+                                       gtk.BUTTONS_CLOSE, e.output)
+            dialog.run()
+            dialog.destroy()
+            raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
 
     def __init__(self):
         gtk.Window.__init__(self)
@@ -329,31 +389,43 @@ class PyGtkDemo(gtk.Window):
 
         vbox = gtk.VBox(False, 3)
         self.add(vbox)
-        tbbox = gtk.HBox(False)
-        vbox.pack_start(tbbox, False, False)
+        self.tbbox = gtk.HBox(False)
+        self.tbbox.set_border_width(12)
+        vbox.pack_start(self.tbbox, False, False)
 
-        # toolbar
-        toolbar = gtk.Toolbar()
-        toolbar.set_orientation(gtk.ORIENTATION_HORIZONTAL)
-        toolbar.set_style(gtk.TOOLBAR_ICONS)
-        toolbar.set_border_width(4)
-        toolbar.show()
-        tbbox.pack_end(toolbar, False, False)
+        # toolbar_l
+        self.toolbar_l = gtk.Toolbar()
+        self.toolbar_l.set_style(gtk.TOOLBAR_ICONS)
+        self.toolbar_l.set_border_width(4)
+        self.toolbar_l.show()
+
+        self.tbbox.pack_start(self.toolbar_l, False, False)
+        iconw = gtk.Image()  # icon widget
+        iconw.set_from_file(GIT_IMAGE)
+        iconw.set_from_stock(gtk.STOCK_HOME, gtk.ICON_SIZE_LARGE_TOOLBAR)
+        self.home_button = self.toolbar_l.append_item(
+            "home",
+            "direct to title",
+            "Private",
+            iconw,
+            self.show_title)
+        self.home_button.set_sensitive(False)
+        # toolbar_r
+        self.toolbar_r = gtk.Toolbar()
+        self.toolbar_r.set_style(gtk.TOOLBAR_ICONS)
+        self.toolbar_r.set_border_width(4)
+        self.toolbar_r.show()
 
         # git button
         iconw = gtk.Image()  # icon widget
         iconw.set_from_file(GIT_IMAGE)
-        git_button = toolbar.append_item(
+        self.git_button = self.toolbar_r.append_item(
             "git pull",
             "get latest version",
             "Private",
             iconw,
             self.git)
-        git_button.set_size_request(80, 34)
-        # foo = toolbar.
-        # git_button.tool_item_set_expand()
-        # git_button.set_alignment(1,1)
-        # toolbar.append_space()
+        self.git_button.set_size_request(80, 34)
 
         self.hpaned = gtk.HPaned()
         self.hpaned.set_border_width(5)
@@ -491,9 +563,51 @@ class PyGtkDemo(gtk.Window):
 
     def on_launch(self):
         # set timer
-        self.insert_title()
+        self.image = gtk.Image()
+        self.image.set_from_file(BUTTON_GREEN)
+        self.image.set_tooltip_text("Connected and up to date.")
 
-    def insert_title(self):
+        self.image2 = gtk.Image()
+        self.image2.set_from_file(BUTTON_ORANGE)
+        self.image2.set_tooltip_text("Connected and not up to date.")
+
+        self.image3 = gtk.Image()
+        self.image3.set_from_file(BUTTON_RED)
+        self.image3.set_tooltip_text("Not connected.")
+
+        # start with a red light
+        self.tbbox.pack_end(self.image3, False, False)
+        self.tbbox.pack_end(self.toolbar_r, False, False)
+        self.image3.show()
+        self.timer = gobject.timeout_add(1000, self.is_connected)
+        self.insert_title(self)
+
+    def show_title(self, something):
+        global TITLE_ACTIVE
+        if TITLE_ACTIVE:
+            return
+        else:
+            childs = self.hpaned.get_children()
+            print childs
+            try:
+                if childs[1] is self.scrolled_window_toc:
+                    print "toc is active"
+                    self.hpaned.remove(self.scrolled_window_toc)
+            except:
+                pass
+            try:
+                if childs[1] is self.notebook:
+                    print "module info is active"
+                    self.hpaned.remove(self.notebook)
+            except:
+                pass
+            self.hpaned.add2(self.scrolled_window_title)
+            self.title_view.show()
+            self.scrolled_window_title.show()
+            self.home_button.set_sensitive(False)
+            TITLE_ACTIVE = True
+
+    def insert_title(self, something):
         global TITLE_ACTIVE
         if not TITLE_ACTIVE:
             file = open(TITLE, "r")
@@ -535,6 +649,7 @@ class PyGtkDemo(gtk.Window):
                 self.module_cache[module_name] = window
 
     def selection_changed_cb(self, selection):
+        global TITLE_ACTIVE
         model, iter = selection.get_selected()
         if not iter:
             return False
@@ -548,6 +663,7 @@ class PyGtkDemo(gtk.Window):
             if childs[1] is self.scrolled_window_title:
                 self.hpaned.remove(self.scrolled_window_title)
                 TITLE_ACTIVE = False
+                self.home_button.set_sensitive(True)
             self.hpaned.add2(self.notebook)
             self.notebook.show()
         else:
@@ -558,6 +674,7 @@ class PyGtkDemo(gtk.Window):
             self.insert_toc(cat_name)
 
     def insert_toc(self, cat_name):
+        global TITLE_ACTIVE
         childs = self.hpaned.get_children()
         try:
             if childs[1] is self.scrolled_window:
@@ -568,6 +685,7 @@ class PyGtkDemo(gtk.Window):
             if childs[1] is self.scrolled_window_title:
                 self.hpaned.remove(self.scrolled_window_title)
                 TITLE_ACTIVE = False
+                self.home_button.set_sensitive(True)
         except:
             pass
         self.hpaned.add2(self.scrolled_window_toc)

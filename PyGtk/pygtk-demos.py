@@ -664,15 +664,15 @@ class PyGtkDemo(gtk.Window):
             # show toc
             cat_name = model.get_value(iter, TITLE_COLUMN)
             cat_name = cat_name.lower()
-            self.notebook.hide()
+            # self.notebook.hide()
             self.insert_toc(cat_name)
 
     def insert_toc(self, cat_name):
         global TITLE_ACTIVE
         childs = self.hpaned.get_children()
         try:
-            if childs[1] is self.scrolled_window:
-                self.hpaned.remove(self.scrolled_window)
+            if childs[1] is self.notebook:
+                self.hpaned.remove(self.notebook)
         except:
             pass
         try:
@@ -682,14 +682,17 @@ class PyGtkDemo(gtk.Window):
                 self.home_button.set_sensitive(True)
         except:
             pass
-        self.hpaned.add2(self.scrolled_window_toc)
+        try:
+            self.hpaned.add2(self.scrolled_window_toc)
+        except:
+            pass
         self.scrolled_window_toc.show()
+        self.toc_view.show()
         try:
             TOCFILE = cat_name + ".toc"
             TOCFILE = os.path.join(DEMODIR, TOCFILE)
             file = open(TOCFILE, "r")
             text = file.read()
-            self.toc_view.show()
             self.toc_buffer.set_text(text)
         except:
             self.scrolled_window_toc.hide()

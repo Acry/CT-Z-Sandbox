@@ -197,6 +197,10 @@ class Images2Demo(gtk.Window):
         # can special-case rendering for that widget or code.
 
         image = gtk.Image()
+        # easiest:
+        # set_from_stock(stock_id, size)
+
+        # more size control:
         pb = gtk.gdk.Pixbuf
         pb = image.render_icon(gtk.STOCK_HELP, gtk.ICON_SIZE_LARGE_TOOLBAR, None)
         w = pb.get_width()

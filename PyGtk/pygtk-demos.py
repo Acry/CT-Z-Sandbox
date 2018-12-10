@@ -60,6 +60,7 @@
 # add containers category
 # tables - Weighting on a table
 
+#region imports
 import string
 import re
 import pygtk
@@ -75,24 +76,17 @@ import os
 import demos
 import subprocess
 # import socket
+#endregion
 
+#region globals and constants
 REMOTE_SERVER = "www.google.com"    # for checking online status
 CHECK_TIME = 1000 * 60 * 60         # checking every hour
-
-D_TEMPL = '%sDemo'
-# Some programmatic definition for the demo list.
-#
-# This avoids extra maintenance if the demo list grows up.
-# The current definition requires # a class or function with
-# a swapped case name+'Demo' like in the doc string.
-# Swapped case is build from the __doc__-string programatically.
 
 child_demos = {}
 testgtk_demos = []
 LINKLIST = []
 SEARCH_STRINGS = ["https://", "http://"]
 NEWLINE_CHAR = "\n"
-
 
 DEMODIR = os.path.join(os.path.dirname(__file__), "demos")
 IMAGEDIR = os.path.join(DEMODIR, 'images')
@@ -102,7 +96,16 @@ MAIN_IMAGE = os.path.join(IMAGEDIR, "squares2.png")
 TITLE = os.path.join(DEMODIR, "title.txt")
 TITLE_ACTIVE = False
 category = []  # not used right now, even so it is filled
+#endregion
 
+#region Some programmatic definition for the demo list.
+D_TEMPL = '%sDemo'
+
+#
+# This avoids extra maintenance if the demo list grows up.
+# The current definition requires # a class or function with
+# a swapped case name+'Demo' like in the doc string.
+# Swapped case is build from the __doc__-string programatically.
 for descr, mod in demos.demo_list:
     # Find some categorized demos
     try:
@@ -137,7 +140,7 @@ for descr, mod in demos.demo_list:
 
 CHILDREN_COLUMN = 3
 # print category
-
+#endregion
 
 class InputStream(object):
     """ Simple Wrapper for File-like objects. [c]StringIO doesn't provide
@@ -184,7 +187,6 @@ class PyGtkDemo(gtk.Window):
         if event.button != 1:
             return False
         buffer = text_view.get_buffer()
-
         # we shouldn't follow a link if the user has selected something
         try:
             start, end = buffer.get_selection_bounds()
@@ -194,11 +196,9 @@ class PyGtkDemo(gtk.Window):
         else:
             if start.get_offset() != end.get_offset():
                 return False
-
         x, y = text_view.window_to_buffer_coords(gtk.TEXT_WINDOW_WIDGET,
                                                  int(event.x), int(event.y))
         iter = text_view.get_iter_at_location(x, y)
-
         self.follow_if_link(text_view, iter)
         return False
 
@@ -490,6 +490,7 @@ class PyGtkDemo(gtk.Window):
         return scrolled_window, buffer
 
     def on_launch(self):
+        # set timer
         self.insert_title()
 
     def insert_title(self):
@@ -537,15 +538,14 @@ class PyGtkDemo(gtk.Window):
         model, iter = selection.get_selected()
         if not iter:
             return False
-
         name = model.get_value(iter, MODULE_COLUMN)
         if name is not None:
             # show module
             self.load_module(name)
             childs = self.hpaned.get_children()
-            if childs[1] == self.scrolled_window_toc:
+            if childs[1] is self.scrolled_window_toc:
                 self.hpaned.remove(self.scrolled_window_toc)
-            if childs[1] == self.scrolled_window_title:
+            if childs[1] is self.scrolled_window_title:
                 self.hpaned.remove(self.scrolled_window_title)
                 TITLE_ACTIVE = False
             self.hpaned.add2(self.notebook)
@@ -558,6 +558,20 @@ class PyGtkDemo(gtk.Window):
             self.insert_toc(cat_name)
 
     def insert_toc(self, cat_name):
+        childs = self.hpaned.get_children()
+        try:
+            if childs[1] is self.scrolled_window:
+                self.hpaned.remove(self.scrolled_window)
+        except:
+            pass
+        try:
+            if childs[1] is self.scrolled_window_title:
+                self.hpaned.remove(self.scrolled_window_title)
+                TITLE_ACTIVE = False
+        except:
+            pass
+        self.hpaned.add2(self.scrolled_window_toc)
+        self.scrolled_window_toc.show()
         try:
             TOCFILE = cat_name + ".toc"
             TOCFILE = os.path.join(DEMODIR, TOCFILE)
@@ -565,14 +579,6 @@ class PyGtkDemo(gtk.Window):
             text = file.read()
             self.toc_view.show()
             self.toc_buffer.set_text(text)
-            childs = self.hpaned.get_children()
-            if childs[1] == self.scrolled_window:
-                self.hpaned.remove(self.scrolled_window)
-            if childs[1] == self.scrolled_window_title:
-                self.hpaned.remove(self.scrolled_window_title)
-                TITLE_ACTIVE = False
-            self.hpaned.add2(self.scrolled_window_toc)
-            self.scrolled_window_toc.show()
         except:
             self.scrolled_window_toc.hide()
 

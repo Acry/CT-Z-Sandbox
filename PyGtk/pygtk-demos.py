@@ -1,4 +1,5 @@
 #!/usr/bin/env python2
+# region Description
 """
 Cherrytree and Zim kinda SDK (work in progress)
 Cherrytree & Zim - A Desktop Wiki
@@ -14,7 +15,9 @@ for a CherryTree and Zim-Wiki Developer-Sandbox.
 based on pygtk-demo, demos from http://zetcode.com/gui/pygtk
 demos from https://www.kksou.com/php-gtk2/category/Sample-Codes/
 """
+# endregion
 
+# region Milestones
 """
   $Id$
 
@@ -26,17 +29,13 @@ demos from https://www.kksou.com/php-gtk2/category/Sample-Codes/
   2018-10-22:   Switched plain TextView with SourceHighlight - made that simple syntax highlighting obsolete.
                 Added panning.
                 Added some educational valuable Demos.
-                Push to github.
+                Push to github, view commits for history
                 (Carsten Holtkamp)
 """
+# endregion
 
-
-
-# NEWS:
-
-# TODO:
+# region OUTLINE / ROADMAP:
 # Browsing Visual/Usability:
-# add home button which links to title
 # save last used page/module
 # internal links to different demos.
 # add index
@@ -46,8 +45,11 @@ demos from https://www.kksou.com/php-gtk2/category/Sample-Codes/
 #   use closure tables
 # remove info from the source buffer (make hidden)?
 #   think it is better to seperate description
+# l10N/I18N
 # implement a tutorial assistant where demos are in a pedagogical order
 # add exercises
+# show new commits
+# allow particular depth of sub-categories
 
 # Long term:
 # thinking of clutter integration, but it looks bad.
@@ -72,8 +74,10 @@ demos from https://www.kksou.com/php-gtk2/category/Sample-Codes/
 # add custom widget
 # tables - Weighting on a table
 # add python 2 category
+# have a diff between fork and base
+# endregion
 
-#region imports
+# region imports
 import string
 import re
 import pygtk
@@ -90,9 +94,10 @@ import demos
 import subprocess
 import datetime
 import socket
-#endregion
 
-#region globals and constants
+# endregion
+
+# region globals and constants
 child_demos = {}
 testgtk_demos = []
 LINKLIST = []
@@ -104,8 +109,8 @@ IMAGEDIR = os.path.join(DEMODIR, 'images')
 ICON_IMAGE = os.path.join(IMAGEDIR, 'gtk-logo.svg')
 
 GIT_IMAGE = os.path.join(IMAGEDIR, "Git-Logo-Black.svg")
-REMOTE_SERVER = "www.google.com"    # for checking online status
-CHECK_TIME = 1000 * 60 * 60         # checking every hour
+REMOTE_SERVER = "www.google.com"  # for checking online status
+CHECK_TIME = 1000 * 60 * 60  # checking every hour
 BUTTON_RED = os.path.join(IMAGEDIR, 'Button-Red.svg')
 BUTTON_ORANGE = os.path.join(IMAGEDIR, 'Button-Yellow.svg')
 BUTTON_GREEN = os.path.join(IMAGEDIR, 'Button-Green.svg')
@@ -114,9 +119,9 @@ MAIN_IMAGE = os.path.join(IMAGEDIR, "squares2.png")
 TITLE = os.path.join(DEMODIR, "title.txt")
 TITLE_ACTIVE = False
 category = []  # not used right now, even so it is filled
-#endregion
+# endregion
 
-#region Some programmatic definition for the demo list.
+# region Some programmatic definition for the demo list.
 D_TEMPL = '%sDemo'
 
 #
@@ -157,8 +162,10 @@ for descr, mod in demos.demo_list:
 ) = range(4)
 
 CHILDREN_COLUMN = 3
+
+
 # print category
-#endregion
+# endregion
 
 class InputStream(object):
     """ Simple Wrapper for File-like objects. [c]StringIO doesn't provide
@@ -224,6 +231,7 @@ class PyGtkDemo(gtk.Window):
         self.timer = gobject.timeout_add(CHECK_TIME, self.is_connected)
 
     def key_press_event(self, text_view, event):
+        """method help"""
         if event.keyval == gtk.keysyms.Return or event.keyval == gtk.keysyms.KP_Enter:
             buffer = text_view.get_buffer()
             iter = buffer.get_iter_at_mark(buffer.get_insert())
@@ -583,6 +591,7 @@ class PyGtkDemo(gtk.Window):
         self.insert_title(self)
 
     def show_title(self, something):
+        """shows title.txt"""
         global TITLE_ACTIVE
         if TITLE_ACTIVE:
             return
@@ -605,6 +614,7 @@ class PyGtkDemo(gtk.Window):
             TITLE_ACTIVE = True
 
     def insert_title(self, something):
+        """creates title buffer from title.txt"""
         global TITLE_ACTIVE
         if not TITLE_ACTIVE:
             file = open(TITLE, "r")

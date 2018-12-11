@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-'''Text Widget/TextViewSimple
+'''Text Widget/TextView 0
 
 Creates a TextViewWidget in a Window.
 
@@ -23,7 +23,7 @@ ICON_IMAGE = os.path.join(IMAGEDIR, 'gtk-logo.svg')
 text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
 
 
-class TextViewSimpleDemo(gtk.Window):
+class TextView0Demo(gtk.Window):
     def __init__(self, parent=None):
 
         # Create the toplevel window
@@ -59,9 +59,7 @@ class TextViewSimpleDemo(gtk.Window):
 
         self.show_all()
 
-def main():
-    TextViewSimpleDemo()
-    gtk.main()
 
 if __name__ == '__main__':
-    main()
+    TextView0Demo()
+    gtk.main()

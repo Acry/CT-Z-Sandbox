@@ -436,6 +436,7 @@ class PyGtkDemo(gtk.Window):
             iconw,
             self.git)
         self.git_button.set_size_request(80, 34)
+        self.git_button.set_sensitive(False)
 
         self.hpaned = gtk.HPaned()
         self.hpaned.set_border_width(5)

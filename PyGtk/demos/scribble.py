@@ -94,7 +94,6 @@ class ScribbleDemo(gtk.Window):
             self.connect('destroy', lambda *w: gtk.main_quit())
 
         self.set_title(self.__class__.__name__)
-        # self.set_default_size(200, 200)
         self.set_icon_from_file(ICON_IMAGE)
         self.set_geometry_hints(min_width=100, min_height=100)
         vbox = gtk.VBox(False, 0)
@@ -122,7 +121,6 @@ class ScribbleDemo(gtk.Window):
         button.connect_object("clicked", lambda w: w.destroy(), self)
         button.show()
         self.show()
-
 
 
 if __name__ == '__main__':

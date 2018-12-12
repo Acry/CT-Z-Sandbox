@@ -375,6 +375,7 @@ class PyGtkDemo(gtk.Window):
                 count = count + 1
 
     def git(self, something):
+        status = None
         try:
             status = subprocess.check_output("git pull", shell=True, stderr=subprocess.STDOUT)
             dialog = gtk.MessageDialog(self, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO,
@@ -387,6 +388,7 @@ class PyGtkDemo(gtk.Window):
             dialog.run()
             dialog.destroy()
             raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
+        print status
 
     def __init__(self):
         gtk.Window.__init__(self)

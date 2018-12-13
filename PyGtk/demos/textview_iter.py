@@ -2,33 +2,11 @@
 # -*- coding: utf-8 -*-
 '''Text Widget/Iters
 
-Text Buffers
-A TextBuffer is the core component of the PyGTK text editing system.
-It contains the text, the TextTags in a TextTagTable and the TextMarks which together describe how the text is to be
-displayed and allow a user to interactively modify the text and text display.
-A TextBuffer is associated with one or more TextViews which display the TextBuffer contents.
-
-A TextBuffer can be created automatically when a TextView is created or it can be created with the function:
-`textbuffer = TextBuffer(table=None)`
-where table is a TextTagTable, if table is not specified (or is `None`) a TextTagTable will be created for the
-TextBuffer.
-
-In this example I show the buffer status information and set the cursor to a certain position using an iter.
-
-You can retrieve the number of lines in a textbuffer by using the method:
-`line_count = textbuffer.get_line_count()`
-
-Likewise you can get the number of characters in the textbuffer using:
-`char_count = textbuffer.get_char_count()`
-
-When the textbuffer contents are changed the modified flag in the textbuffer is set.
-
 iter (plural iters) from Latin iter (“passage”).
 Here: a text passage.
 
 An Iter is used to specify a volatile location within a Buffer between two characters.
 TextBuffer methods that manipulate text use TextIters to specify where the method is to be applied.
-
 `iter = textbuffer.get_iter_at_offset(char_offset)`
 
 `iter = textbuffer.get_iter_at_line(line_number)`
@@ -46,8 +24,6 @@ TextBuffer methods that manipulate text use TextIters to specify where the metho
 
 `start, end = textbuffer.get_selection_bounds()`
 
-Here I set the cursor to the beginning of line 2.
-`iter = textbuffer.get_iter_at_line(2)`
 `textbuffer.place_cursor(iter)`
 '''
 

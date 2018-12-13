@@ -27,11 +27,13 @@ Handle mouse events, how to draw in a window, and how to do drawing better by us
   drawable.draw_rgb_32_image(gc, x, y, width, height, dither, buffer, rowstride)
 
   drawable.draw_gray_image(gc, x, y, width, height, dither, buffer, rowstride)
+
+GTK - The GIMP Toolkit
+Copyright (C) 1995-1997 Peter Mattis, Spencer Kimball and Josh MacDonald
+Copyright (C) 2001-2004 John Finlay
+GPL2
 """
-# GTK - The GIMP Toolkit
-# Copyright (C) 1995-1997 Peter Mattis, Spencer Kimball and Josh MacDonald
-# Copyright (C) 2001-2004 John Finlay
-# GPL2
+
 
 import pygtk
 pygtk.require('2.0')

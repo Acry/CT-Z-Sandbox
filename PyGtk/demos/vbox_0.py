@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-'''Windows/Window
+'''Containers/VBox 0
 
 Creates a Toplevel Window.
 
@@ -27,22 +27,20 @@ text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
 text2 = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et" \
        " dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum." \
        " Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-class WindowDemo(gtk.Window):
+
+
+class VBox0Demo(gtk.Window):
     def __init__(self, parent=None):
-
-        # Create the toplevel window
         gtk.Window.__init__(self)
-
         try:
             self.set_screen(parent.get_screen())
         except AttributeError:
             self.connect('destroy', lambda *w: gtk.main_quit())
 
         self.set_title(self.__class__.__name__)
-        self.set_default_size(200, 200)
+        self.set_default_size(200, 400)
         self.set_icon_from_file(ICON_IMAGE)
         self.set_geometry_hints(min_width=100, min_height=100)
-
 
         textview = gtk.TextView()
         textbuffer = textview.get_buffer()
@@ -67,9 +65,7 @@ class WindowDemo(gtk.Window):
         vbox.pack_start(sw2, True, True)
         self.show_all()
 
-def main():
-    WindowDemo()
-    gtk.main()
 
 if __name__ == '__main__':
-    main()
+    VBox0Demo()
+    gtk.main()

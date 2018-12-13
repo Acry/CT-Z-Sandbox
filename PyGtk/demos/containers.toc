@@ -1,0 +1,15 @@
+Category Containers:
+
+gtk.Container - a base class for widgets that contain other widgets
+
+The gtk.Container class provides common attributes and methods for a large number of widget subclasses that manage the layout of other widgets within the area of a window.
+
+A PyGTK user interface is constructed by nesting widgets inside widgets. Container widgets are the inner nodes in the resulting tree of widgets: they contain other widgets. So, for example, you might have a gtk.Window containing a gtk.Frame containing a gtk.Label. If you wanted an image instead of a textual label inside the frame, you might replace the gtk.Label widget with a gtk.Image widget.
+
+There are two major kinds of container widgets. Both are subclasses of the abstract gtk.Container base class.
+
+The first type of container widget has a single child widget and derives from gtk.Bin. These containers are decorators, that add some kind of functionality to the child. For example, a gtk.Button makes its child into a clickable button; a gtk.Frame draws a frame around its child and a gtk.Window places its child widget inside a top-level window.
+
+The second type of container can have more than one child; its purpose is to manage layout. This means that these containers assign sizes and positions to their children. For example, a gtk.HBox arranges its children in a horizontal row, and a gtk.Table arranges the widgets it contains in a two-dimensional grid.
+
+To fulfill its task, a layout container must negotiate the size requirements with its parent and its children. This negotiation is carried out in two phases, size requisition and size allocation.

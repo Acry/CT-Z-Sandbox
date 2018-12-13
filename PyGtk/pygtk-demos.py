@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-# region Description
+#region Description
 """
 Cherrytree and Zim kinda SDK (work in progress)
 Cherrytree & Zim - A Desktop Wiki
@@ -15,7 +15,7 @@ for a CherryTree and Zim-Wiki Developer-Sandbox.
 based on pygtk-demo, demos from http://zetcode.com/gui/pygtk
 demos from https://www.kksou.com/php-gtk2/category/Sample-Codes/
 """
-# endregion
+#endregion
 
 # region Milestones
 """

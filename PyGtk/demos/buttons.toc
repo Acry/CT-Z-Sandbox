@@ -1,0 +1,25 @@
+Buttons:
+
+A pushbutton widget that issues a signal when clicked.
+
+The `gtk.Button` widget is usually displayed as a pushbutton with a text label (gtk.Label) though it can contain any valid widget.
+The Button is generally used to attach a callback function or method that is called when the button is clicked.
+
+Buttons generate signals that indicate:
+
+"clicked" - the user pressed and released a mouse button over the button
+"pressed" - the user pressed a mouse button over the button
+"released" - the user released a mouse button over the button
+"enter" - the pointer entered the button
+"leave" - the pointer left the button
+
+The "clicked" signal is usually the only signal that an application needs to handle.
+
+If a label is being used by the button its text (the "label" property) is retrieved using the get_label() method.
+The label text is changed using the set_label() method.
+
+The property ("use_underline") that tells a button to use the first underscore to indicate a mnemonic key is changed using the set_use_underline() method.
+It can be retrieved using the get_use_underline() method.
+
+The button's relief style (the "relief" property) is retrieved using the method get_relief().
+The relief style is set to one of gtk.RELIEF_NONE, gtk.RELIEF_HALF or gtk.RELIEF_NORMAL using the method set_relief().

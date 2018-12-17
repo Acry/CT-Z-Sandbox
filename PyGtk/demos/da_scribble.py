@@ -1,32 +1,22 @@
 #!/usr/bin/env python2
-"""Scribble
+"""Drawing Area/Scribble
 
 The DrawingArea Widget and Drawing.
 Handle mouse events, how to draw in a window, and how to do drawing better by using a backing pixmap.
 
-  drawable.draw_point(gc, x, y)
+A DrawingArea is created using the constructor:
+`drawing_area = gtk.DrawingArea()`
 
-  drawable.draw_line(gc, x1, y1, x2, y2)
+A DrawingArea is initially created with a size of (0, 0) so you should use the following method to make the drawing_area visible by setting its width and height to useful values greater than zero:
+`drawing_area.set_size_request(width, height)`
 
-  drawable.draw_rectangle(gc, fill, x, y, width, height)
+To draw on a DrawingArea you must retrieve the wrapped gtk.gdk.Window using the window attribute of the DrawingArea as follows:
+`drawable = drawing_area.window`
 
-  drawable.draw_arc(gc, fill, x, y, width, height, angle1, angle2)
+Then you can draw on drawable using the gtk.gdk.Drawable Drawing Methods.
 
-  drawable.draw_polygon(gc, fill, points)
-
-  drawable.draw_drawable(gc, src, xsrc, ysrc, xdest, ydest, width, height)
-
-  drawable.draw_points(gc, points)
-
-  drawable.draw_lines(gc, points)
-
-  drawable.draw_segments(gc, segments)
-
-  drawable.draw_rgb_image(gc, x, y, width, height, dither, buffer, rowstride)
-
-  drawable.draw_rgb_32_image(gc, x, y, width, height, dither, buffer, rowstride)
-
-  drawable.draw_gray_image(gc, x, y, width, height, dither, buffer, rowstride)
+Note:
+The DrawingArea must be realized (i.e. the Widget methods realize() or show() have been called) to have an associated gtk.gdk.Window that can be used for drawing.
 
 GTK - The GIMP Toolkit
 Copyright (C) 1995-1997 Peter Mattis, Spencer Kimball and Josh MacDonald

@@ -50,6 +50,17 @@ demos from https://www.kksou.com/php-gtk2/category/Sample-Codes/
 # add exercises
 # show new commits
 # allow particular depth of sub-categories
+#
+# Theming:
+# -> gtk-theme-switch2
+# rc-files
+# https://www.gnome-look.org/browse/cat/136/
+# CSS is GTK+3
+#
+# widget factory:
+# https://github.com/valr/awf
+# https://www.jasong-designs.com/2015/05/28/how-to-install-a-widget-factory-in-linux/
+# https://www.gnome-look.org/p/1115124/
 
 # Long term:
 # thinking of clutter integration, but it looks bad.

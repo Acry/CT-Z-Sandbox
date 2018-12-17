@@ -1,0 +1,27 @@
+The DrawingArea widget wraps a gtk.gdk.Window which is a subclass of gtk.gdk.Drawable (as is a gtk.gdk.Pixmap).
+In effect the DrawingArea provides a simple 'canvas' area (the wrapped gtk.gdk.Window) that can be drawn on using the methods of the gtk.gdk.Drawable class.
+
+Drawing Methods:
+  drawable.draw_point(gc, x, y)
+
+  drawable.draw_line(gc, x1, y1, x2, y2)
+
+  drawable.draw_rectangle(gc, fill, x, y, width, height)
+
+  drawable.draw_arc(gc, fill, x, y, width, height, angle1, angle2)
+
+  drawable.draw_polygon(gc, fill, points)
+
+  drawable.draw_drawable(gc, src, xsrc, ysrc, xdest, ydest, width, height)
+
+  drawable.draw_points(gc, points)
+
+  drawable.draw_lines(gc, points)
+
+  drawable.draw_segments(gc, segments)
+
+  drawable.draw_rgb_image(gc, x, y, width, height, dither, buffer, rowstride)
+
+  drawable.draw_rgb_32_image(gc, x, y, width, height, dither, buffer, rowstride)
+
+  drawable.draw_gray_image(gc, x, y, width, height, dither, buffer, rowstride)

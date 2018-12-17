@@ -1,0 +1,7 @@
+`gtk.ItemFactory` is deprecated in PyGTK 2.4 and above, `gtk.UIManager` should be used instead.
+
+The UIManager provides a way to create menus and toolbars from an XML-like description.
+
+The UIManager uses ActionGroup objects to manage the Action objects providing the common substructure for the menu and toolbar items.
+
+Using the UIManager you can dynamically merge and demerge multiple UI descriptions and actions. This allows you to modify the menus and toolbars when the mode changes in the application (for example, changing from text editing to image editing), or when new plug-in features are added or removed from your application.

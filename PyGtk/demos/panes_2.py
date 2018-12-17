@@ -13,7 +13,7 @@ import pygtk
 pygtk.require('2.0')
 import gtk
 
-class VPanedandHPanedDemo(gtk.Window):
+class VPanedAndHPanedDemo(gtk.Window):
     def __init__(self, parent=None):
         # Create the toplevel window
         gtk.Window.__init__(self)
@@ -121,5 +121,5 @@ class VPanedandHPanedDemo(gtk.Window):
 
 
 if __name__ == '__main__':
-    VPanedandHPanedDemo()
+    VPanedAndHPanedDemo()
     gtk.main()

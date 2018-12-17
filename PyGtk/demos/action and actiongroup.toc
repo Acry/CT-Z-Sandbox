@@ -1,0 +1,6 @@
+The Action and ActionGroup objects work together to provide the images, text, callbacks and accelerators for your application menus and toolbars.
+
+The UIManager uses Actions and ActionGroups to build the menubars and toolbars automatically based on a XML specification.
+It's much easier to create and populate menus and toolbars using the UIManager.
+
+The following demos on the Action and ActionGroup objects describe how to directly apply these objects, but it is recommend using the UIManager whenever possible.

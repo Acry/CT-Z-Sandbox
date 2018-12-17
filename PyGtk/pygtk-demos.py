@@ -69,6 +69,7 @@ demos from https://www.kksou.com/php-gtk2/category/Sample-Codes/
 # Bugs: - not intended behaviour:
 # distinct clickable tags, since I have 2 now - inline code should't be clickable
 # FIXME: don't use anonymous tags
+# Refactor Notebook/Scrolled window for Notes/sources/cat/intro/toc after SQLite closure table
 
 # Coding abilities:
 # implement code-fork and save changes
@@ -92,7 +93,6 @@ demos from https://www.kksou.com/php-gtk2/category/Sample-Codes/
 import string
 import re
 import pygtk
-
 pygtk.require('2.0')
 import gobject
 import gtk
@@ -105,8 +105,7 @@ import demos
 import subprocess
 import datetime
 import socket
-
-# endregion
+#endregion
 
 # region globals and constants
 child_demos = {}

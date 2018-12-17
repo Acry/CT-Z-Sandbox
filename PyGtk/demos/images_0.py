@@ -150,9 +150,10 @@ import pygtk
 pygtk.require('2.0')
 import gtk
 
+
 class Images2Demo(gtk.Window):
-    # is invoked when the button is clicked.  It just prints a message.
     def button_clicked(self, widget, data=None):
+        """Invoked when the button is clicked.  It just prints a message."""
         print "button %s clicked" % data
 
     def __init__(self, parent=None):

@@ -7,12 +7,6 @@ You can retrieve the number of lines in a textbuffer by using the method:
 
 Likewise you can get the number of characters in the textbuffer using:
 `char_count = textbuffer.get_char_count()`
-
-When the textbuffer contents are changed the modified flag in the textbuffer is set. The status of the modified flag can be retrieved using the method:
-`modified = textbuffer.get_modified()`
-
-If the program saves the contents of the textbuffer the following method can be used to reset the modified flag:
-`textbuffer.set_modified(setting)`
 """
 
 import pygtk

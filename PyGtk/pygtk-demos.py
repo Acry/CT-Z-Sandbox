@@ -129,6 +129,7 @@ MAIN_IMAGE = os.path.join(IMAGEDIR, "squares2.png")
 TITLE = os.path.join(DEMODIR, "title.txt")
 TITLE_ACTIVE = False
 category = []  # not used right now, even so it is filled
+# todo bring fonts here
 # endregion
 
 # region Some programmatic definition for the demo list.

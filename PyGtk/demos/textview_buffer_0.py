@@ -16,13 +16,13 @@ or it can be created with the function:
 Text can be bound to the buffer with:
 `textbuffer.set_text(text)`
 
-Retrieve the bound buffer:
+Or retrieved the bound buffer:
 `textview.get_buffer()`
 
 Bind the buffer to a view.
 `textview.set_buffer()`
 
-This Demo builds one View and switched buffers if the view gets clicked.
+This Demo builds one view and switches buffers on click.
 """
 
 import pygtk

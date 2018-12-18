@@ -23,6 +23,7 @@ Most valuable links:
 [jan bodnar's samples](http://zetcode.com/gui/pygtk/)
 [PHP sample code](https://www.kksou.com/php-gtk2/category/Sample-Codes/)
 [PyGtksourceview2 Reference Manual](https://people.gnome.org/~gianmt/pygtksourceview2/)
+http://python.zirael.org/ch-gtk.html
 http://code.activestate.com/recipes/tags/pygtk/
 https://github.com/ActiveState/code
 

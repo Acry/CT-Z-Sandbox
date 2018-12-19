@@ -38,8 +38,6 @@ class Buffer1aDemo(gtk.Window):
             gobject.source_remove(self.timer)
             self.timer = gobject.timeout_add(CHECK_TIME, self.green_light)
 
-
-
     def __init__(self, parent=None):
         self.timer = None
         gtk.Window.__init__(self)
@@ -57,14 +55,9 @@ class Buffer1aDemo(gtk.Window):
         rootbox = gtk.VBox(homogeneous=False)
         self.add(rootbox)
 
+        # top
         self.imagebox = gtk.HBox(homogeneous=False)
         rootbox.pack_start(self.imagebox, False, False)
-
-        #TextView
-        textview = gtk.TextView()
-        self.textbuffer = textview.get_buffer()
-        self.textbuffer.set_text(text)
-        textview.set_wrap_mode(gtk.WRAP_WORD)
 
         # lights
         self.light_green = gtk.Image()
@@ -78,13 +71,16 @@ class Buffer1aDemo(gtk.Window):
         # start with a green light
         self.imagebox.pack_end(self.light_green, False, False)
 
+        # TextView in scrolled window
+        textview = gtk.TextView()
+        self.textbuffer = textview.get_buffer()
+        self.textbuffer.set_text(text)
+        textview.set_wrap_mode(gtk.WRAP_WORD)
         sw = gtk.ScrolledWindow()
-        sw.set_border_width(10)
         sw.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         sw.add(textview)
         rootbox.pack_start(sw, expand=True, fill=True)
         self.textbuffer.connect("changed", self.is_modifed)
-
         self.show_all()
 
 

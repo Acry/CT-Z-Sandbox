@@ -1,6 +1,6 @@
-### Cherrytree and Zim kinda SDK (work in progress)
+### Cherrytree, Zim & KeepNote kinda SDK (work in progress)
 
-[Cherrytree](https://www.giuspen.com/cherrytree/) & [Zim - A Desktop Wiki](http://zim-wiki.org/)  
+[Cherrytree](https://www.giuspen.com/cherrytree/),  [Zim - A Desktop Wiki](http://zim-wiki.org/) & [KeepNote](http://keepnote.org/)  
 Python 2 with GTK+ 2 and friends...
 ___
 
@@ -49,3 +49,10 @@ Install:
 - you want activate sourceview install also.  
 
 <https://ftp.gnome.org/pub/GNOME/binaries/win32/pygtk/2.24/pygtk-all-in-one-2.24.2.win32-py2.7.msi>  
+
+---
+Mac user start:
+
+<https://sourceforge.net/projects/macpkg/files/PyGTK/2.24.0/>
+
+<https://www.python.org/downloads/release/python-2715/>
